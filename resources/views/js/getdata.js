@@ -37,7 +37,7 @@ app.controller('controller', function($scope, $http) {
                 num++;
             }
             for (var i = 0; i < 5; i++){
-                console.log(collegeTotal[i]+"ok");
+                console.log("number of published paper "+collegeTotal[i]);
             }
         });
 
@@ -49,15 +49,15 @@ app.controller('controller', function($scope, $http) {
                 collegeTopp1[i]=toppList.college1.total[year];
                 collegeTopp2[i]=toppList.college2.total[year];
                 collegeTopp3[i]=toppList.college3.total[year];
+                if(collegeTopp1[i]==null) collegeTopp1[i]=0;
+                if(collegeTopp2[i]==null) collegeTopp2[i]=0;
+                if(collegeTopp3[i]==null) collegeTopp3[i]=0;
                 year++;
             }
             for (var i=0;i<6;i++){
+                console.log("trend of published paper");
                 console.log(collegeTopp1[i]);
-            }
-            for (var i=0;i<6;i++){
                 console.log(collegeTopp2[i]);
-            }
-            for (var i=0;i<6;i++){
                 console.log(collegeTopp3[i]);
             }
         });
@@ -65,7 +65,7 @@ app.controller('controller', function($scope, $http) {
     $http.get(influenceUrl)
         .success(function (response) {
             influenceList = response;
-            console.log(influenceList);
+            console.log("influence "+influenceList);
         });
 
     $http.get(icUrl)

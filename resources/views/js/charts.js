@@ -80,6 +80,10 @@ window.onload=function () {
         }]
     });
 
+    console.log(collegeTopp1);
+    console.log(collegeTopp2);
+    console.log(collegeTopp3);
+
     var topp = Highcharts.chart('topp', { //trend of published papers
         title: {
             text: '发文趋势'
