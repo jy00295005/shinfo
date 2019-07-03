@@ -1,0 +1,17 @@
+.navbar-customize{
+    background: #ffffff;
+    height: 50px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
+
+.side-customize{
+    background: #f5f5f5;
+}
+
+.side-customize button{
+    border-radius: 0;
+}
+
+.side-customize button:hover{
+    color: #007bff;
+}
