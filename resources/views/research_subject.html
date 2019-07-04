@@ -15,6 +15,8 @@
     <script src="js/highcharts-more.js"></script>
     <script src="js/exporting.js"></script>
     <script src="js/highcharts-zh_CN.js"></script>
+    <script src="js/networkgraph.js"></script>
+    <script src="js/oldie.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -44,12 +46,12 @@
             </li>
         </ul>
 
-<!--        <div class="input-group input-group-sm col-3">-->
-<!--            <input class="form-control" type="search" placeholder="主题检索" aria-label="Search">-->
-<!--            <div class="input-group-append">-->
-<!--                <button class="btn btn-sm btn-outline-success" type="submit">搜索</button>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="input-group input-group-sm col-3">-->
+        <!--            <input class="form-control" type="search" placeholder="主题检索" aria-label="Search">-->
+        <!--            <div class="input-group-append">-->
+        <!--                <button class="btn btn-sm btn-outline-success" type="submit">搜索</button>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <div class="float-right">
             <button type="button" class="btn btn-sm btn-light">帮助</button>
@@ -66,7 +68,7 @@
             <ul class="nav nav-fill flex-column">
 
                 <li class="nav-item active">
-                    <button href="#" class="nav-item btn btn-primary btn-block">科研产出</button>
+                    <a href="index_temp2.html" class="nav-item btn btn-block">科研产出</a>
                 </li>
 
                 <li class="nav-item">
@@ -96,10 +98,10 @@
                     <button class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#research" role="button" aria-expanded="false" aria-controls="collapseExample">
                         研究主题分布
                     </button>
-                    <div class="collapse" id="research">
+                    <div class="collapse.show" id="research">
                         <ul class="nav nav-fill flex-column">
                             <li class="nav-item active">
-                                <a href="research_subject.html" class="nav-link">Physics</a>
+                                <a href="#" class="nav-link btn btn-primary">Physics</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">Chemistry</a>
@@ -245,15 +247,16 @@
             </div>
 
             <div class="row">
-                <div class="col-6">
-                    <div id="nopp" class="m-5"></div>
-                    <div id="hqp" class="m-5"></div>
-                    <div id="ic" class="m-5"></div>
+                <div class="col-12">
+                    <div id="otd" class="m-5"></div>
                 </div>
 
                 <div class="col-6">
-                    <div id="topp" class="m-5"></div>
-                    <div id="influence" class="m-5"></div>
+                    <div id="cit" class="m-5"></div>
+                </div>
+
+                <div class="col-6">
+                    <div id="sust" class="m-5"></div>
                 </div>
             </div>
 

@@ -403,4 +403,397 @@ app.controller('controller', function($scope, $http) {
 
         });
 
+    $scope.isOutput=false;
+
+    $scope.showOutput=function () {
+        $scope.isOutput=!$scope.isOutput;
+    };
+
+});
+
+console.log("ok");
+
+Highcharts.addEvent(
+    Highcharts.seriesTypes.networkgraph,
+    'afterSetOptions',
+    function (e) {
+        var colors = Highcharts.getOptions().colors,
+            i = 0,
+            nodes = {};
+        e.options.data.forEach(function (link) {
+            if (link[0] === 'Proto Indo-European') {
+                nodes['Proto Indo-European'] = {
+                    id: 'Proto Indo-European',
+                    marker: {
+                        radius: 20
+                    }
+                };
+                nodes[link[1]] = {
+                    id: link[1],
+                    marker: {
+                        radius: 10
+                    },
+                    color: colors[i++]
+                };
+            } else if (nodes[link[0]] && nodes[link[0]].color) {
+                nodes[link[1]] = {
+                    id: link[1],
+                    color: nodes[link[0]].color
+                };
+            }
+        });
+        e.options.nodes = Object.keys(nodes).map(function (id) {
+            return nodes[id];
+        });
+    }
+);
+var otd = Highcharts.chart('otd', { //Overall topic distribution
+    chart: {
+        type: 'networkgraph',
+        height: '50%'
+    },
+    title: {
+        text: '总体主题分布'
+    },
+    subtitle: {
+        text: ''
+    },
+    plotOptions: {
+        networkgraph: {
+            keys: ['from', 'to'],
+            layoutAlgorithm: {
+                enableSimulation: true
+            }
+        }
+    },
+    series: [{
+        dataLabels: {
+            enabled: true
+        },
+        data: [
+            ['Proto Indo-European', 'Balto-Slavic'],
+            ['Proto Indo-European', 'Germanic'],
+            ['Proto Indo-European', 'Celtic'],
+            ['Proto Indo-European', 'Italic'],
+            ['Proto Indo-European', 'Hellenic'],
+            ['Proto Indo-European', 'Anatolian'],
+            ['Proto Indo-European', 'Indo-Iranian'],
+            ['Proto Indo-European', 'Tocharian'],
+            ['Indo-Iranian', 'Dardic'],
+            ['Indo-Iranian', 'Indic'],
+            ['Indo-Iranian', 'Iranian'],
+            ['Iranian', 'Old Persian'],
+            ['Old Persian', 'Middle Persian'],
+            ['Indic', 'Sanskrit'],
+            ['Italic', 'Osco-Umbrian'],
+            ['Italic', 'Latino-Faliscan'],
+            ['Latino-Faliscan', 'Latin'],
+            ['Celtic', 'Brythonic'],
+            ['Celtic', 'Goidelic'],
+            ['Germanic', 'North Germanic'],
+            ['Germanic', 'West Germanic'],
+            ['Germanic', 'East Germanic'],
+            ['North Germanic', 'Old Norse'],
+            ['North Germanic', 'Old Swedish'],
+            ['North Germanic', 'Old Danish'],
+            ['West Germanic', 'Old English'],
+            ['West Germanic', 'Old Frisian'],
+            ['West Germanic', 'Old Dutch'],
+            ['West Germanic', 'Old Low German'],
+            ['West Germanic', 'Old High German'],
+            ['Old Norse', 'Old Icelandic'],
+            ['Old Norse', 'Old Norwegian'],
+            ['Old Norwegian', 'Middle Norwegian'],
+            ['Old Swedish', 'Middle Swedish'],
+            ['Old Danish', 'Middle Danish'],
+            ['Old English', 'Middle English'],
+            ['Old Dutch', 'Middle Dutch'],
+            ['Old Low German', 'Middle Low German'],
+            ['Old High German', 'Middle High German'],
+            ['Balto-Slavic', 'Baltic'],
+            ['Balto-Slavic', 'Slavic'],
+            ['Slavic', 'East Slavic'],
+            ['Slavic', 'West Slavic'],
+            ['Slavic', 'South Slavic'],
+            // Leaves:
+            ['Proto Indo-European', 'Phrygian'],
+            ['Proto Indo-European', 'Thracian'],
+            ['Tocharian', 'Tocharian A'],
+            ['Tocharian', 'Tocharian B'],
+            ['Anatolian', 'Hittite'],
+            ['Anatolian', 'Palaic'],
+            ['Anatolian', 'Luwic'],
+            ['Iranian', 'Pashto'],
+            ['Iranian', 'Sogdian'],
+            ['Old Persian', 'Pahlavi'],
+            ['Middle Persian', 'Persian'],
+            ['Hellenic', 'Greek'],
+            ['Dardic', 'Dard'],
+            ['Sanskrit', 'Sindhi'],
+            ['Sanskrit', 'Romani'],
+            ['Sanskrit', 'Punjabi'],
+            ['Sanskrit', 'Sinhalese'],
+            ['Osco-Umbrian', 'Umbrian'],
+            ['Osco-Umbrian', 'Oscan'],
+            ['Latino-Faliscan', 'Faliscan'],
+            ['Latin', 'Portugese'],
+            ['Latin', 'Catalan'],
+            ['Latin', 'Franco-Provençal'],
+            ['Latin', 'Rhaeto-Romance'],
+            ['Brythonic', 'Welsh'],
+            ['Goidelic', 'Modern Irish'],
+            ['Goidelic', 'Scottish Gaelic'],
+            ['Goidelic', 'Manx'],
+            ['East Germanic', 'Gothic'],
+            ['Middle Dutch', 'Dutch'],
+            ['Middle Dutch', 'Limburgish'],
+            ['Middle Dutch', 'Brabantian'],
+            ['Middle Dutch', 'Rhinelandic'],
+            ['Middle Norwegian', 'Norwegian'],
+            ['Old Norse', 'Faroese'],
+            ['Old Icelandic', 'Icelandic'],
+            ['Baltic', 'Old Prussian'],
+            ['Baltic', 'Lithuanian'],
+            ['Baltic', 'Latvian'],
+            ['West Slavic', 'Polish'],
+            ['West Slavic', 'Slovak'],
+            ['South Slavic', 'Ukrainian'],
+            ['South Slavic', 'Belarusian'],
+            ['South Slavic', 'Rusyn']
+        ]
+    }]
+});
+
+var cit = Highcharts.chart('cit', { //California Institute of Technology
+    chart: {
+        type: 'networkgraph',
+        height: '70%'
+    },
+    title: {
+        text: '对标高校-加州理工'
+    },
+    subtitle: {
+        text: ''
+    },
+    plotOptions: {
+        networkgraph: {
+            keys: ['from', 'to'],
+            layoutAlgorithm: {
+                enableSimulation: true
+            }
+        }
+    },
+    series: [{
+        dataLabels: {
+            enabled: true
+        },
+        data: [
+            ['Proto Indo-European', 'Balto-Slavic'],
+            ['Proto Indo-European', 'Germanic'],
+            ['Proto Indo-European', 'Celtic'],
+            ['Proto Indo-European', 'Italic'],
+            ['Proto Indo-European', 'Hellenic'],
+            ['Proto Indo-European', 'Anatolian'],
+            ['Proto Indo-European', 'Indo-Iranian'],
+            ['Proto Indo-European', 'Tocharian'],
+            ['Indo-Iranian', 'Dardic'],
+            ['Indo-Iranian', 'Indic'],
+            ['Indo-Iranian', 'Iranian'],
+            ['Iranian', 'Old Persian'],
+            ['Old Persian', 'Middle Persian'],
+            ['Indic', 'Sanskrit'],
+            ['Italic', 'Osco-Umbrian'],
+            ['Italic', 'Latino-Faliscan'],
+            ['Latino-Faliscan', 'Latin'],
+            ['Celtic', 'Brythonic'],
+            ['Celtic', 'Goidelic'],
+            ['Germanic', 'North Germanic'],
+            ['Germanic', 'West Germanic'],
+            ['Germanic', 'East Germanic'],
+            ['North Germanic', 'Old Norse'],
+            ['North Germanic', 'Old Swedish'],
+            ['North Germanic', 'Old Danish'],
+            ['West Germanic', 'Old English'],
+            ['West Germanic', 'Old Frisian'],
+            ['West Germanic', 'Old Dutch'],
+            ['West Germanic', 'Old Low German'],
+            ['West Germanic', 'Old High German'],
+            ['Old Norse', 'Old Icelandic'],
+            ['Old Norse', 'Old Norwegian'],
+            ['Old Norwegian', 'Middle Norwegian'],
+            ['Old Swedish', 'Middle Swedish'],
+            ['Old Danish', 'Middle Danish'],
+            ['Old English', 'Middle English'],
+            ['Old Dutch', 'Middle Dutch'],
+            ['Old Low German', 'Middle Low German'],
+            ['Old High German', 'Middle High German'],
+            ['Balto-Slavic', 'Baltic'],
+            ['Balto-Slavic', 'Slavic'],
+            ['Slavic', 'East Slavic'],
+            ['Slavic', 'West Slavic'],
+            ['Slavic', 'South Slavic'],
+            // Leaves:
+            ['Proto Indo-European', 'Phrygian'],
+            ['Proto Indo-European', 'Thracian'],
+            ['Tocharian', 'Tocharian A'],
+            ['Tocharian', 'Tocharian B'],
+            ['Anatolian', 'Hittite'],
+            ['Anatolian', 'Palaic'],
+            ['Anatolian', 'Luwic'],
+            ['Iranian', 'Pashto'],
+            ['Iranian', 'Sogdian'],
+            ['Old Persian', 'Pahlavi'],
+            ['Middle Persian', 'Persian'],
+            ['Hellenic', 'Greek'],
+            ['Dardic', 'Dard'],
+            ['Sanskrit', 'Sindhi'],
+            ['Sanskrit', 'Romani'],
+            ['Sanskrit', 'Punjabi'],
+            ['Sanskrit', 'Sinhalese'],
+            ['Osco-Umbrian', 'Umbrian'],
+            ['Osco-Umbrian', 'Oscan'],
+            ['Latino-Faliscan', 'Faliscan'],
+            ['Latin', 'Portugese'],
+            ['Latin', 'Catalan'],
+            ['Latin', 'Franco-Provençal'],
+            ['Latin', 'Rhaeto-Romance'],
+            ['Brythonic', 'Welsh'],
+            ['Goidelic', 'Modern Irish'],
+            ['Goidelic', 'Scottish Gaelic'],
+            ['Goidelic', 'Manx'],
+            ['East Germanic', 'Gothic'],
+            ['Middle Dutch', 'Dutch'],
+            ['Middle Dutch', 'Limburgish'],
+            ['Middle Dutch', 'Brabantian'],
+            ['Middle Dutch', 'Rhinelandic'],
+            ['Middle Norwegian', 'Norwegian'],
+            ['Old Norse', 'Faroese'],
+            ['Old Icelandic', 'Icelandic'],
+            ['Baltic', 'Old Prussian'],
+            ['Baltic', 'Lithuanian'],
+            ['Baltic', 'Latvian'],
+            ['West Slavic', 'Polish'],
+            ['West Slavic', 'Slovak'],
+            ['South Slavic', 'Ukrainian'],
+            ['South Slavic', 'Belarusian'],
+            ['South Slavic', 'Rusyn']
+        ]
+    }]
+});
+
+var sust = Highcharts.chart('sust', { //Shanghai University of Science and Technology
+    chart: {
+        type: 'networkgraph',
+        height: '70%'
+    },
+    title: {
+        text: '上海科技大学'
+    },
+    subtitle: {
+        text: ''
+    },
+    plotOptions: {
+        networkgraph: {
+            keys: ['from', 'to'],
+            layoutAlgorithm: {
+                enableSimulation: true
+            }
+        }
+    },
+    series: [{
+        dataLabels: {
+            enabled: true
+        },
+        data: [
+            ['Proto Indo-European', 'Balto-Slavic'],
+            ['Proto Indo-European', 'Germanic'],
+            ['Proto Indo-European', 'Celtic'],
+            ['Proto Indo-European', 'Italic'],
+            ['Proto Indo-European', 'Hellenic'],
+            ['Proto Indo-European', 'Anatolian'],
+            ['Proto Indo-European', 'Indo-Iranian'],
+            ['Proto Indo-European', 'Tocharian'],
+            ['Indo-Iranian', 'Dardic'],
+            ['Indo-Iranian', 'Indic'],
+            ['Indo-Iranian', 'Iranian'],
+            ['Iranian', 'Old Persian'],
+            ['Old Persian', 'Middle Persian'],
+            ['Indic', 'Sanskrit'],
+            ['Italic', 'Osco-Umbrian'],
+            ['Italic', 'Latino-Faliscan'],
+            ['Latino-Faliscan', 'Latin'],
+            ['Celtic', 'Brythonic'],
+            ['Celtic', 'Goidelic'],
+            ['Germanic', 'North Germanic'],
+            ['Germanic', 'West Germanic'],
+            ['Germanic', 'East Germanic'],
+            ['North Germanic', 'Old Norse'],
+            ['North Germanic', 'Old Swedish'],
+            ['North Germanic', 'Old Danish'],
+            ['West Germanic', 'Old English'],
+            ['West Germanic', 'Old Frisian'],
+            ['West Germanic', 'Old Dutch'],
+            ['West Germanic', 'Old Low German'],
+            ['West Germanic', 'Old High German'],
+            ['Old Norse', 'Old Icelandic'],
+            ['Old Norse', 'Old Norwegian'],
+            ['Old Norwegian', 'Middle Norwegian'],
+            ['Old Swedish', 'Middle Swedish'],
+            ['Old Danish', 'Middle Danish'],
+            ['Old English', 'Middle English'],
+            ['Old Dutch', 'Middle Dutch'],
+            ['Old Low German', 'Middle Low German'],
+            ['Old High German', 'Middle High German'],
+            ['Balto-Slavic', 'Baltic'],
+            ['Balto-Slavic', 'Slavic'],
+            ['Slavic', 'East Slavic'],
+            ['Slavic', 'West Slavic'],
+            ['Slavic', 'South Slavic'],
+            // Leaves:
+            ['Proto Indo-European', 'Phrygian'],
+            ['Proto Indo-European', 'Thracian'],
+            ['Tocharian', 'Tocharian A'],
+            ['Tocharian', 'Tocharian B'],
+            ['Anatolian', 'Hittite'],
+            ['Anatolian', 'Palaic'],
+            ['Anatolian', 'Luwic'],
+            ['Iranian', 'Pashto'],
+            ['Iranian', 'Sogdian'],
+            ['Old Persian', 'Pahlavi'],
+            ['Middle Persian', 'Persian'],
+            ['Hellenic', 'Greek'],
+            ['Dardic', 'Dard'],
+            ['Sanskrit', 'Sindhi'],
+            ['Sanskrit', 'Romani'],
+            ['Sanskrit', 'Punjabi'],
+            ['Sanskrit', 'Sinhalese'],
+            ['Osco-Umbrian', 'Umbrian'],
+            ['Osco-Umbrian', 'Oscan'],
+            ['Latino-Faliscan', 'Faliscan'],
+            ['Latin', 'Portugese'],
+            ['Latin', 'Catalan'],
+            ['Latin', 'Franco-Provençal'],
+            ['Latin', 'Rhaeto-Romance'],
+            ['Brythonic', 'Welsh'],
+            ['Goidelic', 'Modern Irish'],
+            ['Goidelic', 'Scottish Gaelic'],
+            ['Goidelic', 'Manx'],
+            ['East Germanic', 'Gothic'],
+            ['Middle Dutch', 'Dutch'],
+            ['Middle Dutch', 'Limburgish'],
+            ['Middle Dutch', 'Brabantian'],
+            ['Middle Dutch', 'Rhinelandic'],
+            ['Middle Norwegian', 'Norwegian'],
+            ['Old Norse', 'Faroese'],
+            ['Old Icelandic', 'Icelandic'],
+            ['Baltic', 'Old Prussian'],
+            ['Baltic', 'Lithuanian'],
+            ['Baltic', 'Latvian'],
+            ['West Slavic', 'Polish'],
+            ['West Slavic', 'Slovak'],
+            ['South Slavic', 'Ukrainian'],
+            ['South Slavic', 'Belarusian'],
+            ['South Slavic', 'Rusyn']
+        ]
+    }]
 });
