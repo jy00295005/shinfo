@@ -15,3 +15,11 @@
 .side-customize button:hover{
     color: #007bff;
 }
+
+.ddbar{
+    background: #ffffff;
+}
+
+.element{
+    height: 400px;
+}

@@ -411,7 +411,63 @@ app.controller('controller', function($scope, $http) {
 
 });
 
-console.log("ok");
+var duoxiangduibi = [],
+    $containers = $('.ddbar .element'),
+    datasets = [
+        {
+            name: 'University of Oxford',
+            data: [3, 6, 1, 2, 6],
+            isReversed: true,
+            titleAlign: "left"
+        },
+        {
+            name: 'University of Cambridge',
+            data: [5, 6, 4, 2, 1],
+            isReversed: false,
+            titleAlign: "right"
+        }
+    ];
+$.each(datasets, function(i, dataset) {
+    duoxiangduibi.push(new Highcharts.Chart({
+        chart: {
+            renderTo: $containers[i],
+            type: 'bar',
+            marginLeft: i === 0 ? 100 : 10
+        },
+        title: {
+            text: dataset.name,
+            align: dataset.titleAlign,
+            x: i === 0 ? 90 : 0
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        xAxis:
+            {
+                categories: [],
+                labels: {
+                    enabled: i === 0
+                },
+                visible: false,
+            },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: null
+            },
+            min: 0,
+            max: 10,
+            reversed: dataset.isReversed
+        },
+        legend: {
+            enabled: false
+        },
+        series: [dataset]
+    }));
+});
 
 Highcharts.addEvent(
     Highcharts.seriesTypes.networkgraph,
