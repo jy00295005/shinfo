@@ -27,6 +27,13 @@ Route::get('/paper/compare', function () {
     return view('compare');
 });
 
+Route::get('/test', function () {
+    return view('pages.home');
+});
+
+Route::get('/test/theme/cs', function () {
+    return view('pages.theme_cs');
+});
 
 // Route::get('/api/output/', function () {
 //     return array('title'=>'this is api bar');
