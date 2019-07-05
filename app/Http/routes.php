@@ -15,6 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/paper', function () {
+    return view('paper');
+});
+
+Route::get('/paper/research_subs', function () {
+    return view('research_subs');
+});
+
+Route::get('/paper/compare', function () {
+    return view('compare');
+});
+
 
 // Route::get('/api/output/', function () {
 //     return array('title'=>'this is api bar');
@@ -42,13 +54,13 @@ Route::group(['as' => 'api::'], function () {
     Route::get('api/output/inst_paper_trend', ['as' => 'inst_paper_trend', function () {
     	return [
     		'college1' => [
-    			'total'=>[2010 => 14, 2011 => 24, 2012 => 24, 2014 => 34, 2015 =>55]
+    			'total'=>["2010" => 14, "2011" => 24, "2012" => 24, "2014" => 34, "2015" =>55]
     		],
     		'college2' => [
-    			'total'=>[2010 => 34, 2012 => 34, 2013 => 44, 2014 => 64, 2015 =>75] 
+    			'total'=>["2010" => 34, "2012" => 34, "2013" => 44, "2014" => 64, "2015" =>75] 
     		],
     		'college3' => [
-    			'total'=>[2010 => 64, 2011 => 24, 2012 => 24, 2013 => 34, 2014 => 45, 2015 =>53]
+    			'total'=>["2010" => 64, "2011" => 24, "2012" => 24, "2013" => 34, "2014" => 45, "2015" =>53]
     		],
     	];
     }]);
