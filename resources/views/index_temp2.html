@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>集成分析服务平台</title>
+    <!--  Angularjs-->
+    <script src="js/angular.min.js"></script>
+    <!--  Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <!--  highcharts-->
+    <script src="js/highcharts.js"></script>
+    <script src="js/highcharts-more.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/highcharts-zh_CN.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body ng-app="shinfo" ng-controller="controller">
+
+<div class="container-fluid bg-white px-0">
+
+    <nav class="navbar navbar-expand sticky-top justify-content-between py-2 navbar-customize">
+
+        <div class="row pl-2">
+            <img src="img/logo_white.png" class="img-responsive mt-2" width="35" height="35">
+            <h5 class="navbar-text ml-2 mt-1" style="color: #ffffff;">集成分析服务平台</h5>
+        </div>
+
+        <ul class="nav">
+            <li class="nav-item active">
+                <a href="#" class="nav-link" style="color: #ffffff">科研对标</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" style="color: #cccccc">项目基金</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" style="color: #cccccc">技术专利</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" style="color: #cccccc">战略政策</a>
+            </li>
+        </ul>
+
+<!--        <div class="input-group input-group-sm col-3">-->
+<!--            <input class="form-control" type="search" placeholder="主题检索" aria-label="Search">-->
+<!--            <div class="input-group-append">-->
+<!--                <button class="btn btn-sm btn-outline-success" type="submit">搜索</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="float-right">
+            <button type="button" class="btn btn-sm btn-light">帮助</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary">登陆</button>
+                <button type="button" class="btn btn-sm btn-outline-primary">注册</button>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="row">
+        <div class="col float-left pt-4 side-customize pr-0">
+            <ul class="nav nav-fill flex-column">
+
+                <li class="nav-item active">
+                    <button href="#" class="nav-item btn btn-primary btn-block">科研产出</button>
+                </li>
+
+                <li class="nav-item">
+                    <button href="#" class="nav-item btn btn-block">科研影响力</button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#subject" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        学科领域分布
+                    </button>
+                    <div class="collapse" id="subject">
+                        <ul class="nav nav-fill flex-column">
+                            <li class="nav-item active">
+                                <a href="#" class="nav-link">Physics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Chemistry</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Computer Science</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <button class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#research" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        研究主题分布
+                    </button>
+                    <div class="collapse" id="research">
+                        <ul class="nav nav-fill flex-column">
+                            <li class="nav-item active">
+                                <a href="research_subject.html" class="nav-link">Physics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Chemistry</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Computer Science</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="col-10">
+            <div class="btn-toolbar my-4 justify-content-between">
+                <div></div>
+                <div class="btn-group col-7 float-right">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#zhibiao" role="button" aria-expanded="false" aria-controls="collapseExample">指标选择 &rsaquo;</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#time" role="button" aria-expanded="false" aria-controls="collapseExample">时间范围 &rsaquo;</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#jigou" role="button" aria-expanded="false" aria-controls="collapseExample">机构选择 &rsaquo;</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#lingyu" role="button" aria-expanded="false" aria-controls="collapseExample">研究领域 &rsaquo;</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#guojia" role="button" aria-expanded="false" aria-controls="collapseExample">国家/地区 &rsaquo;</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#duoxiangduibi" role="button" aria-expanded="false" aria-controls="collapseExample">多项对比 &rsaquo;</button>
+                </div>
+            </div>
+
+            <div class="row ml-1">
+                <div class="collapse mx-1" id="zhibiao">
+                    <div class="card card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">全选</label>
+                        </div>
+                        <ul>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                                <label class="form-check-label" for="defaultCheck2">Top10%论文比</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                                <label class="form-check-label" for="defaultCheck3">高被引论文比</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
+                                <label class="form-check-label" for="defaultCheck4">国际合作比</label>
+                            </div>
+                        </ul>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
+                            <label class="form-check-label" for="defaultCheck5">影响力</label>
+                        </div>
+                        <ul>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
+                                <label class="form-check-label" for="defaultCheck6">引文影响力</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck7">
+                                <label class="form-check-label" for="defaultCheck7">CNCI</label>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <div class="collapse mx-1" id="time">
+                    <div class="card card-body">
+                        <div class="input-group input-group-sm mb-2 my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">起始</span>
+                            </div>
+                            <input type="text" class="form-control">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">结束</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse mx-1" id="jigou">
+                    <div class="card card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">
+                            <label class="form-check-label" for="defaultCheck8">牛津大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
+                            <label class="form-check-label" for="defaultCheck9">剑桥大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
+                            <label class="form-check-label" for="defaultCheck10">哈佛大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck11">
+                            <label class="form-check-label" for="defaultCheck11">清华大学</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
+                            <label class="form-check-label" for="defaultCheck12">北京大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
+                            <label class="form-check-label" for="defaultCheck13">上海科技大学</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse mx-1" id="lingyu">
+                    <div class="card card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
+                            <label class="form-check-label" for="defaultCheck14">Physics</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
+                            <label class="form-check-label" for="defaultCheck15">Chemistry</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck16">
+                            <label class="form-check-label" for="defaultCheck16">Engineering</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">
+                            <label class="form-check-label" for="defaultCheck17">Microbiology</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse mx-1" id="guojia">
+                    <div class="card card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck18">
+                            <label class="form-check-label" for="defaultCheck18">美国</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck19">
+                            <label class="form-check-label" for="defaultCheck19">中国</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck20">
+                            <label class="form-check-label" for="defaultCheck20">英国</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse col-11 mx-1" id="duoxiangduibi">
+                    <div class="card card-body">
+                        <div class="ddbar col-12">
+                            <div class="row">
+                                <div class="element col-4"></div>
+                                <div class="col-4">
+                                        <div class="form-group mt-5">
+                                            <select class="form-control" id="formControlSelect1">
+                                                <option>Operational Research and Cybernetics</option>
+                                                <option>Applied mathematics</option>
+                                                <option>Probability and Mathematical Statistics</option>
+                                                <option>Computational Mathematics</option>
+                                                <option>Fundamental Mathematics</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mt-4">
+                                            <select class="form-control" id="formControlSelect2">
+                                                <option>Operational Research and Cybernetics</option>
+                                                <option>Applied mathematics</option>
+                                                <option>Probability and Mathematical Statistics</option>
+                                                <option>Computational Mathematics</option>
+                                                <option>Fundamental Mathematics</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mt-4">
+                                            <select class="form-control" id="formControlSelect3">
+                                                <option>Operational Research and Cybernetics</option>
+                                                <option>Applied mathematics</option>
+                                                <option>Probability and Mathematical Statistics</option>
+                                                <option>Computational Mathematics</option>
+                                                <option>Fundamental Mathematics</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mt-4">
+                                            <select class="form-control" id="formControlSelect4">
+                                                <option>Operational Research and Cybernetics</option>
+                                                <option>Applied mathematics</option>
+                                                <option>Probability and Mathematical Statistics</option>
+                                                <option>Computational Mathematics</option>
+                                                <option>Fundamental Mathematics</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mt-4">
+                                            <select class="form-control" id="formControlSelect5">
+                                                <option>Operational Research and Cybernetics</option>
+                                                <option>Applied mathematics</option>
+                                                <option>Probability and Mathematical Statistics</option>
+                                                <option>Computational Mathematics</option>
+                                                <option>Fundamental Mathematics</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <div class="element col-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div id="nopp" class="m-5"></div>
+                    <div id="hqp" class="m-5"></div>
+                    <div id="ic" class="m-5"></div>
+                </div>
+
+                <div class="col-6">
+                    <div id="topp" class="m-5"></div>
+                    <div id="influence" class="m-5"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="js/getdata.js"></script>
+</body>
+</html>

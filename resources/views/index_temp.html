@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>集成分析服务平台</title>
+    <!--  Angularjs-->
+    <script src="js/angular.min.js"></script>
+    <script src="js/getdata.js"></script>
+    <!--  Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <!--  highcharts-->
+    <script src="js/highcharts.js"></script>
+    <script src="js/highcharts-more.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="js/highcharts-zh_CN.js"></script>
+
+    <script src="js/charts.js"></script>
+</head>
+<body ng-app="shinfo" ng-controller="controller">
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-light bg-light justify-content-between">
+
+        <div class="row">
+            <img src="logo.png" class="img-responsive" width="80">
+            <h1 class="navbar-text ml-2" style="color: #ffffff; background: darkred">集成分析服务平台</h1>
+        </div>
+
+        <div class="col-4">
+            <div class="float-right">
+                <button type="button" class="btn btn-light">帮助</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary">登陆</button>
+                    <button type="button" class="btn btn-outline-primary">注册</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <input class="form-control mr-sm-0 my-2 my-sm-2" type="search" placeholder="主题检索" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success my-2 my-sm-2" type="submit">搜索</button>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="row">
+        <div class="col float-left mt-lg-4">
+            <ul class="nav nav-fill flex-column">
+
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">科研产出</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">科研影响力</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" data-toggle="collapse" href="#subject" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        学科领域分布
+                    </a>
+                    <div class="collapse" id="subject">
+                        <ul class="nav nav-fill flex-column">
+                            <li class="nav-item active">
+                                <a href="#" class="nav-link">Physics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Chemistry</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Computer Science</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" data-toggle="collapse" href="#research" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        研究主题分布
+                    </a>
+                    <div class="collapse" id="research">
+                        <ul class="nav nav-fill flex-column">
+                            <li class="nav-item active">
+                                <a href="#" class="nav-link">Physics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Chemistry</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Computer Science</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="col-10">
+
+            <ul class="nav nav-fill">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">科研对标</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">项目基金</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">技术专利</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">战略政策</a>
+                </li>
+            </ul>
+
+            <!--  temporary-->
+            <div class="col">
+                <div class="btn-group btn-group my-4">
+                    <button type="button" class="btn btn-primary">&lt;&lt; 数据选择</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle">数据概览</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#zhibiao" role="button" aria-expanded="false" aria-controls="collapseExample">指标选择</button>
+
+                    <div class="collapse" id="zhibiao">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">全选</label>
+                        </div>
+                        <ul>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                                <label class="form-check-label" for="defaultCheck2">Top10%论文比</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                                <label class="form-check-label" for="defaultCheck3">高被引论文比</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
+                                <label class="form-check-label" for="defaultCheck4">国际合作比</label>
+                            </div>
+                        </ul>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
+                            <label class="form-check-label" for="defaultCheck5">影响力</label>
+                        </div>
+                        <ul>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
+                                <label class="form-check-label" for="defaultCheck6">引文影响力</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck7">
+                                <label class="form-check-label" for="defaultCheck7">CNCI</label>
+                            </div>
+                        </ul>
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#time" role="button" aria-expanded="false" aria-controls="collapseExample">时间范围</button>
+
+                    <div class="collapse" id="time">
+                        <div class="input-group input-group-sm mb-2 my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">起始</span>
+                            </div>
+                            <input type="text" class="form-control">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">结束</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#jigou" role="button" aria-expanded="false" aria-controls="collapseExample">机构选择</button>
+
+                    <div class="collapse" id="jigou">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">
+                            <label class="form-check-label" for="defaultCheck8">牛津大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
+                            <label class="form-check-label" for="defaultCheck9">剑桥大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
+                            <label class="form-check-label" for="defaultCheck10">哈佛大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck11">
+                            <label class="form-check-label" for="defaultCheck11">清华大学</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
+                            <label class="form-check-label" for="defaultCheck12">北京大学</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
+                            <label class="form-check-label" for="defaultCheck13">上海科技大学</label>
+                        </div>
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#lingyu" role="button" aria-expanded="false" aria-controls="collapseExample">研究领域</button>
+
+                    <div class="collapse" id="lingyu">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
+                            <label class="form-check-label" for="defaultCheck14">Physics</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
+                            <label class="form-check-label" for="defaultCheck15">Chemistry</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck16">
+                            <label class="form-check-label" for="defaultCheck16">Engineering</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">
+                            <label class="form-check-label" for="defaultCheck17">Microbiology</label>
+                        </div>
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#guojia" role="button" aria-expanded="false" aria-controls="collapseExample">国家/地区</button>
+
+                    <div class="collapse" id="guojia">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck18">
+                            <label class="form-check-label" for="defaultCheck18">美国</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck19">
+                            <label class="form-check-label" for="defaultCheck19">中国</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck20">
+                            <label class="form-check-label" for="defaultCheck20">英国</label>
+                        </div>
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary dropdown-toggle">多项对比</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div id="nopp"></div>
+                    <div id="hqp"></div>
+                    <div id="ic"></div>
+                </div>
+
+                <div class="col-6">
+                    <div id="topp"></div>
+                    <div id="influence"></div>
+                </div>
+            </div>
+
+        </div>
+
+<!--        <div class="col float-right">-->
+<!--            <div class="btn-group-vertical btn-group-lg mt-lg-5">-->
+<!--                <button type="button" class="btn btn-primary">&lt;&lt; 数据选择</button>-->
+<!--                <button type="button" class="btn btn-primary dropdown-toggle">数据概览</button>-->
+<!--                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#zhibiao" role="button" aria-expanded="false" aria-controls="collapseExample">指标选择</button>-->
+
+<!--                <div class="collapse" id="zhibiao">-->
+
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">-->
+<!--                        <label class="form-check-label" for="defaultCheck1">全选</label>-->
+<!--                    </div>-->
+<!--                    <ul>-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">-->
+<!--                            <label class="form-check-label" for="defaultCheck2">Top10%论文比</label>-->
+<!--                        </div>-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">-->
+<!--                            <label class="form-check-label" for="defaultCheck3">高被引论文比</label>-->
+<!--                        </div>-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">-->
+<!--                            <label class="form-check-label" for="defaultCheck4">国际合作比</label>-->
+<!--                        </div>-->
+<!--                    </ul>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">-->
+<!--                        <label class="form-check-label" for="defaultCheck5">影响力</label>-->
+<!--                    </div>-->
+<!--                    <ul>-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">-->
+<!--                            <label class="form-check-label" for="defaultCheck6">引文影响力</label>-->
+<!--                        </div>-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck7">-->
+<!--                            <label class="form-check-label" for="defaultCheck7">CNCI</label>-->
+<!--                        </div>-->
+<!--                    </ul>-->
+
+<!--                </div>-->
+
+<!--                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#time" role="button" aria-expanded="false" aria-controls="collapseExample">时间范围</button>-->
+
+<!--                <div class="collapse" id="time">-->
+<!--                    <div class="input-group input-group-sm mb-2 my-2">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                            <span class="input-group-text">起始</span>-->
+<!--                        </div>-->
+<!--                        <input type="text" class="form-control">-->
+<!--                        <div class="input-group-prepend">-->
+<!--                            <span class="input-group-text">结束</span>-->
+<!--                        </div>-->
+<!--                        <input type="text" class="form-control">-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#jigou" role="button" aria-expanded="false" aria-controls="collapseExample">机构选择</button>-->
+
+<!--                <div class="collapse" id="jigou">-->
+
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">-->
+<!--                        <label class="form-check-label" for="defaultCheck8">牛津大学</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">-->
+<!--                        <label class="form-check-label" for="defaultCheck9">剑桥大学</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck10">-->
+<!--                        <label class="form-check-label" for="defaultCheck10">哈佛大学</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck11">-->
+<!--                        <label class="form-check-label" for="defaultCheck11">清华大学</label>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">-->
+<!--                        <label class="form-check-label" for="defaultCheck12">北京大学</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">-->
+<!--                        <label class="form-check-label" for="defaultCheck13">上海科技大学</label>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+
+<!--                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#lingyu" role="button" aria-expanded="false" aria-controls="collapseExample">研究领域</button>-->
+
+<!--                <div class="collapse" id="lingyu">-->
+
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">-->
+<!--                        <label class="form-check-label" for="defaultCheck14">Physics</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">-->
+<!--                        <label class="form-check-label" for="defaultCheck15">Chemistry</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck16">-->
+<!--                        <label class="form-check-label" for="defaultCheck16">Engineering</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">-->
+<!--                        <label class="form-check-label" for="defaultCheck17">Microbiology</label>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+
+<!--                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="collapse" href="#guojia" role="button" aria-expanded="false" aria-controls="collapseExample">国家/地区</button>-->
+
+<!--                <div class="collapse" id="guojia">-->
+
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck18">-->
+<!--                        <label class="form-check-label" for="defaultCheck18">美国</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck19">-->
+<!--                        <label class="form-check-label" for="defaultCheck19">中国</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck20">-->
+<!--                        <label class="form-check-label" for="defaultCheck20">英国</label>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+
+<!--                <button type="button" class="btn btn-primary dropdown-toggle">多项对比</button>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+
+</div>
+
+</body>
+</html>
