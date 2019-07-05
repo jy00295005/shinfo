@@ -15,6 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/paper', function () {
+    return view('paper');
+});
+
+Route::get('/paper/research_subs', function () {
+    return view('research_subs');
+});
+
+Route::get('/paper/compare', function () {
+    return view('compare');
+});
+
 
 // Route::get('/api/output/', function () {
 //     return array('title'=>'this is api bar');
