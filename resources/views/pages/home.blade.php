@@ -2,13 +2,18 @@
 @section("content")
     <div class="btn-toolbar my-4 justify-content-between">
         <div></div>
-        <div class="btn-group col-7 float-right">
-            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#zhibiao" role="button" aria-expanded="false" aria-controls="collapseExample">指标选择 &rsaquo;</button>
-            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#time" role="button" aria-expanded="false" aria-controls="collapseExample">时间范围 &rsaquo;</button>
+{{--        <div class="col-2"></div>--}}
+{{--        <div class="mx-1 col-4">--}}
+{{--            <div id="timeslider"></div>--}}
+{{--        </div>--}}
+        <div class="btn-group btn-customize col-4 float-right">
+{{--            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#zhibiao" role="button" aria-expanded="false" aria-controls="collapseExample">指标选择 &rsaquo;</button>--}}
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#time" role="button" aria-expanded="false" aria-controls="collapseExample" ng-click="loadTime()">时间范围 &rsaquo;</button>
             <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#jigou" role="button" aria-expanded="false" aria-controls="collapseExample">机构选择 &rsaquo;</button>
             <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#lingyu" role="button" aria-expanded="false" aria-controls="collapseExample">研究领域 &rsaquo;</button>
-            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#guojia" role="button" aria-expanded="false" aria-controls="collapseExample">国家/地区 &rsaquo;</button>
-            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#duoxiangduibi" role="button" aria-expanded="false" aria-controls="collapseExample">多项对比 &rsaquo;</button>
+{{--            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#guojia" role="button" aria-expanded="false" aria-controls="collapseExample">国家/地区 &rsaquo;</button>--}}
+{{--            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#duoxiangduibi" role="button" aria-expanded="false" aria-controls="collapseExample">多项对比 &rsaquo;</button>--}}
+            <button class="btn btn-success" ng-click="getDemo()">确定</button>
         </div>
     </div>
 
@@ -49,65 +54,56 @@
                 </ul>
             </div>
         </div>
-        <div class="collapse mx-1" id="time">
+        <div class="collapse mx-1 col-4" id="time">
             <div class="card card-body">
-                <div class="input-group input-group-sm mb-2 my-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">起始</span>
-                    </div>
-                    <input type="text" class="form-control">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">结束</span>
-                    </div>
-                    <input type="text" class="form-control">
-                </div>
+                <div id="timeslider"></div>
             </div>
         </div>
         <div class="collapse mx-1" id="jigou">
             <div class="card card-body">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">
+                    <input class="form-check-input" type="checkbox" value="上海科技大学" id="defaultCheck13" checked>
+                    <label class="form-check-label" for="defaultCheck13">上海科技大学</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="牛津大学" id="defaultCheck8">
                     <label class="form-check-label" for="defaultCheck8">牛津大学</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
+                    <input class="form-check-input" type="checkbox" value="剑桥大学" id="defaultCheck9">
                     <label class="form-check-label" for="defaultCheck9">剑桥大学</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
+                    <input class="form-check-input" type="checkbox" value="哈佛大学" id="defaultCheck10">
                     <label class="form-check-label" for="defaultCheck10">哈佛大学</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck11">
+                    <input class="form-check-input" type="checkbox" value="清华大学" id="defaultCheck11">
                     <label class="form-check-label" for="defaultCheck11">清华大学</label>
                 </div>
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
+                    <input class="form-check-input" type="checkbox" value="北京大学" id="defaultCheck12">
                     <label class="form-check-label" for="defaultCheck12">北京大学</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
-                    <label class="form-check-label" for="defaultCheck13">上海科技大学</label>
                 </div>
             </div>
         </div>
         <div class="collapse mx-1" id="lingyu">
             <div class="card card-body">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
+                    <input class="form-check-input" type="checkbox" value="Physics" id="defaultCheck14" checked>
                     <label class="form-check-label" for="defaultCheck14">Physics</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
+                    <input class="form-check-input" type="checkbox" value="Chemistry" id="defaultCheck15">
                     <label class="form-check-label" for="defaultCheck15">Chemistry</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck16">
+                    <input class="form-check-input" type="checkbox" value="Engineering" id="defaultCheck16">
                     <label class="form-check-label" for="defaultCheck16">Engineering</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">
+                    <input class="form-check-input" type="checkbox" value="Microbiology" id="defaultCheck17">
                     <label class="form-check-label" for="defaultCheck17">Microbiology</label>
                 </div>
             </div>

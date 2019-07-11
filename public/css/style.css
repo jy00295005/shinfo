@@ -23,3 +23,21 @@
 .element{
     height: 400px;
 }
+
+.highcharts-data-table{
+    position: fixed;
+    z-index: 99;
+    top: 25vh;
+    left: 40vh;
+    width: 50%;
+    height: 50vh;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 0 0 50vmax  rgba(0,0,0,.5);
+}
+
+.highcharts-data-table table{
+    width: 100%;
+    height: auto;
+}

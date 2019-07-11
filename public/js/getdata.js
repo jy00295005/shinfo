@@ -7,22 +7,70 @@ var toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend";
 var toppList;
 
 var influenceUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_impact";
-var influenceList=new Array();
+var influenceList=[];
 
 var icUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_co_author";
 var icList;
 
-var collegeTotal=new Array();
-var collegeQ1=new Array();
-var collegePercentage=new Array();
+var collegeTotal=[];
+var collegeQ1=[];
+var collegePercentage=[];
 
-var collegeTopp1=new Array();
-var collegeTopp2=new Array();
-var collegeTopp3=new Array();
+var collegeTopp1=[];
+var collegeTopp2=[];
+var collegeTopp3=[];
 
-var collegeIc=new Array();
+var collegeIc=[];
+
+function closeF(){
+    $(".highcharts-data-table").remove();
+}
 
 app.controller('controller', function($scope, $http) {
+
+    $scope.isFirst=true;
+
+    $scope.loadTime=function () {
+        if($scope.isFirst){
+            $("#timeslider").dateRangeSlider({
+                bounds: {
+                    min: new Date(2010, 2, 1),
+                    max: new Date(2020, 11, 31)
+                },
+                defaultValues: {
+                    min: new Date(2010, 3, 1),
+                    max: new Date(2020, 10, 31)
+                },
+                formatter: function(val){
+                    var year = val.getFullYear()+"年";
+                    return year;
+                },
+                step: {
+                    years: 1
+                }
+            });
+            $scope.isFirst=false;
+        }
+    };
+
+    $scope.getDemo=function(){
+        var timeSlider = $("#timeslider").dateRangeSlider("values");
+        var college="";
+        var field="";
+
+        $("#jigou input[type='checkbox']:checked").each(function () {
+            college+=$(this).val()+"&";
+        });
+
+        $("#lingyu input[type='checkbox']:checked").each(function () {
+            field+=$(this).val()+"&";
+        });
+
+        console.log("时间范围："+timeSlider.min.getFullYear()+"&"+timeSlider.max.getFullYear());
+        console.log("机构选择："+college);
+        console.log("研究领域："+field);
+
+    }
 
     $http.get(noppUrl)
         .success(function (response) {
@@ -114,7 +162,8 @@ app.controller('controller', function($scope, $http) {
                     tooltip: {
                         valueSuffix: '%'
                     }
-                }]
+                }],
+                zoomType: 'xy'
             });
 
         });
@@ -402,12 +451,6 @@ app.controller('controller', function($scope, $http) {
             });
 
         });
-
-    $scope.isOutput=false;
-
-    $scope.showOutput=function () {
-        $scope.isOutput=!$scope.isOutput;
-    };
 
 });
 
