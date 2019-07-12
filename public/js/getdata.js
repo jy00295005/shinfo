@@ -22,8 +22,28 @@ var collegeTopp3=[];
 
 var collegeIc=[];
 
+function zoomChart(c){
+    var element="#"+c;
+    $(".c").parent().each(function () {
+        $(this).addClass("display-none");
+    });
+    $(element).parent().removeClass("display-none");
+    $(element).addClass("zoom");
+    $(element).prepend("<button class='btn-sm btn-danger closeB' style='position: relative; float: right' onclick='closeF()'>关闭</button>");
+    $(element).highcharts().reflow();
+}
+
 function closeF(){
-    $(".highcharts-data-table").remove();
+    $(".c").parent().each(function () {
+        $(this).removeClass("display-none");
+    });
+    $(".c").each(function () {
+        $(this).removeClass("zoom");
+    });
+    $(".c").each(function () {
+        $(this).highcharts().reflow();
+    });
+    $(".closeB").remove();
 }
 
 app.controller('controller', function($scope, $http) {
@@ -86,9 +106,6 @@ app.controller('controller', function($scope, $http) {
             }
 
             var nopp = Highcharts.chart('nopp', { //number of published papers
-                chart: {
-                    zoomType: 'xy'
-                },
                 title: {
                     text: '发文量'
                 },
@@ -163,7 +180,57 @@ app.controller('controller', function($scope, $http) {
                         valueSuffix: '%'
                     }
                 }],
-                zoomType: 'xy'
+                zoomType: 'xy',
+                exporting: {
+                    showTable: true,
+                    allowHTML: true
+                }
+            }, function () {
+                Highcharts.addEvent($('#nopp').highcharts(), 'render', function () {
+                    var table = this.dataTableDiv;
+                    if (table) {
+
+                        // Apply styles inline because stylesheets are not passed to the exported SVG
+                        Highcharts.css(table.querySelector('table'), {
+                            'border-collapse': 'collapse',
+                            'border-spacing': 0,
+                            background: 'white',
+                            'min-width': '100%',
+                            'font-family': 'sans-serif',
+                            'font-size': '14px'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                            Highcharts.css(elem, {
+                                border: '1px solid silver',
+                                padding: '0.5em'
+                            });
+                        });
+
+                        Highcharts.css(table.querySelector('caption'), {
+                            'border-bottom': 'none',
+                            'font-size': '1.1em',
+                            'font-weight': 'bold'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                            if (i % 2) {
+                                Highcharts.css(elem, {
+                                    background: '#f8f8f8'
+                                });
+                            }
+                        });
+
+                        // Add the table as the subtitle to make it part of the export
+                        $("#noppModal .modal-title").html(this.title.textStr);
+                        $("#noppModal .modal-body").html(table.outerHTML);
+
+                        if (table.parentNode) {
+                            table.parentNode.removeChild(table);
+                        }
+                        delete this.dataTableDiv;
+                    }
+                });
             });
 
         });
@@ -230,7 +297,56 @@ app.controller('controller', function($scope, $http) {
                             }
                         }
                     }]
+                },
+                exporting: {
+                    showTable: true,
+                    allowHTML: true
                 }
+            }, function () {
+                Highcharts.addEvent($('#topp').highcharts(), 'render', function () {
+                    var table = this.dataTableDiv;
+                    if (table) {
+                        // Apply styles inline because stylesheets are not passed to the exported SVG
+                        Highcharts.css(table.querySelector('table'), {
+                            'border-collapse': 'collapse',
+                            'border-spacing': 0,
+                            background: 'white',
+                            'min-width': '100%',
+                            'font-family': 'sans-serif',
+                            'font-size': '14px'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                            Highcharts.css(elem, {
+                                border: '1px solid silver',
+                                padding: '0.5em'
+                            });
+                        });
+
+                        Highcharts.css(table.querySelector('caption'), {
+                            'border-bottom': 'none',
+                            'font-size': '1.1em',
+                            'font-weight': 'bold'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                            if (i % 2) {
+                                Highcharts.css(elem, {
+                                    background: '#f8f8f8'
+                                });
+                            }
+                        });
+
+                        // Add the table as the subtitle to make it part of the export
+                        $("#toppModal .modal-title").html(this.title.textStr);
+                        $("#toppModal .modal-body").html(table.outerHTML);
+
+                        if (table.parentNode) {
+                            table.parentNode.removeChild(table);
+                        }
+                        delete this.dataTableDiv;
+                    }
+                });
             });
 
         });
@@ -324,7 +440,57 @@ app.controller('controller', function($scope, $http) {
                 },
                 series: [{
                     data: influenceList
-                }]
+                }],
+                exporting: {
+                    showTable: true,
+                    allowHTML: true
+                }
+            }, function () {
+                Highcharts.addEvent($('#influence').highcharts(), 'render', function () {
+                    var table = this.dataTableDiv;
+                    if (table) {
+
+                        // Apply styles inline because stylesheets are not passed to the exported SVG
+                        Highcharts.css(table.querySelector('table'), {
+                            'border-collapse': 'collapse',
+                            'border-spacing': 0,
+                            background: 'white',
+                            'min-width': '100%',
+                            'font-family': 'sans-serif',
+                            'font-size': '14px'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                            Highcharts.css(elem, {
+                                border: '1px solid silver',
+                                padding: '0.5em'
+                            });
+                        });
+
+                        Highcharts.css(table.querySelector('caption'), {
+                            'border-bottom': 'none',
+                            'font-size': '1.1em',
+                            'font-weight': 'bold'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                            if (i % 2) {
+                                Highcharts.css(elem, {
+                                    background: '#f8f8f8'
+                                });
+                            }
+                        });
+
+                        // Add the table as the subtitle to make it part of the export
+                        $("#influenceModal .modal-title").html(this.title.textStr);
+                        $("#influenceModal .modal-body").html(table.outerHTML);
+
+                        if (table.parentNode) {
+                            table.parentNode.removeChild(table);
+                        }
+                        delete this.dataTableDiv;
+                    }
+                });
             });
 
         });
@@ -393,7 +559,57 @@ app.controller('controller', function($scope, $http) {
                         name: 'Mumbai',
                         y: collegeIc[6]
                     }]
-                }]
+                }],
+                exporting: {
+                    showTable: true,
+                    allowHTML: true
+                }
+            }, function () {
+                Highcharts.addEvent($('#hqp').highcharts(), 'render', function () {
+                    var table = this.dataTableDiv;
+                    if (table) {
+
+                        // Apply styles inline because stylesheets are not passed to the exported SVG
+                        Highcharts.css(table.querySelector('table'), {
+                            'border-collapse': 'collapse',
+                            'border-spacing': 0,
+                            background: 'white',
+                            'min-width': '100%',
+                            'font-family': 'sans-serif',
+                            'font-size': '14px'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                            Highcharts.css(elem, {
+                                border: '1px solid silver',
+                                padding: '0.5em'
+                            });
+                        });
+
+                        Highcharts.css(table.querySelector('caption'), {
+                            'border-bottom': 'none',
+                            'font-size': '1.1em',
+                            'font-weight': 'bold'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                            if (i % 2) {
+                                Highcharts.css(elem, {
+                                    background: '#f8f8f8'
+                                });
+                            }
+                        });
+
+                        // Add the table as the subtitle to make it part of the export
+                        $("#hqpModal .modal-title").html(this.title.textStr);
+                        $("#hqpModal .modal-body").html(table.outerHTML);
+
+                        if (table.parentNode) {
+                            table.parentNode.removeChild(table);
+                        }
+                        delete this.dataTableDiv;
+                    }
+                });
             });
 
             var ic = Highcharts.chart('ic', { //international cooperation
@@ -447,7 +663,57 @@ app.controller('controller', function($scope, $http) {
                 series: [{
                     name: '',
                     data: collegeIc
-                }]
+                }],
+                exporting: {
+                    showTable: true,
+                    allowHTML: true
+                }
+            }, function () {
+                Highcharts.addEvent($('#ic').highcharts(), 'render', function () {
+                    var table = this.dataTableDiv;
+                    if (table) {
+
+                        // Apply styles inline because stylesheets are not passed to the exported SVG
+                        Highcharts.css(table.querySelector('table'), {
+                            'border-collapse': 'collapse',
+                            'border-spacing': 0,
+                            background: 'white',
+                            'min-width': '100%',
+                            'font-family': 'sans-serif',
+                            'font-size': '14px'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                            Highcharts.css(elem, {
+                                border: '1px solid silver',
+                                padding: '0.5em'
+                            });
+                        });
+
+                        Highcharts.css(table.querySelector('caption'), {
+                            'border-bottom': 'none',
+                            'font-size': '1.1em',
+                            'font-weight': 'bold'
+                        });
+
+                        [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                            if (i % 2) {
+                                Highcharts.css(elem, {
+                                    background: '#f8f8f8'
+                                });
+                            }
+                        });
+
+                        // Add the table as the subtitle to make it part of the export
+                        $("#icModal .modal-title").html(this.title.textStr);
+                        $("#icModal .modal-body").html(table.outerHTML);
+
+                        if (table.parentNode) {
+                            table.parentNode.removeChild(table);
+                        }
+                        delete this.dataTableDiv;
+                    }
+                });
             });
 
         });

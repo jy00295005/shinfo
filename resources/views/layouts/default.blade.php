@@ -3,7 +3,7 @@
 <head>
     @include("includes.head")
 </head>
-<body ng-app="shinfo" ng-controller="controller" onclick="closeF()">
+<body ng-app="shinfo" ng-controller="controller">
 
 <div class="container-fluid bg-white px-0">
 
