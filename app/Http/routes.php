@@ -35,6 +35,10 @@ Route::get('/test/theme/cs', function () {
     return view('pages.theme_cs');
 });
 
+Route::get('/test/multiple_comparison', function () {
+    return view('pages.multiple_comparison');
+});
+
 // Route::get('/api/output/', function () {
 //     return array('title'=>'this is api bar');
 // });
