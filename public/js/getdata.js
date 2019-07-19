@@ -46,6 +46,23 @@ function closeF(){
     $(".closeB").remove();
 }
 
+var ischecked=true;
+function checkAll(e){
+    var element=$(e);
+    element.checked=ischecked;
+    if (element.checked){
+        element.parent().parent().parent().find("input").each(function () {
+            $(this).attr("checked", true);
+        });
+        ischecked=false;
+    } else{
+        element.parent().parent().parent().find("input").each(function () {
+            $(this).attr("checked", false);
+        });
+        ischecked=true;
+    }
+}
+
 app.controller('controller', function($scope, $http) {
 
     $scope.isFirst=true;

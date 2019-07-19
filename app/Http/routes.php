@@ -43,6 +43,12 @@ Route::get('/test/multiple_comparison', function () {
 //     return array('title'=>'this is api bar');
 // });
 
+Route::get('/', function () {
+    $data = DB::table('uni_hq_stat')->take(5)->get();
+    var_dump($data);
+    // return view('welcome');
+});
+
 
 
 ##api
