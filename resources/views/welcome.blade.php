@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>上海科技大学-情报分析系统</title>
+        <title>a上海科技大学-情报分析系统</title>
 
         <!-- <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'> -->
 

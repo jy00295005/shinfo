@@ -47,34 +47,34 @@ Route::get('/test/multiple_comparison', function () {
 
 ##api
 Route::group(['as' => 'api::'], function () {
-    Route::get('api/output/inst_paper_count', ['as' => 'inst_paper_count', function () {
-    	return [
-    		'college1'=>[
-    			'total' => 47, 'q1' => 27, 'percent' => 25 ],
-    		'college2'=>[
-    			'total' => 37, 'q1' => 27, 'percent' => 25 ],
-    		'college3'=>[
-    			'total' => 57, 'q1' => 27, 'percent' => 25 ],
-    		'college4'=>[
-    			'total' => 17, 'q1' => 27, 'percent' => 25 ],
-    		'college5'=>[
-    			'total' => 357, 'q1' => 27, 'percent' => 25 ],
-    	];
+    Route::get('api/output/get_options', ['as' => 'inst_paper_count', function () {
+        // use DB;
+        $time_range = ["2018-12-31","2019-06-20"];
+            // "2018-12-31"=>[2014, 2015, 2016, 2017, 2018],
+            // "2019-06-20"=>[2015, 2016, 2017, 2018, 2019],
+        // ];
+        $universityName = [
+            '上交大', '上科大', '中科大', '剑桥', '加州伯克利', '加州理工', 
+            '北大', '南科大', '哈佛', '国科大', '复旦', '斯坦福', '清华', 
+            '牛津', '苏黎世理工', '麻省理工'];
+        $dicipline=[
+            'Physics', 'Chemistry', 'Molecular Biology & Genetics', 'Biology & Biochemistry',
+            'Neuroscience & Behavior', 'Engineering', 'Materials Science', 'Computer Science', 
+            'Immunology','Microbiology'];
+
+        return [
+                'time_range'=>$time_range,
+                'universityName'=>$universityName,
+                'dicipline'=>$dicipline
+                ];
     }]);
 
-    Route::get('api/output/inst_paper_trend', ['as' => 'inst_paper_trend', function () {
-    	return [
-    		'college1' => [
-    			'total'=>["2010" => 14, "2011" => 24, "2012" => 24, "2014" => 34, "2015" =>55]
-    		],
-    		'college2' => [
-    			'total'=>["2010" => 34, "2012" => 34, "2013" => 44, "2014" => 64, "2015" =>75] 
-    		],
-    		'college3' => [
-    			'total'=>["2010" => 64, "2011" => 24, "2012" => 24, "2013" => 34, "2014" => 45, "2015" =>53]
-    		],
-    	];
-    }]);
+    Route::get('api/output/inst_paper_count/{update_time}/{uni}/{cate}', 'api@show_unv_output');
+
+    Route::get('api/output/inst_paper_trend/{update_time}/{uni}/{cate}', 'api@show_inst_paper_trend');
+    
+    Route::get('api/output/high_quality_paper/{type}/{update_time}/{uni}/{cate}', 'api@show_high_quality_paper');
+
 
 	Route::get('api/output/inst_paper_impact', ['as' => 'inst_paper_impact', function () {
 		return [
