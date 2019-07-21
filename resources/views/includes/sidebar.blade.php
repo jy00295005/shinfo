@@ -5,22 +5,22 @@
         <div id="scientific_research_output">
             <ul class="nav nav-fill flex-column">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">发文总量</a>
+                    <a href="#topp" class="nav-link">发文总量</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">年发文趋势</a>
+                    <a href="#nopp" class="nav-link">年发文趋势</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Q1文章及比例</a>
+                    <a href="#q1" class="nav-link">Q1文章及比例</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">高被引论文及比例</a>
+                    <a href="#hq" class="nav-link">高被引论文及比例</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">热点论文及比例</a>
+                    <a href="#hot" class="nav-link">热点论文及比例</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">CNS论文及比例</a>
+                    <a href="#cns" class="nav-link">CNS论文及比例</a>
                 </li>
             </ul>
         </div>

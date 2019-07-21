@@ -24,21 +24,21 @@
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('hqp')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hqpModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('q1')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#q1Modal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="hqp" class="mx-5 mb-5 c"></div>
+                <div id="q1" class="mx-5 mb-5 c"></div>
             </div>
             <div>
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('ic')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#icModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('hot')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hotModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="ic" class="mx-5 mb-5 c"></div>
+                <div id="hot" class="mx-5 mb-5 c"></div>
             </div>
         </div>
 
@@ -57,11 +57,21 @@
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('influence')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#influenceModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('hq')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hqModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="influence" class="mx-5 mb-5 c"></div>
+                <div id="hq" class="mx-5 mb-5 c"></div>
+            </div>
+            <div>
+                <div class="row mx-0 justify-content-between">
+                    <div></div>
+                    <div class="btn-group-sm mr-5">
+                        <button class="btn btn-outline-primary" onclick="zoomChart('cns')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#cnsModal">显示数据表格</button>
+                    </div>
+                </div>
+                <div id="cns" class="mx-5 mb-5 c"></div>
             </div>
         </div>
 
@@ -84,7 +94,7 @@
         </div>
         <div class="modal fade" id="toppModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+                <div class="modal-content" style="width: 1000px;">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -98,7 +108,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="hqpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="q1Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -114,7 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="influenceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="hqModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -130,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="icModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="hotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -146,6 +156,21 @@
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="cnsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @stop
