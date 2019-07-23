@@ -91,7 +91,7 @@ class Api extends Controller
     }
 
     public function show_high_quality_paper($type = 'Q1',$update_time='2019-06-20',$uni = 'all',$cate = 'all'){
-        $data = DB::table('uni_hq_stat');
+        
 
         switch ($type) {
             case 'Q1':
@@ -114,16 +114,38 @@ class Api extends Controller
                 return ['error'=>'Wrong type value'];
                 break;
         }
-        $data->select(DB::raw("dis_uni_name, MAX(CASE WHEN indicator = 'SCI论文总数' THEN paper_count END) as 'SCI论文总数', MAX(CASE WHEN indicator = '".$ind."' THEN paper_count END) as '".$ind."'"))
-            ->where('updateTime',$update_time)
-            ->where('dicipline',$cate);
 
-        if($uni != 'all'){
-            $uni_li = explode(',',$uni);
-            $data->whereIn('dis_uni_name', $uni_li);
+        $cate_li = explode(',',$cate);
+
+
+        function local_sql_builder($table_,$ind_,$update_time_,$cate_,$uni_)
+        {
+            $data = DB::table($table_);
+            $data->select(DB::raw("dis_uni_name, MAX(CASE WHEN indicator = 'SCI论文总数' THEN paper_count END) as 'SCI论文总数', MAX(CASE WHEN indicator = '".$ind_."' THEN paper_count END) as '".$ind_."',dicipline"))
+                ->where('updateTime',$update_time_)
+                ->where('dicipline',$cate_);
+
+            if($uni_ != 'all'){
+                $uni_li_ = explode(',',$uni_);
+                $data->whereIn('dis_uni_name', $uni_li_);
+            }
+            $data->groupBy('dis_uni_name');
+            return $data->get();
         }
-        $data->groupBy('dis_uni_name');
-        return $data->get();
 
+        if (count($cate_li)>1) {
+            $return = [];
+            foreach ($cate_li as $key => $cate_val) {
+                $mysql_return = local_sql_builder('uni_hq_stat',$ind,$update_time,$cate_val,$uni);
+                $return = array_merge($return,$mysql_return);
+
+            }
+            
+            return $return;
+        } else{
+            $mysql_return = local_sql_builder('uni_hq_stat',$ind,$update_time,$cate,$uni);
+            return $mysql_return;
+            // return $data->tosql();
+        }
     }
 }
