@@ -117,14 +117,10 @@ app.controller('controller', function($scope, $http) {
 
         toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/"+updateDate+"/"+university+"/"+dicipline;
         noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/"+updateDate+"/"+university+"/"+dicipline;
-        // q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-        // hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-        // hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-        // cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
-        q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/all";
-        hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/all";
-        hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/all";
-        cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/all";
+        q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
+        hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
+        hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
+        cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
 
         $scope.getNopp();
         $scope.getTopp();
@@ -371,20 +367,30 @@ app.controller('controller', function($scope, $http) {
         $http.get(q1Url)
             .success(function (response) {
                 var disUniName=[];
+                var allData=[];
                 var sciAll=[];
                 var q1All=[];
                 var q1Ratio=[];
 
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
+                var length=0;
+                for (var key in response) {
+                    disUniName.push(key);
+                    allData.push(response[key]);
+                    length++;
                 }
-                for(var i=0;i<response.length;i++){
-                    sciAll.push(response[i]["SCI论文总数"]);
+
+                for(var i=0;i<length;i++){
+                    var sci=0;
+                    var q1=0;
+                    for(var j=0;j<allData[i].length;j++) {
+                        sci+=allData[i][j]["SCI论文总数"];
+                        q1+=allData[i][j]["高被引论文数"];
+                    }
+                    sciAll.push(sci);
+                    q1All.push(q1);
                 }
-                for(var i=0;i<response.length;i++){
-                    q1All.push(response[i]["高被引论文数"]);
-                }
-                for(var i=0;i<response.length;i++){
+
+                for(var i=0;i<length;i++){
                     q1Ratio[i]=q1All[i]/sciAll[i];
                 }
 
@@ -511,20 +517,30 @@ app.controller('controller', function($scope, $http) {
         $http.get(hqUrl)
             .success(function (response) {
                 var disUniName=[];
+                var allData=[];
                 var sciAll=[];
                 var hqAll=[];
                 var hqRatio=[];
 
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
+                var length=0;
+                for (var key in response) {
+                    disUniName.push(key);
+                    allData.push(response[key]);
+                    length++;
                 }
-                for(var i=0;i<response.length;i++){
-                    sciAll.push(response[i]["SCI论文总数"]);
+
+                for(var i=0;i<length;i++){
+                    var sci=0;
+                    var hq=0;
+                    for(var j=0;j<allData[i].length;j++) {
+                        sci+=allData[i][j]["SCI论文总数"];
+                        hq+=allData[i][j]["高被引论文数"];
+                    }
+                    sciAll.push(sci);
+                    hqAll.push(hq);
                 }
-                for(var i=0;i<response.length;i++){
-                    hqAll.push(response[i]["高被引论文数"]);
-                }
-                for(var i=0;i<response.length;i++){
+
+                for(var i=0;i<length;i++){
                     hqRatio[i]=hqAll[i]/sciAll[i];
                 }
 
@@ -651,20 +667,30 @@ app.controller('controller', function($scope, $http) {
         $http.get(hotUrl)
             .success(function (response) {
                 var disUniName=[];
+                var allData=[];
                 var sciAll=[];
                 var hotAll=[];
                 var hotRatio=[];
 
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
+                var length=0;
+                for (var key in response) {
+                    disUniName.push(key);
+                    allData.push(response[key]);
+                    length++;
                 }
-                for(var i=0;i<response.length;i++){
-                    sciAll.push(response[i]["SCI论文总数"]);
+
+                for(var i=0;i<length;i++){
+                    var sci=0;
+                    var hot=0;
+                    for(var j=0;j<allData[i].length;j++) {
+                        sci+=allData[i][j]["SCI论文总数"];
+                        hot+=allData[i][j]["热点论文数"];
+                    }
+                    sciAll.push(sci);
+                    hotAll.push(hot);
                 }
-                for(var i=0;i<response.length;i++){
-                    hotAll.push(response[i]["热点论文数"]);
-                }
-                for(var i=0;i<response.length;i++){
+
+                for(var i=0;i<length;i++){
                     hotRatio[i]=hotAll[i]/sciAll[i];
                 }
 
@@ -791,20 +817,30 @@ app.controller('controller', function($scope, $http) {
         $http.get(cnsUrl)
             .success(function (response) {
                 var disUniName=[];
+                var allData=[];
                 var sciAll=[];
                 var cnsAll=[];
                 var cnsRatio=[];
 
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
+                var length=0;
+                for (var key in response) {
+                    disUniName.push(key);
+                    allData.push(response[key]);
+                    length++;
                 }
-                for(var i=0;i<response.length;i++){
-                    sciAll.push(response[i]["SCI论文总数"]);
+
+                for(var i=0;i<length;i++){
+                    var sci=0;
+                    var cns=0;
+                    for(var j=0;j<allData[i].length;j++) {
+                        sci+=allData[i][j]["SCI论文总数"];
+                        cns+=allData[i][j]["CNS论文数"];
+                    }
+                    sciAll.push(sci);
+                    cnsAll.push(cns);
                 }
-                for(var i=0;i<response.length;i++){
-                    cnsAll.push(response[i]["CNS论文数"]);
-                }
-                for(var i=0;i<response.length;i++){
+
+                for(var i=0;i<length;i++){
                     cnsRatio[i]=cnsAll[i]/sciAll[i];
                 }
 
