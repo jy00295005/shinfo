@@ -141,27 +141,15 @@ class Api extends Controller
 
             }
 
-            $all_unis = [];
-            foreach ($return as $key => $value) {
-                array_push($all_unis,$value->dis_uni_name);
-            }
-
             $add_return = [];
-            foreach ($all_unis as $key => $uni_name) {
-                foreach ($return as $k => $v) {
-                    if ($uni_name == $v->dis_uni_name) {
-                        if (array_key_exists($uni_name, $add_return)) {
-                        $add_return[$uni_name][] = $v;
-                        // array_push($add_return[$uni_name],$v[1]);
-                        }else{
-                            $add_return[$uni_name] = [$v];
-                        }
-                    }
-                    
+            foreach ($return as $k => $v) {
+                if (array_key_exists($v->dis_uni_name, $add_return)) {
+
+                    $add_return[$v->dis_uni_name][] = $v;
+                }else{
+                    $add_return[$v->dis_uni_name] = [$v];
                 }
             }
-
-
            return $add_return;
         } else{
             $mysql_return = local_sql_builder('uni_hq_stat',$ind,$update_time,$cate,$uni);
