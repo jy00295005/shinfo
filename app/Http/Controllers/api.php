@@ -91,8 +91,6 @@ class Api extends Controller
     }
 
     public function show_high_quality_paper($type = 'Q1',$update_time='2019-06-20',$uni = 'all',$cate = 'all'){
-        
-
         switch ($type) {
             case 'Q1':
                 $ind = "Q1论文数量";
@@ -114,7 +112,6 @@ class Api extends Controller
                 return ['error'=>'Wrong type value'];
                 break;
         }
-
         $cate_li = explode(',',$cate);
 
 
@@ -138,23 +135,20 @@ class Api extends Controller
             foreach ($cate_li as $key => $cate_val) {
                 $mysql_return = local_sql_builder('uni_hq_stat',$ind,$update_time,$cate_val,$uni);
                 $return = array_merge($return,$mysql_return);
-
             }
-
-            $add_return = [];
-            foreach ($return as $k => $v) {
-                if (array_key_exists($v->dis_uni_name, $add_return)) {
-
-                    $add_return[$v->dis_uni_name][] = $v;
-                }else{
-                    $add_return[$v->dis_uni_name] = [$v];
-                }
-            }
-           return $add_return;
         } else{
-            $mysql_return = local_sql_builder('uni_hq_stat',$ind,$update_time,$cate,$uni);
-            return $mysql_return;
-            // return $data->tosql();
+            $return = local_sql_builder('uni_hq_stat',$ind,$update_time,$cate,$uni);
         }
+
+        $add_return = [];
+        foreach ($return as $k => $v) {
+            if (array_key_exists($v->dis_uni_name, $add_return)) {
+
+                $add_return[$v->dis_uni_name][] = $v;
+            }else{
+                $add_return[$v->dis_uni_name] = [$v];
+            }
+        }
+        return $add_return;
     }
 }
