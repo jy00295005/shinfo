@@ -92,7 +92,8 @@ class Api extends Controller
         switch ($type) {
             case 'Q1':
                 $ind = "Q1论文数量";
-
+                break;
+                
             case 'HQ':
                 $ind = "高被引论文数";
                 break;
