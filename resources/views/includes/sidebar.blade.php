@@ -1,29 +1,29 @@
 <nav class="nav nav-fill flex-column" id="side_link">
 
     <li class="nav-item active">
-        <a href="{{URL('test')}}" class="nav-item btn btn-primary btn-block dropdown-toggle">科研产出</a>
-        <div id="scientific_research_output">
-            <ul class="nav nav-fill flex-column">
-                <li class="nav-item">
-                    <a href="#topp" class="nav-link">发文总量</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#nopp" class="nav-link">年发文趋势</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#q1" class="nav-link">Q1文章及比例</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#hq" class="nav-link">高被引论文及比例</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#hot" class="nav-link">热点论文及比例</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#cns" class="nav-link">CNS论文及比例</a>
-                </li>
-            </ul>
-        </div>
+        <a href="{{URL('test')}}" class="nav-item btn btn-primary btn-block">科研产出</a>
+{{--        <div id="scientific_research_output">--}}
+{{--            <ul class="nav nav-fill flex-column">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#topp" class="nav-link">发文总量</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#nopp" class="nav-link">年发文趋势</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#q1" class="nav-link">Q1文章及比例</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#hq" class="nav-link">高被引论文及比例</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#hot" class="nav-link">热点论文及比例</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#cns" class="nav-link">CNS论文及比例</a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
     </li>
 
     <li class="nav-item">

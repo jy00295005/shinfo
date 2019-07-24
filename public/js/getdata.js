@@ -109,8 +109,11 @@ app.controller('controller', function($scope, $http) {
 
         university=university.replace(",","");
         dicipline=dicipline.replace(",","");
-
         // updateDate=timeSlider.min.getFullYear()+"&"+timeSlider.max.getFullYear();
+
+        if(university=="") university="all"; // 如果没有选中项，默认全选
+        if(dicipline=="") dicipline="all";
+
         console.log("时间范围："+updateDate);
         console.log("机构选择："+university);
         console.log("研究领域："+dicipline);
@@ -147,6 +150,8 @@ app.controller('controller', function($scope, $http) {
                 for(var i=0;i<response.length;i++){
                     uniPaperCount.push(response[i]["uni_paper_count"]);
                 }
+
+
 
                 var nopp = Highcharts.chart('nopp', { //number of published papers
                     title: {
@@ -384,7 +389,7 @@ app.controller('controller', function($scope, $http) {
                     var q1=0;
                     for(var j=0;j<allData[i].length;j++) {
                         sci+=allData[i][j]["SCI论文总数"];
-                        q1+=allData[i][j]["高被引论文数"];
+                        q1+=allData[i][j]["Q1论文数量"];
                     }
                     sciAll.push(sci);
                     q1All.push(q1);

@@ -1,6 +1,6 @@
 @extends("layouts.default")
 @section("content")
-    <div class="btn-toolbar my-4 justify-content-between">
+    <div class="btn-toolbar my-4">
         @include("includes.filter")
     </div>
 
@@ -18,7 +18,11 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#noppModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="nopp" class="mx-5 mb-5 c"></div>
+                <div id="nopp" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="row mx-0 justify-content-between">
@@ -28,7 +32,11 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#q1Modal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="q1" class="mx-5 mb-5 c"></div>
+                <div id="q1" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="row mx-0 justify-content-between">
@@ -38,7 +46,11 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hotModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="hot" class="mx-5 mb-5 c"></div>
+                <div id="hot" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -51,7 +63,11 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#toppModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="topp" class="mx-5 mb-5 c"></div>
+                <div id="topp" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="row mx-0 justify-content-between">
@@ -61,7 +77,11 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hqModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="hq" class="mx-5 mb-5 c"></div>
+                <div id="hq" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="row mx-0 justify-content-between">
@@ -71,7 +91,11 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#cnsModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="cns" class="mx-5 mb-5 c"></div>
+                <div id="cns" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
