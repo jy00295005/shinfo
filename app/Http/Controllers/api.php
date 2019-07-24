@@ -62,11 +62,11 @@ class Api extends Controller
                     ->where('updateTime',$update_time)
                     ->groupBy('dis_uni_name');
 
-
         if($uni != 'all'){
             $uni_li = explode(',',$uni);
             $uni_paper_count->whereIn('dis_uni_name', $uni_li);
         }
+        
         if($cate != 'all'){
             $cate_li = explode(',',$cate);
             $uni_paper_count->whereIn('dicipline', $cate_li);
@@ -85,17 +85,14 @@ class Api extends Controller
                 }
             }
         }
-        
         return $return;
-
     }
 
     public function show_high_quality_paper($type = 'Q1',$update_time='2019-06-20',$uni = 'all',$cate = 'all'){
         switch ($type) {
             case 'Q1':
                 $ind = "Q1论文数量";
-                
-            
+
             case 'HQ':
                 $ind = "高被引论文数";
                 break;
@@ -112,8 +109,8 @@ class Api extends Controller
                 return ['error'=>'Wrong type value'];
                 break;
         }
-        $cate_li = explode(',',$cate);
 
+        $cate_li = explode(',',$cate);
 
         function local_sql_builder($table_,$ind_,$update_time_,$cate_,$uni_)
         {
