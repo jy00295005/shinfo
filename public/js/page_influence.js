@@ -1,64 +1,6 @@
 var app = angular.module('shinfo', []);
 
-
-
-function zoomChart(c){ // 放大图表
-    var element="#"+c;
-    $(".c").parent().each(function () {
-        $(this).addClass("display-none");
-    });
-    $(element).parent().removeClass("display-none");
-    $(element).addClass("zoom");
-    $(element).prepend("<button class='btn-sm btn-danger closeB' style='position: relative; float: right' onclick='closeF()'>关闭</button>");
-    $(element).highcharts().reflow();
-}
-
-function closeF(){ // 关闭浮层
-    $(".c").parent().each(function () {
-        $(this).removeClass("display-none");
-    });
-    $(".c").each(function () {
-        $(this).removeClass("zoom");
-    });
-    $(".c").each(function () {
-        $(this).highcharts().reflow();
-    });
-    $(".closeB").remove();
-}
-
-var ischecked1=true;
-var ischecked2=true;
-function checkAll(e){ // 全选
-    var element=$(e);
-    if (e=="#all1"){
-        element.checked=ischecked1;
-    } else{
-        element.checked=ischecked2;
-    }
-
-    if (element.checked){
-        element.parent().parent().parent().find("input").each(function () {
-            $(this).attr("checked", true);
-        });
-        if (e=="#all1"){
-            ischecked1=false;
-        } else{
-            ischecked2=false;
-        }
-    } else{
-        element.parent().parent().parent().find("input").each(function () {
-            $(this).attr("checked", false);
-        });
-        if (e=="#all1"){
-            ischecked1=true;
-        } else{
-            ischecked2=true;
-        }
-    }
-}
-
 app.controller('controller', function($scope, $http) {
-
     $scope.isFirst=true;
 
     $scope.loadTime=function () {
@@ -89,12 +31,12 @@ app.controller('controller', function($scope, $http) {
     var dicipline="all";
 
     var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
-    var noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-    var hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-    var hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-    var cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
+    var noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
+    var toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
+    var hUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
+    var coauUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
+    var cnciUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
+    var rfUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
 
     $scope.filterss=function(){
         var timeSlider = $("#timeslider").dateRangeSlider("values");
@@ -119,19 +61,19 @@ app.controller('controller', function($scope, $http) {
         console.log("机构选择："+university);
         console.log("研究领域："+dicipline);
 
-        toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
-        q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-        hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-        hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-        cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
+        toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
+        noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
+        hUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
+        coauUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
+        cnciUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
+        rfUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
 
         $scope.getNopp();
-        $scope.getTopp();
-        $scope.getQ1();
-        $scope.getHq();
-        $scope.getHot();
-        $scope.getCns();
+        // $scope.getTopp();
+        $scope.getH();
+        $scope.getCoau();
+        $scope.getCnci();
+        $scope.getRf();
     }
 
     $http.get(optionsUrl)
@@ -145,57 +87,53 @@ app.controller('controller', function($scope, $http) {
             .success(function (response) {
                 var disUniName=[];
                 var uniPaperCount=[];
+                var sum=0;
+                var pieData=[];
+
                 for(var i=0;i<response.length;i++){
                     disUniName.push(response[i]["dis_uni_name"]);
                 }
                 for(var i=0;i<response.length;i++){
                     uniPaperCount.push(response[i]["uni_paper_count"]);
+                    sum+=response[i]["uni_paper_count"];
+                }
+                for(var i=0;i<response.length;i++){
+                    var noppData={};
+                    noppData.name=disUniName[i];
+                    noppData.y=uniPaperCount[i];
+                    pieData.push(noppData);
                 }
 
-
-
-                var nopp = Highcharts.chart('nopp', { //number of published papers
-                    title: {
-                        text: '发文总量'
+                var nopp = Highcharts.chart('nopp', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
                     },
-                    xAxis: [{
-                        categories: disUniName,
-                        crosshair: true
-                    }],
-                    yAxis: [{ // Primary yAxis
-                        labels: {
-                            format: '{value}',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        },
-                        title: {
-                            text: '',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
+                    title: {
+                        text: '总被引次数'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
                             }
                         }
-                    }],
-                    tooltip: {
-                        shared: true
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        align: 'left',
-                        x: 120,
-                        verticalAlign: 'top',
-                        y: 100,
-                        floating: true,
-                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '总量',
-                        type: 'column',
-                        yAxis: 0,
-                        data: uniPaperCount,
-                        tooltip: {
-                            valueSuffix: ' '
-                        }
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: pieData
                     }],
                     exporting: {
                         showTable: true,
@@ -369,8 +307,8 @@ app.controller('controller', function($scope, $http) {
             });
     }
 
-    $scope.getQ1=function(){
-        $http.get(q1Url)
+    $scope.getH=function(){
+        $http.get(hUrl)
             .success(function (response) {
                 var disUniName=[];
                 var allData=[];
@@ -390,7 +328,7 @@ app.controller('controller', function($scope, $http) {
                     var q1=0;
                     for(var j=0;j<allData[i].length;j++) {
                         sci+=allData[i][j]["SCI论文总数"];
-                        q1+=allData[i][j]["Q1论文数量"];
+                        q1+=allData[i][j]["h指数"];
                     }
                     sciAll.push(sci);
                     q1All.push(q1);
@@ -402,7 +340,7 @@ app.controller('controller', function($scope, $http) {
 
                 var q1 = Highcharts.chart('q1', { // Q1
                     title: {
-                        text: 'Q1文章及比例'
+                        text: 'H指数'
                     },
                     xAxis: [{
                         categories: disUniName,
@@ -416,27 +354,29 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: 'Q1文章比例',
+                            text: 'h指数',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         }
-                    }, { // Secondary yAxis
-                        title: {
-                            text: '\n' +
-                                'Q1文章数量',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        },
-                        labels: {
-                            format: '{value}',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        },
-                        opposite: true
-                    }],
+                    }
+                    // , { // Secondary yAxis
+                    //     title: {
+                    //         text: '\n' +
+                    //             'Q1文章数量',
+                    //         style: {
+                    //             color: Highcharts.getOptions().colors[1]
+                    //         }
+                    //     },
+                    //     labels: {
+                    //         format: '{value}',
+                    //         style: {
+                    //             color: Highcharts.getOptions().colors[1]
+                    //         }
+                    //     },
+                    //     opposite: true
+                    // }
+                    ],
                     tooltip: {
                         shared: true
                     },
@@ -450,21 +390,23 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: 'Q1文章比例',
+                        name: 'h指数',
                         type: 'column',
-                        data: q1Ratio,
-                        tooltip: {
-                            valueSuffix: ''
-                        }
-                    }, {
-                        name: 'Q1文章数量',
-                        type: 'spline',
-                        yAxis: 1,
                         data: q1All,
                         tooltip: {
                             valueSuffix: ''
                         }
-                    }],
+                    }
+                    // , {
+                    //     name: 'Q1文章数量',
+                    //     type: 'spline',
+                    //     yAxis: 1,
+                    //     data: q1All,
+                    //     tooltip: {
+                    //         valueSuffix: ''
+                    //     }
+                    // }
+                    ],
                     exporting: {
                         showTable: true,
                         allowHTML: true
@@ -519,8 +461,8 @@ app.controller('controller', function($scope, $http) {
             });
     }
 
-    $scope.getHq=function(){
-        $http.get(hqUrl)
+    $scope.getCoau=function(){
+        $http.get(coauUrl)
             .success(function (response) {
                 var disUniName=[];
                 var allData=[];
@@ -540,7 +482,7 @@ app.controller('controller', function($scope, $http) {
                     var hq=0;
                     for(var j=0;j<allData[i].length;j++) {
                         sci+=allData[i][j]["SCI论文总数"];
-                        hq+=allData[i][j]["高被引论文数"];
+                        hq+=allData[i][j]["国际合作论文数"];
                     }
                     sciAll.push(sci);
                     hqAll.push(hq);
@@ -552,7 +494,7 @@ app.controller('controller', function($scope, $http) {
 
                 var q1 = Highcharts.chart('hq', { // Q1
                     title: {
-                        text: '高被引论文及比例'
+                        text: '国际合作数量及比例'
                     },
                     xAxis: [{
                         categories: disUniName,
@@ -566,7 +508,7 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: '高被引论文比例',
+                            text: '国际合作论文比例',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
@@ -574,7 +516,7 @@ app.controller('controller', function($scope, $http) {
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
-                                '高被引论文数量',
+                                '国际合作论文数量',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -600,14 +542,14 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '高被引论文比例',
+                        name: '国际合作论文比例',
                         type: 'column',
                         data: hqRatio,
                         tooltip: {
                             valueSuffix: ''
                         }
                     }, {
-                        name: '高被引论文数量',
+                        name: '国际合作论文数量',
                         type: 'spline',
                         yAxis: 1,
                         data: hqAll,
@@ -669,8 +611,8 @@ app.controller('controller', function($scope, $http) {
             });
     }
 
-    $scope.getHot=function(){
-        $http.get(hotUrl)
+    $scope.getCnci=function(){
+        $http.get(cnciUrl)
             .success(function (response) {
                 var disUniName=[];
                 var allData=[];
@@ -690,7 +632,7 @@ app.controller('controller', function($scope, $http) {
                     var hot=0;
                     for(var j=0;j<allData[i].length;j++) {
                         sci+=allData[i][j]["SCI论文总数"];
-                        hot+=allData[i][j]["热点论文数"];
+                        hot+=allData[i][j]["CNCI"];
                     }
                     sciAll.push(sci);
                     hotAll.push(hot);
@@ -702,7 +644,7 @@ app.controller('controller', function($scope, $http) {
 
                 var q1 = Highcharts.chart('hot', { // Q1
                     title: {
-                        text: '热点论文及比例'
+                        text: 'CNCI'
                     },
                     xAxis: [{
                         categories: disUniName,
@@ -716,27 +658,29 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: '热点论文比例',
+                            text: 'CNCI',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         }
-                    }, { // Secondary yAxis
-                        title: {
-                            text: '\n' +
-                                '热点论文数量',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        },
-                        labels: {
-                            format: '{value}',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        },
-                        opposite: true
-                    }],
+                    }
+                    // , { // Secondary yAxis
+                    //     title: {
+                    //         text: '\n' +
+                    //             '热点论文数量',
+                    //         style: {
+                    //             color: Highcharts.getOptions().colors[1]
+                    //         }
+                    //     },
+                    //     labels: {
+                    //         format: '{value}',
+                    //         style: {
+                    //             color: Highcharts.getOptions().colors[1]
+                    //         }
+                    //     },
+                    //     opposite: true
+                    // }
+                    ],
                     tooltip: {
                         shared: true
                     },
@@ -750,21 +694,23 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '热点论文比例',
+                        name: 'CNCI',
                         type: 'column',
-                        data: hotRatio,
-                        tooltip: {
-                            valueSuffix: ''
-                        }
-                    }, {
-                        name: '热点论文数量',
-                        type: 'spline',
-                        yAxis: 1,
                         data: hotAll,
                         tooltip: {
                             valueSuffix: ''
                         }
-                    }],
+                    }
+                    // , {
+                    //     name: '热点论文数量',
+                    //     type: 'spline',
+                    //     yAxis: 1,
+                    //     data: hotAll,
+                    //     tooltip: {
+                    //         valueSuffix: ''
+                    //     }
+                    // }
+                    ],
                     exporting: {
                         showTable: true,
                         allowHTML: true
@@ -819,8 +765,8 @@ app.controller('controller', function($scope, $http) {
             });
     }
 
-    $scope.getCns=function(){
-        $http.get(cnsUrl)
+    $scope.getRf=function(){
+        $http.get(rfUrl)
             .success(function (response) {
                 var disUniName=[];
                 var allData=[];
@@ -840,7 +786,7 @@ app.controller('controller', function($scope, $http) {
                     var cns=0;
                     for(var j=0;j<allData[i].length;j++) {
                         sci+=allData[i][j]["SCI论文总数"];
-                        cns+=allData[i][j]["CNS论文数"];
+                        cns+=allData[i][j]["进入RF的论文"];
                     }
                     sciAll.push(sci);
                     cnsAll.push(cns);
@@ -852,7 +798,7 @@ app.controller('controller', function($scope, $http) {
 
                 var q1 = Highcharts.chart('cns', { // Q1
                     title: {
-                        text: 'CNS论文及比例'
+                        text: '对Research Front的贡献度'
                     },
                     xAxis: [{
                         categories: disUniName,
@@ -866,7 +812,7 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: 'CNS论文比例',
+                            text: '进入RF的论文比例',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
@@ -874,7 +820,7 @@ app.controller('controller', function($scope, $http) {
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
-                                'CNS论文数量',
+                                '进入RF的论文数量',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -900,14 +846,14 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: 'CNS论文比例',
+                        name: '进入RF的论文比例',
                         type: 'column',
                         data: cnsRatio,
                         tooltip: {
                             valueSuffix: ''
                         }
                     }, {
-                        name: 'CNS论文数量',
+                        name: '进入RF的论文数量',
                         type: 'spline',
                         yAxis: 1,
                         data: cnsAll,
@@ -970,103 +916,10 @@ app.controller('controller', function($scope, $http) {
     }
 
     $scope.getNopp();
-    $scope.getTopp();
-    $scope.getQ1();
-    $scope.getHq();
-    $scope.getHot();
-    $scope.getCns();
+    // $scope.getTopp();
+    $scope.getH();
+    $scope.getCoau();
+    $scope.getCnci();
+    $scope.getRf();
 
 });
-
-var duoxiangduibi = [],
-    $containers = $('.ddbar .element'),
-    datasets = [
-        {
-            name: 'University of Oxford',
-            data: [3, 6, 1, 2, 6],
-            isReversed: true,
-            titleAlign: "left"
-        },
-        {
-            name: 'University of Cambridge',
-            data: [5, 6, 4, 2, 1],
-            isReversed: false,
-            titleAlign: "right"
-        }
-    ];
-$.each(datasets, function(i, dataset) {
-    duoxiangduibi.push(new Highcharts.Chart({
-        chart: {
-            renderTo: $containers[i],
-            type: 'bar',
-            marginLeft: i === 0 ? 100 : 10
-        },
-        title: {
-            text: dataset.name,
-            align: dataset.titleAlign,
-            x: i === 0 ? 90 : 0
-        },
-        exporting: {
-            enabled: false
-        },
-        credits: {
-            enabled: false
-        },
-        xAxis:
-            {
-                categories: [],
-                labels: {
-                    enabled: i === 0
-                },
-                visible: false,
-            },
-        yAxis: {
-            allowDecimals: false,
-            title: {
-                text: null
-            },
-            min: 0,
-            max: 10,
-            reversed: dataset.isReversed
-        },
-        legend: {
-            enabled: false
-        },
-        series: [dataset]
-    }));
-});
-
-Highcharts.addEvent(
-    Highcharts.seriesTypes.networkgraph,
-    'afterSetOptions',
-    function (e) {
-        var colors = Highcharts.getOptions().colors,
-            i = 0,
-            nodes = {};
-        e.options.data.forEach(function (link) {
-            if (link[0] === 'Proto Indo-European') {
-                nodes['Proto Indo-European'] = {
-                    id: 'Proto Indo-European',
-                    marker: {
-                        radius: 20
-                    }
-                };
-                nodes[link[1]] = {
-                    id: link[1],
-                    marker: {
-                        radius: 10
-                    },
-                    color: colors[i++]
-                };
-            } else if (nodes[link[0]] && nodes[link[0]].color) {
-                nodes[link[1]] = {
-                    id: link[1],
-                    color: nodes[link[0]].color
-                };
-            }
-        });
-        e.options.nodes = Object.keys(nodes).map(function (id) {
-            return nodes[id];
-        });
-    }
-);

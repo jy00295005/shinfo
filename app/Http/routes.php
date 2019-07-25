@@ -31,6 +31,10 @@ Route::get('/test', function () {
     return view('pages.home');
 });
 
+Route::get('/test/influence', function () {
+    return view('pages.influence');
+});
+
 Route::get('/test/theme/cs', function () {
     return view('pages.theme_cs');
 });

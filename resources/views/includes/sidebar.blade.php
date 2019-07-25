@@ -27,29 +27,29 @@
     </li>
 
     <li class="nav-item">
-        <a data-toggle="collapse" href="#research_influence" class="nav-item btn btn-block dropdown-toggle">科研影响力</a>
-        <div class="collapse" id="research_influence">
-            <ul class="nav nav-fill flex-column">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">总被引次数</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">篇均被引</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">H指数</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">CNCI</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">国际合作数及比例</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">对RF的贡献度</a>
-                </li>
-            </ul>
-        </div>
+        <a href="{{URL('test/influence')}}" class="nav-item btn btn-block">科研影响力</a>
+{{--        <div class="collapse" id="research_influence">--}}
+{{--            <ul class="nav nav-fill flex-column">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">总被引次数</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">篇均被引</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">H指数</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">CNCI</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">国际合作数及比例</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">对RF的贡献度</a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
     </li>
 
     <li class="nav-item">

@@ -24,6 +24,5 @@
     </div>
 
 </div>
-<script src="{{URL::asset('js/getdata.js')}}"></script>
 </body>
 </html>
