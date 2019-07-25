@@ -75,12 +75,15 @@ Route::group(['as' => 'api::'], function () {
                 ];
     }]);
 
-    Route::get('api/output/inst_paper_count/{update_time}/{uni}/{cate}', 'api@show_unv_output');
 
-    Route::get('api/output/inst_paper_trend/{update_time}/{uni}/{cate}', 'api@show_inst_paper_trend');
+    Route::get('api/output/inst_paper_count/{type}/{update_time}/{uni}/{cate}', 'api@show_unv_output');
+
+    Route::get('api/output/inst_paper_trend/{type}/{update_time}/{uni}/{cate}', 'api@show_inst_paper_trend');
     
     Route::get('api/output/high_quality_paper/{type}/{update_time}/{uni}/{cate}', 'api@show_high_quality_paper');
 
+    // #机构被引次数统计
+    // Route::get('api/output/inst_citation_count/{update_time}/{uni}/{cate}', 'api@show_unv_citaion');
 
 	Route::get('api/output/inst_paper_impact', ['as' => 'inst_paper_impact', function () {
 		return [

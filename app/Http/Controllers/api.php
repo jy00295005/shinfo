@@ -18,14 +18,28 @@ class Api extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show_unv_output($update_time='2019-06-20',$uni = 'all',$cate = 'all')
+    public function show_unv_output($type='paper',$update_time='2019-06-20',$uni = 'all',$cate = 'all')
     { 
-        $uni_paper_count = DB::table('paper_output')
-                            ->select(DB::raw('dis_uni_name,count(dis_uni_name) as uni_paper_count'))
-                            ->where('updateTime',$update_time)
-                            ->groupBy('dis_uni_name');
+        $uni_paper_count = DB::table('paper_output');
 
-        $count = DB::table('paper_output')->where('updateTime',$update_time);
+        switch ($type) {
+            case 'paper':
+                $uni_paper_count->select(DB::raw('dis_uni_name,count(dis_uni_name) as uni_paper_count'));
+                break;
+
+            case 'citation':
+                $uni_paper_count->select(DB::raw('dis_uni_name,sum(citation) as uni_paper_count'));
+                break;
+            
+            default:
+                return ['error'=>'Wrong type value'];
+                break;
+        }
+
+        $uni_paper_count->where('updateTime',$update_time)
+                        ->groupBy('dis_uni_name');
+
+        // $count = DB::table('paper_output')->where('updateTime',$update_time);
 
         if($uni != 'all'){
             $uni_li = explode(',',$uni);
@@ -34,28 +48,42 @@ class Api extends Controller
         if($cate != 'all'){
             $cate_li = explode(',',$cate);
             $uni_paper_count->whereIn('dicipline', $cate_li);
-            $count->whereIn('dicipline', $cate_li);
+            // $count->whereIn('dicipline', $cate_li);
         }
 
         $uni_paper_count = $uni_paper_count->get();
-        $count = $count->count();
-
+        // $count = $count->count();
+/*
         foreach ($uni_paper_count as $key => $value) {
             $value->{"precent"} = ($value->uni_paper_count/$count)*100;
-        }
+        }*/
 
         return $uni_paper_count;
 
     }
 
 
-    public function show_inst_paper_trend($update_time='2019-06-20',$uni = 'all',$cate = 'all')
-    { 
-        $uni_paper_count = DB::table('paper_output')
-                            ->select(DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count'))
-                            ->where('updateTime',$update_time)
-                            ->whereNotNull('pubYear')
-                            ->groupBy('dis_uni_name','pubYear');
+    public function show_inst_paper_trend($type='paper',$update_time='2019-06-20',$uni = 'all',$cate = 'all')
+    {   
+        $uni_paper_count = DB::table('paper_output');
+        switch ($type) {
+            case 'paper':
+                $uni_paper_count->select(DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count'));
+                break;
+
+            case 'citation':
+                $uni_paper_count->select(DB::raw('dis_uni_name,pubYear,sum(citation)  as uni_year_count'));
+                
+                break;
+            
+            default:
+                return ['error'=>'Wrong type value'];
+                break;
+        }
+
+        $uni_paper_count->where('updateTime',$update_time)
+                        ->whereNotNull('pubYear')
+                        ->groupBy('dis_uni_name','pubYear');
 
         $uni_group_li = DB::table('paper_output')
                     ->select(DB::raw('dis_uni_name'))
@@ -93,7 +121,7 @@ class Api extends Controller
             case 'Q1':
                 $ind = "Q1论文数量";
                 break;
-                
+
             case 'HQ':
                 $ind = "高被引论文数";
                 break;
@@ -104,6 +132,23 @@ class Api extends Controller
 
             case 'CNS':
                 $ind = "CNS论文数";
+                break;
+
+            case 'H':
+                $ind = "h指数";
+                break;
+
+            case 'COAU':
+                $ind = "国际合作论文数";
+                break;
+
+            case 'CNCI':
+                $ind = "CNCI";
+                break;
+
+
+            case 'RF':
+                $ind = "进入RF的论文";
                 break;
 
             default:
