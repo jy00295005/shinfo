@@ -1,6 +1,6 @@
 <nav class="nav nav-fill flex-column" id="side_link">
 
-    <li class="nav-item active">
+    <li class="nav-item active col-12 p-0">
         <a href="{{URL('test')}}" class="nav-item btn btn-primary btn-block">科研产出</a>
 {{--        <div id="scientific_research_output">--}}
 {{--            <ul class="nav nav-fill flex-column">--}}
@@ -26,7 +26,7 @@
 {{--        </div>--}}
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item col-12 p-0">
         <a href="{{URL('test/influence')}}" class="nav-item btn btn-block">科研影响力</a>
 {{--        <div class="collapse" id="research_influence">--}}
 {{--            <ul class="nav nav-fill flex-column">--}}
@@ -52,7 +52,7 @@
 {{--        </div>--}}
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item col-12 p-0">
         <a class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#output_and_influence" role="button" aria-expanded="false" aria-controls="collapseExample">
             各学科产出及影响力
         </a>
@@ -92,7 +92,7 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item col-12 p-0">
         <a class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#research_subject" role="button" aria-expanded="false" aria-controls="collapseExample">
             各学科研究主题
         </a>
@@ -132,7 +132,7 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item col-12 p-0">
         <a class="nav-item btn btn-block" href="{{URL('test/multiple_comparison')}}">多项对比</a>
     </li>
 

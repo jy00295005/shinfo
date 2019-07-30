@@ -13,11 +13,11 @@
 
     <div class="row">
 
-        <div class="col float-left pt-4 side-customize pr-0">
+        <div class="col-lg-2 col-xl-2 float-left pt-4 side-customize pr-0">
             @include('includes.sidebar')
         </div>
 
-        <div class="col-10">
+        <div class="col-lg-10 col-xl-10">
             @yield('content')
         </div>
 

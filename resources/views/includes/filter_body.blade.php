@@ -1,13 +1,13 @@
 <div class="collapse mx-1 col-11 mb-2" id="filter_body">
     <div class="row">
 
-        <div class="mx-1 col-4" id="time">
+        <div class="mx-1 col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-2" id="time">
             <div class="card card-body">
                 <div id="timeslider"></div>
             </div>
         </div>
 
-        <div class="mx-1 col-3" id="jigou">
+        <div class="mx-1 col-12 col-sm-5 col-md-5 col-lg-3 col-xl-3 mt-2" id="jigou">
             <div class="card card-body">
 
                 <div class="row mx-1">
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="mx-1 col-3" id="lingyu">
+        <div class="mx-1 col-12 col-sm-5 col-md-5 col-lg-3 col-xl-3 mt-2" id="lingyu">
             <div class="card card-body">
 
                 <div class="row mx-1">

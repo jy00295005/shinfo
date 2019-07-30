@@ -19,14 +19,14 @@
 {{--    </div>--}}
 
     <div class="row col-12 justify-content-between">
-        <div class="form-group mt-3 col-2 row">
+        <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
             <strong>机构选择</strong>
             <select class="form-control" id="institution1">
                 <option ng-repeat="x in universityName" value=@{{x}}>@{{x}}</option>
             </select>
         </div>
 
-        <div class="form-group mt-3 col-3 row">
+        <div class="form-group mt-3 col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 row">
             <strong>指标</strong>
             <select class="form-control" id="">
                 <option>年发文趋势</option>
@@ -36,7 +36,7 @@
             </select>
         </div>
 
-        <div class="form-group mt-3 col-2 row">
+        <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
             <strong>机构选择</strong>
             <select class="form-control" id="institution2">
                 <option ng-repeat="x in universityName" value=@{{x}}>@{{x}}</option>
@@ -46,10 +46,10 @@
 
     <div class="row mt-2">
         <div class="col-12">
-            <div class="card card-body mr-2">
+            <div class="card card-body mr-2 p-0">
                 <div class="ddbar col-12">
                     <div class="row">
-                        <div class="element col-4"></div>
+                        <div class="element col-4 pl-0"></div>
                         <div class="col-3 mt-3">
                             <div class="form-group mt-5">
                                 <select class="form-control" id="formControlSelect1">
@@ -97,7 +97,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="element col-4"></div>
+                        <div class="element col-4 pr-0"></div>
                     </div>
                 </div>
             </div>
