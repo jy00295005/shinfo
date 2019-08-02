@@ -68,12 +68,15 @@ class Api extends Controller
         $uni_paper_count = DB::table('paper_output');
         switch ($type) {
             case 'paper':
-                $uni_paper_count->select(DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count'));
+                $uni_paper_count->select(
+                    DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count')
+                );
                 break;
 
             case 'citation':
-                $uni_paper_count->select(DB::raw('dis_uni_name,pubYear,sum(citation)  as uni_year_count'));
-                
+                $uni_paper_count->select(
+                    DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count,sum(citation) as uni_year_citation')
+                );
                 break;
             
             default:
@@ -84,6 +87,7 @@ class Api extends Controller
         $uni_paper_count->where('updateTime',$update_time)
                         ->whereNotNull('pubYear')
                         ->groupBy('dis_uni_name','pubYear');
+
 
         $uni_group_li = DB::table('paper_output')
                     ->select(DB::raw('dis_uni_name'))
@@ -104,15 +108,40 @@ class Api extends Controller
         $uni_paper_count = $uni_paper_count->get();
         $uni_group_li = $uni_group_li->get();
 
-        $return = [];
-        foreach ($uni_group_li as $key => $value) {
-            $uni_name = $value->dis_uni_name;
-            foreach ($uni_paper_count as $db_data) {
-                if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
-                    $return[$uni_name][$db_data->pubYear] = $db_data->uni_year_count;
+
+
+        switch ($type) {
+            case 'paper':
+                $return = [];
+                foreach ($uni_group_li as $key => $value) {
+                    $uni_name = $value->dis_uni_name;
+                    foreach ($uni_paper_count as $db_data) {
+                        if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
+                            $return[$uni_name][$db_data->pubYear] = $db_data->uni_year_count;
+                        }
+                    }
                 }
-            }
+
+            case 'citation':
+                foreach ($uni_group_li as $key => $value) {
+                    $uni_name = $value->dis_uni_name;
+                    foreach ($uni_paper_count as $db_data) {
+                        if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
+                            $return[$uni_name][$db_data->pubYear]['paper_count'] = $db_data->uni_year_count;
+                            $return[$uni_name][$db_data->pubYear]['paper_citaiton'] = $db_data->uni_year_citation;
+                            $return[$uni_name][$db_data->pubYear]['paper_ave_citation'] = $db_data->uni_year_count/$db_data->uni_year_citation;
+                        }
+                    }
+                }
+                
+                
+                break;
+            
+            default:
+                return ['error'=>'Wrong type value'];
+                break;
         }
+        
         return $return;
     }
 
