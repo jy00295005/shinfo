@@ -69,7 +69,7 @@ app.controller('controller', function($scope, $http) {
         rfUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
 
         $scope.getNopp();
-        // $scope.getTopp();
+        $scope.getTopp();
         $scope.getH();
         $scope.getCoau();
         $scope.getCnci();
@@ -194,64 +194,78 @@ app.controller('controller', function($scope, $http) {
     $scope.getTopp=function(){
         $http.get(toppUrl)
             .success(function (response) {
-                var uniName=[];
-                var trendData=[];
-                var length=0;
+                var disUniName=[];
+                var res=[];
                 for (var key in response) {
-                    uniName.push(key);
-                    trendData.push(response[key]);
-                    length++;
+                    disUniName.push(key);
+                    res.push(response[key])
                 }
 
-                var series=[];
-                for(var i=0; i<length; i++){
-                    var data={};
-                    var dataData=[];
+                var paperCounts=[];
+                var paperCitaitons=[];
+                var paperAveCitations=[];
+                for(var x in res){
+                    var paperCount=0;
+                    var paperCitaiton=0;
+                    var paperAveCitation=0;
                     for(var year=2015;year<2020;year++){
-                        dataData.push(trendData[i][year]);
+                        paperCount=paperCount+res[x][year]["paper_count"];
+                        paperCitaiton=paperCitaiton+res[x][year]["paper_citaiton"];
                     }
-                    data.data=dataData;
-                    data.name=uniName[i];
-                    series.push(data);
+                    paperCounts.push(paperCount);
+                    paperCitaitons.push(paperCitaiton);
+                    paperAveCitation=paperCount/paperCitaiton;
+                    paperAveCitations.push(paperAveCitation);
                 }
 
-                var topp = Highcharts.chart('topp', { //trend of published papers
+                var topp = Highcharts.chart('topp', { // Q1
                     title: {
-                        text: '年发文趋势'
+                        text: '篇均被引'
                     },
-                    yAxis: {
+                    xAxis: [{
+                        categories: disUniName,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                         title: {
-                            text: '年发文量'
+                            text: '',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        }
+                    }],
+                    tooltip: {
+                        shared: true,
+                        formatter: function(){
+                            console.log(this);
+                            this.count=paperCounts[this.points[0].point.index];
+                            this.citation=paperCitaitons[this.points[0].point.index];
+                            return this.x+"<br>"+"篇均被引: "+this.y+"<br>"+"被引总数: "+this.count+"<br>"+"文章总数: "+this.citation;
                         }
                     },
                     legend: {
                         layout: 'vertical',
-                        align: 'right',
-                        verticalAlign: 'middle'
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
-                    plotOptions: {
-                        series: {
-                            label: {
-                                connectorAllowed: false
-                            },
-                            pointStart: 2015
+                    series: [{
+                        name: '篇均被引',
+                        type: 'column',
+                        data: paperAveCitations,
+                        tooltip: {
+                            valueSuffix: ''
                         }
-                    },
-                    series: series,
-                    responsive: {
-                        rules: [{
-                            condition: {
-                                maxWidth: 500
-                            },
-                            chartOptions: {
-                                legend: {
-                                    layout: 'horizontal',
-                                    align: 'center',
-                                    verticalAlign: 'bottom'
-                                }
-                            }
-                        }]
-                    },
+                    }],
                     exporting: {
                         showTable: true,
                         allowHTML: true
@@ -302,7 +316,6 @@ app.controller('controller', function($scope, $http) {
                         }
                     });
                 });
-
                 $("#topp").highcharts().reflow();
             });
     }
@@ -916,7 +929,7 @@ app.controller('controller', function($scope, $http) {
     }
 
     $scope.getNopp();
-    // $scope.getTopp();
+    $scope.getTopp();
     $scope.getH();
     $scope.getCoau();
     $scope.getCnci();
