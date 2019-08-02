@@ -121,7 +121,7 @@ class Api extends Controller
                         }
                     }
                 }
-
+                break;
             case 'citation':
                 foreach ($uni_group_li as $key => $value) {
                     $uni_name = $value->dis_uni_name;
