@@ -43,6 +43,10 @@ Route::get('/test/multiple_comparison', function () {
     return view('pages.multiple_comparison');
 });
 
+Route::get('/test/subject_analyzing', function () {
+    return view('pages.subject_analyzing');
+});
+
 // Route::get('/api/output/', function () {
 //     return array('title'=>'this is api bar');
 // });

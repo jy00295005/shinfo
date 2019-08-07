@@ -7,16 +7,8 @@
             $(this).find("a").removeClass("btn-primary");
             $(this).find("div").addClass("collapse");
         });
-        $("#side_link>li:nth-child(5) a").addClass("btn-primary text-white");
+        $("#side_link>li:nth-child(4) a").addClass("btn-primary text-white");
     </script>
-
-{{--    <div class="btn-toolbar my-4 justify-content-between">--}}
-{{--        @include("includes.filter")--}}
-{{--    </div>--}}
-
-{{--    <div class="row ml-1">--}}
-{{--        @include("includes.filter_body")--}}
-{{--    </div>--}}
 
     <div class="row col-12 justify-content-between">
         <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
@@ -28,11 +20,15 @@
 
         <div class="form-group mt-3 col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 row">
             <strong>指标</strong>
-            <select class="form-control" id="">
-                <option>年发文趋势</option>
-                <option>年发文趋势</option>
-                <option>年发文趋势</option>
-                <option>年发文趋势</option>
+            <select class="form-control" id="high_quality_paper">
+                <option value="Q1">Q1文章数量</option>
+                <option value="HQ">高被引论文数量</option>
+                <option value="HOT">热点论文数量</option>
+                <option value="CNS">CNS论文数量</option>
+                <option value="H">H指数</option>
+                <option value="CNCI">CNCI</option>
+                <option value="COAU">国际合作数量</option>
+                <option value="RF">对Research Front的贡献度</option>
             </select>
         </div>
 
@@ -52,48 +48,28 @@
                         <div class="element col-4 pl-0"></div>
                         <div class="col-3 mt-3">
                             <div class="form-group mt-5">
-                                <select class="form-control" id="formControlSelect1">
-                                    <option>Operational Research and Cybernetics</option>
-                                    <option>Applied mathematics</option>
-                                    <option>Probability and Mathematical Statistics</option>
-                                    <option>Computational Mathematics</option>
-                                    <option>Fundamental Mathematics</option>
+                                <select class="form-control" id="diciplineSelect1">
+                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
                                 </select>
                             </div>
                             <div class="form-group mt-4">
-                                <select class="form-control" id="formControlSelect2">
-                                    <option>Operational Research and Cybernetics</option>
-                                    <option>Applied mathematics</option>
-                                    <option>Probability and Mathematical Statistics</option>
-                                    <option>Computational Mathematics</option>
-                                    <option>Fundamental Mathematics</option>
+                                <select class="form-control" id="diciplineSelect2">
+                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
                                 </select>
                             </div>
                             <div class="form-group mt-4">
-                                <select class="form-control" id="formControlSelect3">
-                                    <option>Operational Research and Cybernetics</option>
-                                    <option>Applied mathematics</option>
-                                    <option>Probability and Mathematical Statistics</option>
-                                    <option>Computational Mathematics</option>
-                                    <option>Fundamental Mathematics</option>
+                                <select class="form-control" id="diciplineSelect3">
+                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
                                 </select>
                             </div>
                             <div class="form-group mt-4">
-                                <select class="form-control" id="formControlSelect4">
-                                    <option>Operational Research and Cybernetics</option>
-                                    <option>Applied mathematics</option>
-                                    <option>Probability and Mathematical Statistics</option>
-                                    <option>Computational Mathematics</option>
-                                    <option>Fundamental Mathematics</option>
+                                <select class="form-control" id="diciplineSelect4">
+                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
                                 </select>
                             </div>
                             <div class="form-group mt-4">
-                                <select class="form-control" id="formControlSelect5">
-                                    <option>Operational Research and Cybernetics</option>
-                                    <option>Applied mathematics</option>
-                                    <option>Probability and Mathematical Statistics</option>
-                                    <option>Computational Mathematics</option>
-                                    <option>Fundamental Mathematics</option>
+                                <select class="form-control" id="diciplineSelect5">
+                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
                                 </select>
                             </div>
                         </div>

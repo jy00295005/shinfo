@@ -61,12 +61,25 @@ app.controller('controller', function($scope, $http) {
         console.log("机构选择："+university);
         console.log("研究领域："+dicipline);
 
+        $(".info-display").css("display","flex");
+
+        $(".info-display span")[0].innerHTML=updateDate;
+        $(".info-display span")[1].innerHTML=university;
+        $(".info-display span")[2].innerHTML=dicipline;
+
         toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
         noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
         hUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
         coauUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
         cnciUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
         rfUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
+
+        $("#nopp").highcharts().showLoading();
+        $("#topp").highcharts().showLoading();
+        $("#q1").highcharts().showLoading();
+        $("#hq").highcharts().showLoading();
+        $("#hot").highcharts().showLoading();
+        $("#cns").highcharts().showLoading();
 
         $scope.getNopp();
         $scope.getTopp();
@@ -188,6 +201,7 @@ app.controller('controller', function($scope, $http) {
                 });
 
                 $("#nopp").highcharts().reflow();
+                $("#nopp").highcharts().hideLoading();
             });
     }
 
@@ -317,6 +331,7 @@ app.controller('controller', function($scope, $http) {
                     });
                 });
                 $("#topp").highcharts().reflow();
+                $("#topp").highcharts().hideLoading();
             });
     }
 
@@ -372,24 +387,7 @@ app.controller('controller', function($scope, $http) {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         }
-                    }
-                    // , { // Secondary yAxis
-                    //     title: {
-                    //         text: '\n' +
-                    //             'Q1文章数量',
-                    //         style: {
-                    //             color: Highcharts.getOptions().colors[1]
-                    //         }
-                    //     },
-                    //     labels: {
-                    //         format: '{value}',
-                    //         style: {
-                    //             color: Highcharts.getOptions().colors[1]
-                    //         }
-                    //     },
-                    //     opposite: true
-                    // }
-                    ],
+                    }],
                     tooltip: {
                         shared: true
                     },
@@ -409,17 +407,7 @@ app.controller('controller', function($scope, $http) {
                         tooltip: {
                             valueSuffix: ''
                         }
-                    }
-                    // , {
-                    //     name: 'Q1文章数量',
-                    //     type: 'spline',
-                    //     yAxis: 1,
-                    //     data: q1All,
-                    //     tooltip: {
-                    //         valueSuffix: ''
-                    //     }
-                    // }
-                    ],
+                    }],
                     exporting: {
                         showTable: true,
                         allowHTML: true
@@ -471,6 +459,7 @@ app.controller('controller', function($scope, $http) {
                     });
                 });
                 $("#q1").highcharts().reflow();
+                $("#q1").highcharts().hideLoading();
             });
     }
 
@@ -517,30 +506,30 @@ app.controller('controller', function($scope, $http) {
                         labels: {
                             format: '{value}',
                             style: {
-                                color: Highcharts.getOptions().colors[0]
+                                color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
                             text: '国际合作论文比例',
                             style: {
-                                color: Highcharts.getOptions().colors[0]
+                                color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
                                 '国际合作论文数量',
                             style: {
-                                color: Highcharts.getOptions().colors[1]
+                                color: Highcharts.getOptions().colors[0]
                             }
                         },
                         labels: {
                             format: '{value}',
                             style: {
-                                color: Highcharts.getOptions().colors[1]
+                                color: Highcharts.getOptions().colors[0]
                             }
-                        },
-                        opposite: true
+                        }
                     }],
                     tooltip: {
                         shared: true
@@ -555,17 +544,17 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '国际合作论文比例',
+                        name: '国际合作论文数量',
                         type: 'column',
-                        data: hqRatio,
+                        yAxis: 1,
+                        data: hqAll,
                         tooltip: {
                             valueSuffix: ''
                         }
                     }, {
-                        name: '国际合作论文数量',
+                        name: '国际合作论文比例',
                         type: 'spline',
-                        yAxis: 1,
-                        data: hqAll,
+                        data: hqRatio,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -621,6 +610,7 @@ app.controller('controller', function($scope, $http) {
                     });
                 });
                 $("#hq").highcharts().reflow();
+                $("#hq").highcharts().hideLoading();
             });
     }
 
@@ -676,24 +666,7 @@ app.controller('controller', function($scope, $http) {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         }
-                    }
-                    // , { // Secondary yAxis
-                    //     title: {
-                    //         text: '\n' +
-                    //             '热点论文数量',
-                    //         style: {
-                    //             color: Highcharts.getOptions().colors[1]
-                    //         }
-                    //     },
-                    //     labels: {
-                    //         format: '{value}',
-                    //         style: {
-                    //             color: Highcharts.getOptions().colors[1]
-                    //         }
-                    //     },
-                    //     opposite: true
-                    // }
-                    ],
+                    }],
                     tooltip: {
                         shared: true
                     },
@@ -713,17 +686,7 @@ app.controller('controller', function($scope, $http) {
                         tooltip: {
                             valueSuffix: ''
                         }
-                    }
-                    // , {
-                    //     name: '热点论文数量',
-                    //     type: 'spline',
-                    //     yAxis: 1,
-                    //     data: hotAll,
-                    //     tooltip: {
-                    //         valueSuffix: ''
-                    //     }
-                    // }
-                    ],
+                    }],
                     exporting: {
                         showTable: true,
                         allowHTML: true
@@ -775,6 +738,7 @@ app.controller('controller', function($scope, $http) {
                     });
                 });
                 $("#hot").highcharts().reflow();
+                $("#hot").highcharts().hideLoading();
             });
     }
 
@@ -821,30 +785,30 @@ app.controller('controller', function($scope, $http) {
                         labels: {
                             format: '{value}',
                             style: {
-                                color: Highcharts.getOptions().colors[0]
+                                color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
                             text: '进入RF的论文比例',
                             style: {
-                                color: Highcharts.getOptions().colors[0]
+                                color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
                                 '进入RF的论文数量',
                             style: {
-                                color: Highcharts.getOptions().colors[1]
+                                color: Highcharts.getOptions().colors[0]
                             }
                         },
                         labels: {
                             format: '{value}',
                             style: {
-                                color: Highcharts.getOptions().colors[1]
+                                color: Highcharts.getOptions().colors[0]
                             }
-                        },
-                        opposite: true
+                        }
                     }],
                     tooltip: {
                         shared: true
@@ -859,17 +823,17 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '进入RF的论文比例',
+                        name: '进入RF的论文数量',
                         type: 'column',
-                        data: cnsRatio,
+                        yAxis: 1,
+                        data: cnsAll,
                         tooltip: {
                             valueSuffix: ''
                         }
                     }, {
-                        name: '进入RF的论文数量',
+                        name: '进入RF的论文比例',
                         type: 'spline',
-                        yAxis: 1,
-                        data: cnsAll,
+                        data: cnsRatio,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -925,6 +889,7 @@ app.controller('controller', function($scope, $http) {
                     });
                 });
                 $("#cns").highcharts().reflow();
+                $("#cns").highcharts().hideLoading();
             });
     }
 

@@ -1,9 +1,22 @@
 <div class="collapse mx-1 col-11 mb-2" id="filter_body">
     <div class="row">
 
-        <div class="mx-1 col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-2" id="time">
+{{--        <div class="mx-1 col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-2" id="time">--}}
+        <div class="mx-1 col-12 col-sm-5 col-md-5 col-lg-3 col-xl-3 mt-2" id="time">
             <div class="card card-body">
-                <div id="timeslider"></div>
+{{--                <div id="timeslider"></div>--}}
+                <div class="row mx-1">
+                    <span><strong>时间选择</strong></span>&nbsp;&nbsp;
+                </div>
+
+                <div class="dropdown-divider"></div>
+                <div class="checkboxs">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="2019.6.20" checked>
+                        <label class="form-check-label">2019.6.20</label>
+                    </div>
+                </div>
+
             </div>
         </div>
 

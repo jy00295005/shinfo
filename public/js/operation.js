@@ -34,7 +34,8 @@ function checkAll(e){ // 全选
 
     if (element.checked){
         element.parent().parent().parent().find("input").each(function () {
-            $(this).attr("checked", true);
+            // $(this).attr("checked", true);
+            $(this)[0].checked=true;
         });
         if (e=="#all1"){
             ischecked1=false;
@@ -43,7 +44,8 @@ function checkAll(e){ // 全选
         }
     } else{
         element.parent().parent().parent().find("input").each(function () {
-            $(this).attr("checked", false);
+            // $(this).attr("checked", false);
+            $(this)[0].checked=false;
         });
         if (e=="#all1"){
             ischecked1=true;
@@ -51,4 +53,8 @@ function checkAll(e){ // 全选
             ischecked2=true;
         }
     }
+}
+
+$(".btn-customize button")[1].onclick=function () {
+    $("#filter_body").collapse('hide');
 }

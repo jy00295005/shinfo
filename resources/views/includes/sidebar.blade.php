@@ -52,84 +52,48 @@
 {{--        </div>--}}
     </li>
 
-    <li class="nav-item col-12 p-0">
-        <a class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#output_and_influence" role="button" aria-expanded="false" aria-controls="collapseExample">
-            各学科产出及影响力
-        </a>
-        <div class="collapse" id="output_and_influence">
-            <ul class="nav nav-fill flex-column">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Physics</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Chemistry</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Biology & Biochemistry</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Computer Science</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Material Science</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Molecular Biology & Genetics</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Immunology</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Microbiology</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Neuroscience & Behavior</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Engineering</a>
-                </li>
-            </ul>
-        </div>
-    </li>
+{{--    <li class="nav-item col-12 p-0">--}}
+{{--        <a class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#output_and_influence" role="button" aria-expanded="false" aria-controls="collapseExample">--}}
+{{--            各学科产出及影响力--}}
+{{--        </a>--}}
+{{--        <div class="collapse" id="output_and_influence">--}}
+{{--            <ul class="nav nav-fill flex-column">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Physics</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Chemistry</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Biology & Biochemistry</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Computer Science</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Material Science</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Molecular Biology & Genetics</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Immunology</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Microbiology</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Neuroscience & Behavior</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#" class="nav-link">Engineering</a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    </li>--}}
 
     <li class="nav-item col-12 p-0">
-        <a class="nav-item btn btn-block dropdown-toggle" data-toggle="collapse" href="#research_subject" role="button" aria-expanded="false" aria-controls="collapseExample">
-            各学科研究主题
-        </a>
-        <div class="collapse" id="research_subject">
-            <ul class="nav nav-fill flex-column">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Physics</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Chemistry</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Biology & Biochemistry</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Computer Science</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Material Science</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Molecular Biology & Genetics</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Immunology</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Microbiology</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Neuroscience & Behavior</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Engineering</a>
-                </li>
-            </ul>
-        </div>
+        <a class="nav-item btn btn-block" href="{{URL('test/subject_analyzing')}}">研究主题分析</a>
     </li>
 
     <li class="nav-item col-12 p-0">
