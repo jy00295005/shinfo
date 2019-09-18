@@ -84,7 +84,19 @@ Route::group(['as' => 'api::'], function () {
 
     Route::get('api/output/inst_paper_trend/{type}/{update_time}/{uni}/{cate}', 'api@show_inst_paper_trend');
     
+    
     Route::get('api/output/high_quality_paper/{type}/{update_time}/{uni}/{cate}', 'api@show_high_quality_paper');
+    
+    ##9月17日添加list接口
+    // Route::get('api/output/lists/{type}/{update_time}/{uni}/{cate}', 'api@list');
+    Route::get('api/output/lists/{type}/{update_time}/{uni}/{cate}/{year}/{limit?}/{offset?}', 'api@lists');
+    Route::get('api/output/detail', 'api@detail');
+
+
+
+
+
+
 
     // #机构被引次数统计
     // Route::get('api/output/inst_citation_count/{update_time}/{uni}/{cate}', 'api@show_unv_citaion');
