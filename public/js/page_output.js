@@ -429,6 +429,19 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    localStorage.setItem("uni",event.point.category);
+                                    localStorage.setItem("type",this.name);
+                                    localStorage.setItem("cate",dicipline);
+                                    window.open("test/list");
+                                }
+                            }
+                        }
                     }
                 }, function () {
                     Highcharts.addEvent($('#q1').highcharts(), 'render', function () {
@@ -580,6 +593,19 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    localStorage.setItem("uni",event.point.category);
+                                    localStorage.setItem("type",this.name);
+                                    localStorage.setItem("cate",dicipline);
+                                    window.open("test/list");
+                                }
+                            }
+                        }
                     }
                 }, function () {
                     Highcharts.addEvent($('#hq').highcharts(), 'render', function () {
@@ -731,6 +757,19 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    localStorage.setItem("uni",event.point.category);
+                                    localStorage.setItem("type",this.name);
+                                    localStorage.setItem("cate",dicipline);
+                                    window.open("test/list");
+                                }
+                            }
+                        }
                     }
                 }, function () {
                     Highcharts.addEvent($('#hot').highcharts(), 'render', function () {
@@ -882,6 +921,19 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    localStorage.setItem("uni",event.point.category);
+                                    localStorage.setItem("type",this.name);
+                                    localStorage.setItem("cate",dicipline);
+                                    window.open("test/list");
+                                }
+                            }
+                        }
                     }
                 }, function () {
                     Highcharts.addEvent($('#cns').highcharts(), 'render', function () {

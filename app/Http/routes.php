@@ -47,6 +47,10 @@ Route::get('/test/subject_analyzing', function () {
     return view('pages.subject_analyzing');
 });
 
+Route::get('/test/list', function () {
+    return view('pages.list');
+});
+
 // Route::get('/api/output/', function () {
 //     return array('title'=>'this is api bar');
 // });
