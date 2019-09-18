@@ -256,7 +256,6 @@ class Api extends Controller
         }
 
         if ($limit) {
-            echo $limit;
             $data->limit($limit);
         }
 
