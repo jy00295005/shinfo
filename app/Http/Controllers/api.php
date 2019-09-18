@@ -223,4 +223,56 @@ class Api extends Controller
         }
         return $add_return;
     }
+
+    public function lists($type = 'paper',$update_time='2019-06-20',$uni = '上科大',$cate = 'all', $year = 'all',$limit = null,$offset = null){
+        
+        $data = DB::table('paper_output')
+                ->select('paperID','dis_uni_name','paperTitle','pubYear','citation')
+                ->where('updateTime',$update_time)
+                ->where('dis_uni_name', $uni);
+
+        if ($cate != 'all') {
+            $data->where('dicipline',$cate);
+        }
+
+        if ($year != 'all') {
+            $data->where('pubYear',$year);
+        }
+
+        if ($type == 'Q1') {
+            $data->where('isQ1',1);
+        }
+
+        if ($type == 'HQ') {
+            $data->where('isHCP',1);
+        }
+
+        if ($type == 'HOT') {
+            $data->where('isHot',1);
+        }
+
+        if ($type == 'CNS') {
+            $data->where('isCNS',1);
+        }
+
+        if ($limit) {
+            echo $limit;
+            $data->limit($limit);
+        }
+
+        if ($offset) {
+            $data->offset($offset);
+        }
+        $return_data = $data->get();
+
+        return [
+                    'count'=>count($return_data),
+                    'list'=>$return_data
+                ];
+    }
+
+    public function detail($id)
+    {
+        
+    }
 }
