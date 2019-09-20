@@ -89,7 +89,7 @@ Route::group(['as' => 'api::'], function () {
     
     ##9月17日添加list接口
     // Route::get('api/output/lists/{type}/{update_time}/{uni}/{cate}', 'api@list');
-    Route::get('api/output/lists/{type}/{update_time}/{uni}/{cate}/{year}/{limit?}/{offset?}', 'api@lists');
+    Route::get('api/output/lists/{type}/{update_time}/{uni}/{cate}/{year}/{limit?}/{offset?}/{sort?}', 'api@lists');
     Route::get('api/output/detail', 'api@detail');
 
 
