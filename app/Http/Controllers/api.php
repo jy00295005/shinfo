@@ -254,6 +254,8 @@ class Api extends Controller
         if ($type == 'CNS') {
             $data->where('isCNS',1);
         }
+        $count = $data->count();
+        // var_dump($count);
 
         if ($limit) {
             $data->limit($limit);
@@ -262,13 +264,15 @@ class Api extends Controller
         if ($offset) {
             $data->offset($offset);
         }
+        // var_dump($count);
+        
         $return_data = $data
                         ->orderBy($sort, 'desc')
                         ->get();
 
         return [
-                    'count'=>count($return_data),
-                    'list'=>$return_data
+                    'count' => $count,
+                    'list' => $return_data
                 ];
     }
 
