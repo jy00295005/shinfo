@@ -224,7 +224,7 @@ class Api extends Controller
         return $add_return;
     }
 
-    public function lists($type = 'paper',$update_time='2019-06-20',$uni = '上科大',$cate = 'all', $year = 'all',$limit = null,$offset = null){
+    public function lists($type = 'paper',$update_time='2019-06-20',$uni = '上科大',$cate = 'all', $year = 'all',$limit = null,$offset = null, $sort = 'pubYear'){
         
         $data = DB::table('paper_output')
                 ->select('paperID','dis_uni_name','paperTitle','pubYear','citation')
@@ -254,6 +254,8 @@ class Api extends Controller
         if ($type == 'CNS') {
             $data->where('isCNS',1);
         }
+        $count = $data->count();
+        // var_dump($count);
 
         if ($limit) {
             $data->limit($limit);
@@ -262,11 +264,15 @@ class Api extends Controller
         if ($offset) {
             $data->offset($offset);
         }
-        $return_data = $data->get();
+        // var_dump($count);
+        
+        $return_data = $data
+                        ->orderBy($sort, 'desc')
+                        ->get();
 
         return [
-                    'count'=>count($return_data),
-                    'list'=>$return_data
+                    'count' => $count,
+                    'list' => $return_data
                 ];
     }
 
