@@ -83,3 +83,9 @@
 .info-display{
     display: none;
 }
+
+#jumpPage{
+    width: 45px;
+    border-radius: 0px;
+    border-left: 0px;
+}

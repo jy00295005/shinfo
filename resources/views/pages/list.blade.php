@@ -18,14 +18,23 @@
                     <li class="page-item disabled" id="prePage">
                         <a class="page-link" href="#" tabindex="-1" ng-click="pageTurning('pre')">上一页</a>
                     </li>
-                    <ul class="pagination" id="p">
-                        <li class="page-item active" id="p1"><a class="page-link" href="#" ng-click="pageTurning(1)">1</a></li>
-                        <li class="page-item" id="p2"><a class="page-link" href="#" ng-click="pageTurning(2)">2</a></li>
-                        <li class="page-item" id="p3"><a class="page-link" href="#" ng-click="pageTurning(3)">3</a></li>
-                        <li class="page-item" id="p4"><a class="page-link" href="#" ng-click="pageTurning(4)">4</a></li>
-                    </ul>
-                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" id="lastPage" href="#" ng-click="pageTurning('end')">@{{page}}</a></li>
+                    <li class="page-item" id="prePage">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="jumpPage" placeholder="">
+                            <div class="input-group-append">
+                                <a href="#" class="page-link" id="jumpButton" ng-click="jumpPage()">跳转</a>
+                            </div>
+                        </div>
+                    </li>
+
+{{--                    <ul class="pagination" id="p">--}}
+{{--                        <li class="page-item active" id="p1"><a class="page-link" href="#" ng-click="pageTurning(1)">1</a></li>--}}
+{{--                        <li class="page-item" id="p2"><a class="page-link" href="#" ng-click="pageTurning(2)">2</a></li>--}}
+{{--                        <li class="page-item" id="p3"><a class="page-link" href="#" ng-click="pageTurning(3)">3</a></li>--}}
+{{--                        <li class="page-item" id="p4"><a class="page-link" href="#" ng-click="pageTurning(4)">4</a></li>--}}
+{{--                    </ul>--}}
+{{--                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>--}}
+{{--                    <li class="page-item"><a class="page-link" id="lastPage" href="#" ng-click="pageTurning('end')">@{{page}}</a></li>--}}
                     <li class="page-item" id="nextPage">
                         <a class="page-link" href="#" ng-click="pageTurning('next')">下一页</a>
                     </li>

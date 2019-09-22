@@ -23,6 +23,8 @@ app.controller('controller', function($scope, $http) {
             break
     }
 
+    $("#jumpPage").attr("placeholder","1");
+
     var limit=30;
     var offset=0;
     var pageNum=1;
@@ -45,7 +47,7 @@ app.controller('controller', function($scope, $http) {
     $scope.getList();
 
      $scope.pageTurning=function(e){
-         var lastPage=parseInt($("#lastPage")[0].innerHTML);
+         // var lastPage=parseInt($("#lastPage")[0].innerHTML);
          if(e=="next"){
              offset+=limit;
              pageNum++;
@@ -53,19 +55,21 @@ app.controller('controller', function($scope, $http) {
          else if(e=="pre"){
              offset-=limit;
              pageNum--;
+             // $("#lastPage").parent().removeClass("active");
          }
-         else if(e=="end"){
-             offset=limit*(lastPage-1);
-             pageNum=lastPage;
-         }else{
-             offset=limit*(e-1);
-             pageNum=e;
-         }
+         // else if(e=="end"){
+         //     offset=limit*(lastPage-1);
+         //     pageNum=lastPage;
+         // }else{
+         //     offset=limit*(e-1);
+         //     pageNum=e;
+         // }
          url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset;
          console.log(url);
          $scope.getList();
          console.log("页码："+pageNum);
-         $scope.changePageList();
+         $("#jumpPage").val(pageNum);
+         // $scope.changePageList();
     }
 
     $scope.changePageList=function(){
@@ -83,8 +87,18 @@ app.controller('controller', function($scope, $http) {
 
          var pId="#p"+pageNum;
          if($(pId)[0]==undefined){
-             var f=$("#p li").eq(0).children()[0].innerHTML;
-            if(parseInt(pageNum)>parseInt(f)){
+            var f=$("#p li").eq(0).children()[0].innerHTML;
+            if(pageNum==parseInt($("#lastPage")[0].innerHTML)){
+                var f4=parseInt(pageNum)-4;
+                var f5=parseInt(pageNum)-3;
+                var f6=parseInt(pageNum)-2;
+                var f7=parseInt(pageNum)-1;
+                $("#p")[0].innerHTML="<li class=\"page-item\" id=\"p"+f4+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f4+")\">"+f4+"</a></li>\n" +
+                    "                        <li class=\"page-item\" id=\"p"+f5+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f5+")\">"+f5+"</a></li>\n" +
+                    "                        <li class=\"page-item\" id=\"p"+f6+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f6+")\">"+f6+"</a></li>\n" +
+                    "                        <li class=\"page-item\" id=\"p"+f7+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f7+")\">"+f7+"</a></li>";
+            }
+            else if(parseInt(pageNum)>parseInt(f)){
                 var f4=parseInt(f)+4;
                 var f5=parseInt(f)+5;
                 var f6=parseInt(f)+6;
@@ -109,6 +123,12 @@ app.controller('controller', function($scope, $http) {
              $(pId).addClass("active");
          }
 
+    }
+    $scope.jumpPage=function () {
+        pageNum=$("#jumpPage").val();
+        offset=limit*(pageNum-1);
+        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset;
+        $scope.getList();
     }
 
 });
