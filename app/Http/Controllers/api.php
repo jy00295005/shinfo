@@ -28,7 +28,7 @@ class Api extends Controller
                 break;
 
             case 'citation':
-                $uni_paper_count->select(DB::raw('dis_uni_name,sum(citation) as uni_paper_count'));
+                $uni_paper_count->select(DB::raw('dis_uni_name,CAST(sum(citation) as UNSIGNED) as uni_paper_count'));
                 break;
             
             default:
@@ -53,10 +53,12 @@ class Api extends Controller
 
         $uni_paper_count = $uni_paper_count->get();
         // $count = $count->count();
-/*
-        foreach ($uni_paper_count as $key => $value) {
-            $value->{"precent"} = ($value->uni_paper_count/$count)*100;
-        }*/
+
+
+
+        // foreach ($uni_paper_count as $key => $value) {
+        //     $value->{"precent"} = ($value->uni_paper_count/$count)*100;
+        // }
 
         return $uni_paper_count;
 
@@ -127,9 +129,9 @@ class Api extends Controller
                     $uni_name = $value->dis_uni_name;
                     foreach ($uni_paper_count as $db_data) {
                         if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
-                            $return[$uni_name][$db_data->pubYear]['paper_count'] = $db_data->uni_year_count;
-                            $return[$uni_name][$db_data->pubYear]['paper_citaiton'] = $db_data->uni_year_citation;
-                            $return[$uni_name][$db_data->pubYear]['paper_ave_citation'] = $db_data->uni_year_count/$db_data->uni_year_citation;
+                            $return[$uni_name][$db_data->pubYear]['paper_count'] = floatval($db_data->uni_year_count);
+                            $return[$uni_name][$db_data->pubYear]['paper_citaiton'] = floatval($db_data->uni_year_citation);
+                            $return[$uni_name][$db_data->pubYear]['paper_ave_citation'] = floatval($db_data->uni_year_count/$db_data->uni_year_citation);
                         }
                     }
                 }
