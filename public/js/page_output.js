@@ -107,8 +107,6 @@ app.controller('controller', function($scope, $http) {
                     uniPaperCount.push(response[i]["uni_paper_count"]);
                 }
 
-
-
                 var nopp = Highcharts.chart('nopp', { //number of published papers
                     title: {
                         text: '发文总量'
@@ -155,6 +153,19 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    localStorage.setItem("uni",event.point.category);
+                                    localStorage.setItem("type","发文总量");
+                                    localStorage.setItem("cate",dicipline);
+                                    window.open("test/list");
+                                }
+                            }
+                        }
                     }
                 }, function () {
                     Highcharts.addEvent($('#nopp').highcharts(), 'render', function () {
@@ -247,14 +258,6 @@ app.controller('controller', function($scope, $http) {
                         align: 'right',
                         verticalAlign: 'middle'
                     },
-                    plotOptions: {
-                        series: {
-                            label: {
-                                connectorAllowed: false
-                            },
-                            pointStart: 2015
-                        }
-                    },
                     series: series,
                     responsive: {
                         rules: [{
@@ -278,6 +281,23 @@ app.controller('controller', function($scope, $http) {
                         hideDuration: 1000,
                         showDuration: 1000
                     },
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            },
+                            pointStart: 2015,
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    localStorage.setItem("uni",event.point.series.name);
+                                    localStorage.setItem("type","年发文趋势");
+                                    localStorage.setItem("cate",dicipline);
+                                    window.open("test/list");
+                                }
+                            }
+                        }
+                    }
                 }, function () {
                     Highcharts.addEvent($('#topp').highcharts(), 'render', function () {
                         var table = this.dataTableDiv;

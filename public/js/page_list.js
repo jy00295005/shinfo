@@ -21,6 +21,12 @@ app.controller('controller', function($scope, $http) {
         case "CNS论文数量":
             type="CNS";
             break
+        case "发文总量":
+            type="inst_paper_count";
+            break
+        case "年发文趋势":
+            type="inst_paper_trend";
+            break
     }
 
     $("#jumpPage").attr("placeholder","1");
@@ -28,7 +34,8 @@ app.controller('controller', function($scope, $http) {
     var limit=30;
     var offset=0;
     var pageNum=1;
-    var url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset;
+    var sort="citation";
+    var url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
     console.log(url);
     $scope.getList=function(){
         $http.get(url)
@@ -42,12 +49,13 @@ app.controller('controller', function($scope, $http) {
                 }
                 $scope.page=Math.ceil($scope.count/limit);
                 console.log("共 "+$scope.page+"页");
+                $("#loaded").css("display","block");
+                $(".loading-container").css("display","none");
             });
     }
     $scope.getList();
 
      $scope.pageTurning=function(e){
-         // var lastPage=parseInt($("#lastPage")[0].innerHTML);
          if(e=="next"){
              offset+=limit;
              pageNum++;
@@ -55,21 +63,15 @@ app.controller('controller', function($scope, $http) {
          else if(e=="pre"){
              offset-=limit;
              pageNum--;
-             // $("#lastPage").parent().removeClass("active");
          }
-         // else if(e=="end"){
-         //     offset=limit*(lastPage-1);
-         //     pageNum=lastPage;
-         // }else{
-         //     offset=limit*(e-1);
-         //     pageNum=e;
-         // }
-         url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset;
+         url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
          console.log(url);
+         $("#loaded").css("display","none");
+         $(".loading-container").css("display","flex");
          $scope.getList();
          console.log("页码："+pageNum);
          $("#jumpPage").val(pageNum);
-         // $scope.changePageList();
+         $scope.changePageList();
     }
 
     $scope.changePageList=function(){
@@ -78,56 +80,37 @@ app.controller('controller', function($scope, $http) {
          }else{
              $("#prePage").removeClass("disabled");
          }
-         if(pageNum==parseInt($("#lastPage")[0].innerHTML)){
+         if(pageNum==$scope.page){
              $("#nextPage").addClass("disabled");
              $("#lastPage").parent().addClass("active");
          }else{
              $("#nextPage").removeClass("disabled");
          }
-
-         var pId="#p"+pageNum;
-         if($(pId)[0]==undefined){
-            var f=$("#p li").eq(0).children()[0].innerHTML;
-            if(pageNum==parseInt($("#lastPage")[0].innerHTML)){
-                var f4=parseInt(pageNum)-4;
-                var f5=parseInt(pageNum)-3;
-                var f6=parseInt(pageNum)-2;
-                var f7=parseInt(pageNum)-1;
-                $("#p")[0].innerHTML="<li class=\"page-item\" id=\"p"+f4+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f4+")\">"+f4+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f5+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f5+")\">"+f5+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f6+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f6+")\">"+f6+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f7+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f7+")\">"+f7+"</a></li>";
-            }
-            else if(parseInt(pageNum)>parseInt(f)){
-                var f4=parseInt(f)+4;
-                var f5=parseInt(f)+5;
-                var f6=parseInt(f)+6;
-                var f7=parseInt(f)+7;
-                $("#p")[0].innerHTML="<li class=\"page-item active\" id=\"p"+f4+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f4+")\">"+f4+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f5+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f5+")\">"+f5+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f6+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f6+")\">"+f6+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f7+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f7+")\">"+f7+"</a></li>";
-            }else{
-                var f=$("#p li").eq(3).children()[0].innerHTML;
-                var f4=parseInt(f)-7;
-                var f5=parseInt(f)-6;
-                var f6=parseInt(f)-5;
-                var f7=parseInt(f)-4;
-                $("#p")[0].innerHTML="<li class=\"page-item\" id=\"p"+f4+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f4+")\">"+f4+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f5+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f5+")\">"+f5+"</a></li>\n" +
-                    "                        <li class=\"page-item\" id=\"p"+f6+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f6+")\">"+f6+"</a></li>\n" +
-                    "                        <li class=\"page-item active\" id=\"p"+f7+"\"><a class=\"page-link\" href=\"#\" ng-click=\"pageTurning("+f7+")\">"+f7+"</a></li>";
-            }
-         }else{
-             $(pId).siblings().removeClass("active");
-             $(pId).addClass("active");
-         }
-
     }
     $scope.jumpPage=function () {
         pageNum=$("#jumpPage").val();
         offset=limit*(pageNum-1);
-        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset;
+        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+        $("#loaded").css("display","none");
+        $(".loading-container").css("display","flex");
+        $scope.getList();
+        $scope.changePageList();
+    }
+
+    $scope.changeSort=function () {
+         console.log(sort);
+        if(sort=="citation"){
+            console.log(1);
+            sort="pubYear";
+            $("#sortButton")[0].innerHTML="按被引用次数排序";
+        }else if(sort=="pubYear"){
+            console.log(2);
+            sort="citation";
+            $("#sortButton")[0].innerHTML="按出版年份排序";
+        }
+        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+        $("#loaded").css("display","none");
+        $(".loading-container").css("display","flex");
         $scope.getList();
     }
 

@@ -85,7 +85,11 @@
 }
 
 #jumpPage{
-    width: 45px;
+    width: 50px;
     border-radius: 0px;
     border-left: 0px;
+}
+
+#loaded{
+    display: none;
 }
