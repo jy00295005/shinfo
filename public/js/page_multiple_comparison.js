@@ -76,13 +76,23 @@ app.controller('controller', function($scope, $http) {
                         name: uni1,
                         data: all1,
                         isReversed: true,
-                        titleAlign: "left"
+                        titleAlign: "left",
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'left'
+                        }
                     },
                     {
                         name: uni2,
                         data: all2,
                         isReversed: false,
-                        titleAlign: "right"
+                        titleAlign: "right",
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right'
+                        }
                     }
                 ];
             $.each(datasets, function (i, dataset) {
@@ -121,7 +131,10 @@ app.controller('controller', function($scope, $http) {
                     legend: {
                         enabled: false
                     },
-                    series: [dataset]
+                    series: [dataset],
+                    tooltip: {
+                        enabled: false,
+                    },
                 }));
             });
             $('.ddbar .element').highcharts().reflow();
