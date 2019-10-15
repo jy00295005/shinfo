@@ -101,6 +101,10 @@ Route::group(['as' => 'api::'], function () {
     Route::get('api/output/detail', 'api@detail');
 
 
+    ##10月10日添加共现接口
+    Route::get('api/cooccurrence/{type}/{update_time}/{uni}/{cate}', 'api@cooccurrence');
+
+
 
 
 

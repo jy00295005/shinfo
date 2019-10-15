@@ -282,4 +282,16 @@ class Api extends Controller
     {
         
     }
+
+    public function cooccurrence($type = 'inst_coo',$update_time='2019-06-20',$uni = 'all',$cate = 'all')
+    {
+        $data = DB::table('cooccurrence')
+                ->select('source','target','weight','updateTime')
+                ->where('updateTime',$update_time)
+                ->where('dis_uni_name', $uni)
+                ->where('cate', $cate)
+                ->get();
+
+        return $data;
+    }
 }
