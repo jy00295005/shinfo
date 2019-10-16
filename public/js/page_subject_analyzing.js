@@ -8,14 +8,17 @@ app.controller('controller', function($scope, $http) {
     var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
     var cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+university+"/"+dicipline;
 
+    $("#all1").parent().hide();
+    $("#all2").parent().hide();
+
     $scope.filterss=function(){
         university="";
         dicipline="";
-        $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {
+        $("#jigou .checkboxs input:checked").each(function () {
             university+=","+$(this).val();
         });
 
-        $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
+        $("#lingyu .checkboxs input:checked").each(function () {
             dicipline+=","+$(this).val();
         });
 
@@ -68,7 +71,7 @@ app.controller('controller', function($scope, $http) {
                 .attr("class", "nodes")
                 .selectAll("g")
                 .data(graph.nodes)
-                .enter().append("g")
+                .enter().append("g");
 
             var circles = node.append("circle")
                 .attr("r", function (d) {
@@ -131,3 +134,13 @@ app.controller('controller', function($scope, $http) {
 
     $scope.getCoo();
 });
+
+$("#jigou .checkboxs input[type='checkbox']").attr("type","radio");
+$("#jigou .checkboxs input").each(function () {
+    $(this).attr("name","jigou");
+});
+$("#lingyu .checkboxs input[type='checkbox']").attr("type","radio");
+$("#lingyu .checkboxs input").each(function () {
+    $(this).attr("name","lingyu");
+});
+

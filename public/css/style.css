@@ -109,3 +109,7 @@ text {
     font-family: sans-serif;
     font-size: 10px;
 }
+
+#coo{
+    border: 1px solid rgb(0, 123, 255);;
+}

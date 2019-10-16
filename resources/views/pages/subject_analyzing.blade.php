@@ -23,7 +23,7 @@
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div>
-                <svg id="coo" class="mx-5 mb-5 c col-11" height="600">
+                <svg id="coo" class="mx-5 mb-5 c col-11" height="1000">
 {{--                    <div class="loading-container">--}}
 {{--                        <div class="loading"></div>--}}
 {{--                    </div>--}}
