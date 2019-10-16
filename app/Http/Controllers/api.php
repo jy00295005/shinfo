@@ -292,6 +292,23 @@ class Api extends Controller
                 ->where('cate', $cate)
                 ->get();
 
-        return $data;
+        $nodes = [];
+        foreach ($data as $key => $value) {
+            $nodes[] = $value->source;
+            $nodes[] = $value->target;
+            // var_dump($value);
+        }
+        $nodes_count_value = (array_count_values($nodes));
+
+        $nodes_return = [];
+        foreach ($nodes_count_value as $key => $value) {
+            $nodes_return[] = ['id'=>$key,'size'=>$value];
+        }
+        return [
+            'nodes'=>$nodes_return,
+            'links'=>$data
+        ] ;
+
+        // return $nodes_count_value;
     }
 }
