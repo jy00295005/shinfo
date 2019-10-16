@@ -10,6 +10,8 @@
         $("#side_link>li:nth-child(3) a").addClass("btn-primary text-white");
     </script>
 
+    <script src="{{URL::asset('js/d3.v4.min.js')}}"></script>
+
     <div class="btn-toolbar my-4">
         @include("includes.filter")
     </div>
@@ -19,65 +21,13 @@
     </div>
 
     <div class="row mt-2">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div>
-                <div class="row mx-0 justify-content-between">
-                    <div></div>
-                    <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('q1')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#q1Modal">显示数据表格</button>
-                    </div>
-                </div>
-                <div id="q1" class="mx-5 mb-5 c">
-                    <div class="loading-container">
-                        <div class="loading"></div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="row mx-0 justify-content-between">
-                    <div></div>
-                    <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('hot')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hotModal">显示数据表格</button>
-                    </div>
-                </div>
-                <div id="hot" class="mx-5 mb-5 c">
-                    <div class="loading-container">
-                        <div class="loading"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div>
-                <div class="row mx-0 justify-content-between">
-                    <div></div>
-                    <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('hq')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#hqModal">显示数据表格</button>
-                    </div>
-                </div>
-                <div id="hq" class="mx-5 mb-5 c">
-                    <div class="loading-container">
-                        <div class="loading"></div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="row mx-0 justify-content-between">
-                    <div></div>
-                    <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('cns')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#cnsModal">显示数据表格</button>
-                    </div>
-                </div>
-                <div id="cns" class="mx-5 mb-5 c">
-                    <div class="loading-container">
-                        <div class="loading"></div>
-                    </div>
-                </div>
+                <svg id="coo" class="mx-5 mb-5 c col-11" height="600">
+{{--                    <div class="loading-container">--}}
+{{--                        <div class="loading"></div>--}}
+{{--                    </div>--}}
+                </svg>
             </div>
         </div>
     </div>
