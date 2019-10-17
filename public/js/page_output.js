@@ -30,13 +30,13 @@ app.controller('controller', function($scope, $http) {
     var university="all";
     var dicipline="all";
 
-    var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
-    var noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-    var hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-    var hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-    var cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
+    var optionsUrl="127.0.0.1/shinfo/public/api/output/get_options";
+    var noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
+    var toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
+    var q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
+    var hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
+    var hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
+    var cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
 
     $scope.filterss=function(){
         var timeSlider = $("#timeslider").dateRangeSlider("values");
@@ -67,12 +67,12 @@ app.controller('controller', function($scope, $http) {
         $(".info-display span")[1].innerHTML=university;
         $(".info-display span")[2].innerHTML=dicipline;
 
-        toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
-        q1Url="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-        hqUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-        hotUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-        cnsUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
+        toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
+        noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
+        q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
+        hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
+        hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
+        cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
 
         $("#nopp").highcharts().showLoading();
         $("#topp").highcharts().showLoading();

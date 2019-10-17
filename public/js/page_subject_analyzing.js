@@ -5,8 +5,8 @@ app.controller('controller', function($scope, $http) {
     var updateDate="2019-06-20";
     var uni="上交大";
     var dic="Physics";
-    var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
-    var cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+    var optionsUrl="/shinfo/public/api/output/get_options";
+    var cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
 
     $http.get(optionsUrl)
         .success(function (response) {
@@ -16,7 +16,7 @@ app.controller('controller', function($scope, $http) {
 
     $("#institution").change(function () {
         uni=$(this).val();
-        cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+        cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
@@ -24,7 +24,7 @@ app.controller('controller', function($scope, $http) {
 
     $("#dicipline").change(function () {
         dic=$(this).val();
-        cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+        cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();

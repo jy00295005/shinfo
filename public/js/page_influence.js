@@ -30,13 +30,13 @@ app.controller('controller', function($scope, $http) {
     var university="all";
     var dicipline="all";
 
-    var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
-    var noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
-    var toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
-    var hUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
-    var coauUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
-    var cnciUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
-    var rfUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
+    var optionsUrl="/shinfo/public/api/output/get_options";
+    var noppUrl="/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
+    var toppUrl="/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
+    var hUrl="/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
+    var coauUrl="/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
+    var cnciUrl="/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
+    var rfUrl="/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
 
     $scope.filterss=function(){
         var timeSlider = $("#timeslider").dateRangeSlider("values");
@@ -67,12 +67,12 @@ app.controller('controller', function($scope, $http) {
         $(".info-display span")[1].innerHTML=university;
         $(".info-display span")[2].innerHTML=dicipline;
 
-        toppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="http://127.0.0.1/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
-        hUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
-        coauUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
-        cnciUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
-        rfUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
+        toppUrl="/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
+        noppUrl="/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
+        hUrl="/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
+        coauUrl="/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
+        cnciUrl="/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
+        rfUrl="/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
 
         $("#nopp").highcharts().showLoading();
         $("#topp").highcharts().showLoading();

@@ -1,8 +1,8 @@
 var app = angular.module('shinfo', []);
 
 app.controller('controller', function($scope, $http) {
-    var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
-    var mcUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/Q1/2019-06-20/上交大,上科大/Physics,Chemistry,Molecular Biology & Genetics,Biology & Biochemistry,Neuroscience & Behavior";
+    var optionsUrl="/shinfo/public/api/output/get_options";
+    var mcUrl="/shinfo/public/api/output/high_quality_paper/Q1/2019-06-20/上交大,上科大/Physics,Chemistry,Molecular Biology & Genetics,Biology & Biochemistry,Neuroscience & Behavior";
 
     $http.get(optionsUrl)
         .success(function (response) {
@@ -19,26 +19,26 @@ app.controller('controller', function($scope, $http) {
         var query="#diciplineSelect"+i;
         $(query).change(function () {
             subject[i-1]=$(this).val();
-            mcUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+            mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
             $scope.mc();
         });
     }
 
     $("#institution1").change(function () {
         uni1=$(this).val();
-        mcUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
         $scope.mc();
     });
 
     $("#institution2").change(function () {
         uni2=$(this).val();
-        mcUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
         $scope.mc();
     });
 
     $("#high_quality_paper").change(function () {
         category=$(this).val();
-        mcUrl="http://127.0.0.1/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="h/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
         $scope.mc();
     });
 

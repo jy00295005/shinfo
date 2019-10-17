@@ -20,7 +20,7 @@ app.controller('controller', function($scope, $http) {
 
     if(isForceDirectedGraph=="true"){
         keyWord=localStorage.getItem("keyWord");
-        url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+        url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
     }else{
         type=localStorage.getItem("type");
         typee=type;
@@ -46,13 +46,13 @@ app.controller('controller', function($scope, $http) {
                 break
         }
 
-        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+        url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
 
     }
 
     $("#jumpPage").attr("placeholder","1");
 
-    console.log(url);
+    // console.log(url);
     $scope.getList=function(){
         $http.get(url)
             .success(function (response) {
@@ -81,9 +81,9 @@ app.controller('controller', function($scope, $http) {
          }
 
          if(isForceDirectedGraph){
-             url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+             url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
          }else{
-             url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+             url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
          }
 
          console.log(url);
@@ -115,9 +115,9 @@ app.controller('controller', function($scope, $http) {
         offset=limit*(pageNum-1);
 
         if(isForceDirectedGraph){
-            url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+            url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
         }else{
-            url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+            url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
         }
 
         $("#loaded").css("display","none");
@@ -140,9 +140,9 @@ app.controller('controller', function($scope, $http) {
         }
 
         if(isForceDirectedGraph){
-            url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+            url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
         }else{
-            url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+            url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
         }
 
         $("#loaded").css("display","none");
