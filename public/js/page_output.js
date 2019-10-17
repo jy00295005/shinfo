@@ -30,7 +30,7 @@ app.controller('controller', function($scope, $http) {
     var university="all";
     var dicipline="all";
 
-    var optionsUrl="127.0.0.1/shinfo/public/api/output/get_options";
+    var optionsUrl="/shinfo/public/api/output/get_options";
     var noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
     var toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
     var q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;

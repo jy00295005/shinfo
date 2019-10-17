@@ -80,7 +80,7 @@ app.controller('controller', function($scope, $http) {
              pageNum--;
          }
 
-         if(isForceDirectedGraph){
+         if(isForceDirectedGraph=="true"){
              url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
          }else{
              url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
@@ -114,7 +114,7 @@ app.controller('controller', function($scope, $http) {
         pageNum=$("#jumpPage").val();
         offset=limit*(pageNum-1);
 
-        if(isForceDirectedGraph){
+        if(isForceDirectedGraph=="true"){
             url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
         }else{
             url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
@@ -139,7 +139,7 @@ app.controller('controller', function($scope, $http) {
             $("#sortButton")[0].innerHTML="按出版年份排序";
         }
 
-        if(isForceDirectedGraph){
+        if(isForceDirectedGraph=="true"){
             url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
         }else{
             url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;

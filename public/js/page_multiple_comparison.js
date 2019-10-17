@@ -38,7 +38,7 @@ app.controller('controller', function($scope, $http) {
 
     $("#high_quality_paper").change(function () {
         category=$(this).val();
-        mcUrl="h/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
         $scope.mc();
     });
 
