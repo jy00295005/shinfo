@@ -138,68 +138,69 @@ app.controller('controller', function($scope, $http) {
                 }));
             });
             $('.ddbar .element').highcharts().reflow();
-
+            conflictSolve();
         });
     }
 
     $scope.mc();
 
-    window.onload=function(){ // 去除五个select之间的冲突
-        $("#institution2 option:nth-child(2)").attr("selected", "selected");
 
-        var dicipline=[];
-        for(var i=1;i<6;i++) {
-            var query = "#diciplineSelect" + i + " option:nth-child(" + i + ")"
-            $(query).attr("selected", "selected");
-            var query2 = "#diciplineSelect" + i;
-            dicipline.push($(query2).val());
-        }
 
-        for(var i=0;i<5;i++) {
-            for (var j = 1; j < 6; j++) {
-                var query = "#diciplineSelect" + j + " option";
-                $(query).each(function () {
-                    if ($(this).val() == dicipline[i]) {
-                        $(this).attr("disabled", "disabled");
-                    }
-                });
-            }
-        }
+});
 
-        var diciplineS=[dicipline.length];
-        for(var i=0;i<dicipline.length;i++){
-            diciplineS[i]=dicipline[i];
-        }
+function conflictSolve(){ // 去除五个select之间的冲突
+    $("#institution2 option:nth-child(2)").attr("selected", "selected");
 
-        for(let i=1;i<6;i++){
-            var query="#diciplineSelect"+i;
-            var thisVal="";
-            $(query).change(function () {
-                thisVal=diciplineS[this.id.replace(/[^0-9]/ig,"")-1];
-                for(let j=1;j<6;j++){
-                    var query="#diciplineSelect"+j+" option";
-                    $(query).each(function () {
-                        if(dicipline.indexOf(thisVal)>-1){
-                            $(this).removeAttr("disabled");
-                        }
-                    });
-                }
+    var dicipline=[];
+    for(var i=1;i<6;i++) {
+        var query = "#diciplineSelect" + i + " option:nth-child(" + i + ")"
+        $(query).attr("selected", "selected");
+        var query2 = "#diciplineSelect" + i;
+        dicipline.push($(query2).val());
+    }
 
-                dicipline.splice(dicipline.indexOf(thisVal),1);
-                thisVal=$(this).val();
-                dicipline.push(thisVal);
-
-                for(let j=1;j<6;j++){
-                    var query="#diciplineSelect"+j+" option";
-                    $(query).each(function () {
-                        if(dicipline.indexOf($(this).val())>-1){
-                            $(this).attr("disabled","disabled");
-                        }
-                    });
+    for(var i=0;i<5;i++) {
+        for (var j = 1; j < 6; j++) {
+            var query = "#diciplineSelect" + j + " option";
+            $(query).each(function () {
+                if ($(this).val() == dicipline[i]) {
+                    $(this).attr("disabled", "disabled");
                 }
             });
         }
     }
 
-});
+    var diciplineS=[dicipline.length];
+    for(var i=0;i<dicipline.length;i++){
+        diciplineS[i]=dicipline[i];
+    }
 
+    for(let i=1;i<6;i++){
+        var query="#diciplineSelect"+i;
+        var thisVal="";
+        $(query).change(function () {
+            thisVal=diciplineS[this.id.replace(/[^0-9]/ig,"")-1];
+            for(let j=1;j<6;j++){
+                var query="#diciplineSelect"+j+" option";
+                $(query).each(function () {
+                    if(dicipline.indexOf(thisVal)>-1){
+                        $(this).removeAttr("disabled");
+                    }
+                });
+            }
+
+            dicipline.splice(dicipline.indexOf(thisVal),1);
+            thisVal=$(this).val();
+            dicipline.push(thisVal);
+
+            for(let j=1;j<6;j++){
+                var query="#diciplineSelect"+j+" option";
+                $(query).each(function () {
+                    if(dicipline.indexOf($(this).val())>-1){
+                        $(this).attr("disabled","disabled");
+                    }
+                });
+            }
+        });
+    }
+}
