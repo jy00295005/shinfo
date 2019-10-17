@@ -135,6 +135,24 @@ app.controller('controller', function($scope, $http) {
                     tooltip: {
                         enabled: false,
                     },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {
+                                    if(cate=="Q1论文数量"||cate=="高被引论文数"||cate=="热点论文数"||cate=="CNS论文数") {
+                                        localStorage.setItem("uni", event.point.series.name);
+                                        var num = parseInt(event.point.category) + parseInt(1);
+                                        var idText = "#diciplineSelect" + num + " option:selected";
+                                        localStorage.setItem("type", cate);
+                                        localStorage.setItem("cate", $(idText).text());
+                                        localStorage.setItem("ifdg", false);
+                                        window.open("list");
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }));
             });
             $('.ddbar .element').highcharts().reflow();

@@ -57,6 +57,11 @@ app.controller('controller', function($scope, $http) {
                 .data(graph.nodes)
                 .enter().append("g");
 
+            // Define the div for the tooltip
+            var div = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
             var circles = node.append("circle")
                 .attr("r", function (d) {
                     return d.size;
@@ -65,7 +70,20 @@ app.controller('controller', function($scope, $http) {
                 .call(d3.drag()
                     .on("start", dragstarted)
                     .on("drag", dragged)
-                    .on("end", dragended));
+                    .on("end", dragended))
+                .on("mouseover", function(d) {
+                    div.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    div	.html(d.id+": "+d.size)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function(d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });;
 
             var lables = node.append("text")
                 .text(function(d) {
