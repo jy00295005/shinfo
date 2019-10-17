@@ -100,9 +100,15 @@ Route::group(['as' => 'api::'], function () {
     Route::get('api/output/lists/{type}/{update_time}/{uni}/{cate}/{year}/{limit?}/{offset?}/{sort?}', 'api@lists');
     Route::get('api/output/detail', 'api@detail');
 
+    Route::get('api/output/kw_lists/{type}/{update_time}/{uni}/{cate}/{year}/kw/{limit?}/{offset?}/{sort?}', 'api@kw_lists');
+
+
+    Route::get('api/output/paper_kw_lists/{update_time}/{uni}/{cate}/{limit?}/{offset?}/{sort?}', 'api@paper_kw_lists');
+
 
     ##10月10日添加共现接口
     Route::get('api/cooccurrence/{type}/{update_time}/{uni}/{cate}', 'api@cooccurrence');
+
 
 
 

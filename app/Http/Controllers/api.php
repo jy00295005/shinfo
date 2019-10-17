@@ -226,13 +226,15 @@ class Api extends Controller
         return $add_return;
     }
 
-    public function lists($type = 'paper',$update_time='2019-06-20',$uni = '上科大',$cate = 'all', $year = 'all',$limit = null,$offset = null, $sort = 'pubYear'){
+    public function lists($type = 'paper',$update_time='2019-06-20',$uni = '上科大',$cate = 'all', $year = 'all',$limit = null,$offset = null, $sort = 'pubYear',$kw = null){
         
         $data = DB::table('paper_output')
                 ->select('paperID','dis_uni_name','paperTitle','pubYear','citation')
                 ->where('updateTime',$update_time)
                 ->where('dis_uni_name', $uni);
 
+
+        
         if ($cate != 'all') {
             $data->where('dicipline',$cate);
         }
@@ -278,6 +280,40 @@ class Api extends Controller
                 ];
     }
 
+    public function paper_kw_lists($update_time='2019-06-20',$uni = '上科大',$cate = 'all',$kw=null,$limit = null,$offset = null, $sort = 'pubYear')
+    {
+        $data = DB::table('paper_output')
+                ->select('paperID','dis_uni_name','paperTitle','pubYear','citation')
+                ->where('updateTime',$update_time)
+                ->where('dis_uni_name', $uni)
+                ->where('dicipline', $cate)
+                ->where('authorKWs','like', '%'.$kw.'%');
+
+        $count = $data->count();
+        // var_dump($count);
+
+        if ($limit) {
+            $data->limit($limit);
+        }
+
+        if ($offset) {
+            $data->offset($offset);
+        }
+        // var_dump($count);
+        
+        $return_data = $data
+                        ->orderBy($sort, 'desc')
+                        ->get();
+
+        return [
+                    'count' => $count,
+                    'list' => $return_data
+                ];
+
+    }
+
+   
+
     public function detail($id)
     {
         
@@ -302,8 +338,11 @@ class Api extends Controller
 
         $nodes_return = [];
         foreach ($nodes_count_value as $key => $value) {
-            $nodes_return[] = ['id'=>$key,'size'=>$value];
+            $nodes_return[] = ['id'=>$key,'size'=>floatval($value)];
         }
+
+        // var_dump($nodes_return);
+
         return [
             'nodes'=>$nodes_return,
             'links'=>$data
