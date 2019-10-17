@@ -5,37 +5,53 @@ app.controller('controller', function($scope, $http) {
     var updateDate="2019-06-20";
     var university=localStorage.getItem("uni");
     var dicipline=localStorage.getItem("cate");
-    var type=localStorage.getItem("type");
-    var typee=type;
 
-    switch (type) {
-        case "Q1文章数量":
-            type="Q1";
-            break
-        case "高被引论文数量":
-            type="HQ";
-            break
-        case "热点论文数量":
-            type="HOT";
-            break
-        case "CNS论文数量":
-            type="CNS";
-            break
-        case "发文总量":
-            type="inst_paper_count";
-            break
-        case "年发文趋势":
-            type="inst_paper_trend";
-            break
-    }
-
-    $("#jumpPage").attr("placeholder","1");
+    var type="";
+    var typee="";
+    var url="";
+    var keyWord="";
 
     var limit=30;
     var offset=0;
     var pageNum=1;
     var sort="citation";
-    var url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+
+    var isForceDirectedGraph=localStorage.getItem("ifdg");
+
+    if(isForceDirectedGraph=="true"){
+        keyWord=localStorage.getItem("keyWord");
+        url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+    }else{
+        type=localStorage.getItem("type");
+        typee=type;
+
+        switch (type) {
+            case "Q1文章数量":
+                type="Q1";
+                break
+            case "高被引论文数量":
+                type="HQ";
+                break
+            case "热点论文数量":
+                type="HOT";
+                break
+            case "CNS论文数量":
+                type="CNS";
+                break
+            case "发文总量":
+                type="inst_paper_count";
+                break
+            case "年发文趋势":
+                type="inst_paper_trend";
+                break
+        }
+
+        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+
+    }
+
+    $("#jumpPage").attr("placeholder","1");
+
     console.log(url);
     $scope.getList=function(){
         $http.get(url)
@@ -55,16 +71,21 @@ app.controller('controller', function($scope, $http) {
     }
     $scope.getList();
 
-     $scope.pageTurning=function(e){
+    $scope.pageTurning=function(e){
          if(e=="next"){
              offset+=limit;
              pageNum++;
-         }
-         else if(e=="pre"){
+         }else if(e=="pre"){
              offset-=limit;
              pageNum--;
          }
-         url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+
+         if(isForceDirectedGraph){
+             url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+         }else{
+             url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+         }
+
          console.log(url);
          $("#loaded").css("display","none");
          $(".loading-container").css("display","flex");
@@ -80,6 +101,7 @@ app.controller('controller', function($scope, $http) {
          }else{
              $("#prePage").removeClass("disabled");
          }
+
          if(pageNum==$scope.page){
              $("#nextPage").addClass("disabled");
              $("#lastPage").parent().addClass("active");
@@ -87,18 +109,26 @@ app.controller('controller', function($scope, $http) {
              $("#nextPage").removeClass("disabled");
          }
     }
+
     $scope.jumpPage=function () {
         pageNum=$("#jumpPage").val();
         offset=limit*(pageNum-1);
-        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+
+        if(isForceDirectedGraph){
+            url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+        }else{
+            url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+        }
+
         $("#loaded").css("display","none");
         $(".loading-container").css("display","flex");
+
         $scope.getList();
         $scope.changePageList();
     }
 
     $scope.changeSort=function () {
-         console.log(sort);
+        console.log(sort);
         if(sort=="citation"){
             console.log(1);
             sort="pubYear";
@@ -108,9 +138,16 @@ app.controller('controller', function($scope, $http) {
             sort="citation";
             $("#sortButton")[0].innerHTML="按出版年份排序";
         }
-        url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+
+        if(isForceDirectedGraph){
+            url="http://127.0.0.1/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
+        }else{
+            url="http://127.0.0.1/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+        }
+
         $("#loaded").css("display","none");
         $(".loading-container").css("display","flex");
+
         $scope.getList();
     }
 

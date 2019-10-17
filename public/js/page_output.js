@@ -162,6 +162,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.category);
                                     localStorage.setItem("type","发文总量");
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
                             }
@@ -293,6 +294,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.series.name);
                                     localStorage.setItem("type","年发文趋势");
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
                             }
@@ -458,6 +460,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.category);
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
                             }
@@ -622,6 +625,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.category);
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
                             }
@@ -786,6 +790,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.category);
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
                             }
@@ -950,6 +955,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.category);
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
                             }

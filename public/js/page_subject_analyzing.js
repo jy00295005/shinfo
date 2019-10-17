@@ -3,48 +3,32 @@ var app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
     var updateDate="2019-06-20";
-    var university="上科大";
-    var dicipline="Chemistry";
+    var uni="上交大";
+    var dic="Physics";
     var optionsUrl="http://127.0.0.1/shinfo/public/api/output/get_options";
-    var cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+university+"/"+dicipline;
-
-    $("#all1").parent().hide();
-    $("#all2").parent().hide();
-
-    $scope.filterss=function(){
-        university="";
-        dicipline="";
-        $("#jigou .checkboxs input:checked").each(function () {
-            university+=","+$(this).val();
-        });
-
-        $("#lingyu .checkboxs input:checked").each(function () {
-            dicipline+=","+$(this).val();
-        });
-
-        university=university.replace(",","");
-        dicipline=dicipline.replace(",","");
-
-        if(university=="") university="上科大"; // 如果没有选中项，默认全选
-        if(dicipline=="") dicipline="Chemistry";
-
-        $(".info-display").css("display","flex");
-
-        $(".info-display span")[0].innerHTML=updateDate;
-        $(".info-display span")[1].innerHTML=university;
-        $(".info-display span")[2].innerHTML=dicipline;
-
-        cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+university+"/"+dicipline;
-        d3.select(".nodes").remove();
-        d3.select(".links").remove();
-        $scope.getCoo();
-    }
+    var cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
 
     $http.get(optionsUrl)
         .success(function (response) {
             $scope.universityName=response.universityName;
             $scope.dicipline=response.dicipline;
         });
+
+    $("#institution").change(function () {
+        uni=$(this).val();
+        cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    });
+
+    $("#dicipline").change(function () {
+        dic=$(this).val();
+        cooUrl="http://127.0.0.1/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    });
 
     $scope.getCoo=function(){
         var svg = d3.select("#coo"),
@@ -129,18 +113,16 @@ app.controller('controller', function($scope, $http) {
                 d.fx = null;
                 d.fy = null;
             }
+
+            $("circle").click(function () {
+                localStorage.setItem("uni",uni);
+                localStorage.setItem("cate",dic);
+                localStorage.setItem("keyWord",$(this).parent()[0].lastChild.innerHTML);
+                localStorage.setItem("ifdg",true);
+                window.open("list");
+            });
         });
     };
 
     $scope.getCoo();
 });
-
-$("#jigou .checkboxs input[type='checkbox']").attr("type","radio");
-$("#jigou .checkboxs input").each(function () {
-    $(this).attr("name","jigou");
-});
-$("#lingyu .checkboxs input[type='checkbox']").attr("type","radio");
-$("#lingyu .checkboxs input").each(function () {
-    $(this).attr("name","lingyu");
-});
-
