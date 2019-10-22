@@ -38,9 +38,15 @@ app.controller('controller', function($scope, $http) {
         var color = d3.scaleOrdinal(d3.schemeCategory20);
 
         var simulation = d3.forceSimulation()
-            .velocityDecay(0.6)
-            .force("link", d3.forceLink().id(function(d) { return d.id; }))
+            .alphaDecay(0.05)
+            .alphaMin(0.1)
+            .velocityDecay(0.5)
+            .force("link", d3.forceLink()
+                .id(function(d) { return d.id; })
+                .distance(60)
+            )
             .force("charge", d3.forceManyBody())
+            // .force("charge",d3.forceManyBody().strength(-10))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         d3.json(cooUrl, function(error, graph) {
@@ -64,7 +70,7 @@ app.controller('controller', function($scope, $http) {
 
             var circles = node.append("circle")
                 .attr("r", function (d) {
-                    return d.size;
+                    return Math.sqrt(d.size)*4;
                 })
                 .attr("fill", function(d) { return color(d.size); })
                 .call(d3.drag()
@@ -83,7 +89,7 @@ app.controller('controller', function($scope, $http) {
                     div.transition()
                         .duration(500)
                         .style("opacity", 0);
-                });;
+                });
 
             var lables = node.append("text")
                 .text(function(d) {

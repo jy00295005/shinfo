@@ -15,6 +15,7 @@ app.controller('controller', function($scope, $http) {
     var offset=0;
     var pageNum=1;
     var sort="citation";
+    var year="all";
 
     var isForceDirectedGraph=localStorage.getItem("ifdg");
 
@@ -43,16 +44,16 @@ app.controller('controller', function($scope, $http) {
                 break
             case "年发文趋势":
                 type="inst_paper_trend";
+                year=localStorage.getItem("year");
                 break
         }
 
-        url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
-
+        url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/"+year+"/"+limit+"/"+offset+"/"+sort;
+        console.log(url)
     }
 
     $("#jumpPage").attr("placeholder","1");
 
-    // console.log(url);
     $scope.getList=function(){
         $http.get(url)
             .success(function (response) {
@@ -83,7 +84,7 @@ app.controller('controller', function($scope, $http) {
          if(isForceDirectedGraph=="true"){
              url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
          }else{
-             url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+             url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/"+year+"/"+limit+"/"+offset+"/"+sort;
          }
 
          console.log(url);
@@ -117,7 +118,7 @@ app.controller('controller', function($scope, $http) {
         if(isForceDirectedGraph=="true"){
             url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
         }else{
-            url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+            url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/"+year+"/"+limit+"/"+offset+"/"+sort;
         }
 
         $("#loaded").css("display","none");
@@ -142,7 +143,7 @@ app.controller('controller', function($scope, $http) {
         if(isForceDirectedGraph=="true"){
             url="/shinfo/public/api/output/paper_kw_lists/"+updateDate+"/"+university+"/"+dicipline+"/"+keyWord+"/"+limit+"/"+offset+"/"+sort;
         }else{
-            url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/all/"+limit+"/"+offset+"/"+sort;
+            url="/shinfo/public/api/output/lists/"+type+"/"+updateDate+"/"+university+"/"+dicipline+"/"+year+"/"+limit+"/"+offset+"/"+sort;
         }
 
         $("#loaded").css("display","none");

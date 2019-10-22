@@ -294,6 +294,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("uni",event.point.series.name);
                                     localStorage.setItem("type","年发文趋势");
                                     localStorage.setItem("cate",dicipline);
+                                    localStorage.setItem("year",event.point.category);
                                     localStorage.setItem("ifdg",false);
                                     window.open("test/list");
                                 }
