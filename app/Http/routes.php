@@ -87,7 +87,6 @@ Route::group(['as' => 'api::'], function () {
                 ];
     }]);
 
-
     Route::get('api/output/inst_paper_count/{type}/{update_time}/{uni}/{cate}', 'api@show_unv_output');
 
     Route::get('api/output/inst_paper_trend/{type}/{update_time}/{uni}/{cate}', 'api@show_inst_paper_trend');
@@ -110,6 +109,33 @@ Route::group(['as' => 'api::'], function () {
     Route::get('api/cooccurrence/{type}/{update_time}/{uni}/{cate}', 'api@cooccurrence');
 
 
+
+    ##项目筛选条件
+    Route::get('api/output/funding_opt', ['as' => 'funding_opt', function () {
+        $fields=[
+            'Physical Science & Technology'];
+
+        $FunderGroup=[
+            'EC-ERC','UKRI','NASA','NIH','NSF','DoE'];
+
+        $description=[
+            'fields'=>'项目学科',
+            'FunderGroup'=>'项目资助机构'
+        ];
+
+        return [
+                'description'=>$description,
+                'fields'=>$fields,
+                'FunderGroup'=>$FunderGroup
+                ];
+    }]);
+
+    ##项目分析
+    Route::get('api/output/funding/{fields}', 'api@show_funding');
+
+
+    ##项目资助机构
+    Route::get('api/output/funding_group/{fields}/{FunderGroup}', 'api@show_funding_group');
 
 
 

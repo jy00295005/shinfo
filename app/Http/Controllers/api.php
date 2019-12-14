@@ -346,8 +346,61 @@ class Api extends Controller
         return [
             'nodes'=>$nodes_return,
             'links'=>$data
-        ] ;
+        ];
 
         // return $nodes_count_value;
     }
+
+
+    public function show_funding($field='Physical Science & Technology')
+    {
+        $funding_year = DB::table('funding')
+                        ->select(DB::raw('StartYear,count(StartYear) as year_count'))
+                        ->where('field',$field)
+                        ->groupBy('StartYear')
+                        ->get();
+
+         $funding_cate = DB::table('funding')
+                        ->select(DB::raw('cate,count(cate) as cate_count'))
+                        ->where('field',$field)
+                        ->where('cate','not like','%;%')
+                        ->groupBy('cate')
+                        ->orderBy('cate_count', 'desc')
+                        ->limit(10)
+                        ->get();
+
+        $funding_country = DB::table('funding')
+                        ->select(DB::raw('country,count(country) as country_count'))
+                        ->where('field',$field)
+                        ->where('country','not like','%;%')
+                        ->groupBy('country')
+                        ->orderBy('country_count', 'desc')
+                        ->limit(10)
+                        ->get();
+
+        $funding_FunderGroup_display = DB::table('funding')
+                        ->select(DB::raw('FunderGroup_display,count(FunderGroup_display) as FunderGroup_display_count'))
+                        ->where('field',$field)
+                        ->groupBy('FunderGroup_display')
+                        ->orderBy('FunderGroup_display_count', 'desc')
+                        ->limit(10)
+                        ->get();
+        return [
+            'funding_year'=>$funding_year,
+            'funding_cate'=>$funding_cate,
+            'funding_country'=>$funding_country,
+            'funding_FunderGroup_display'=>$funding_FunderGroup_display
+        ];
+    }
+    public function show_funding_group($field='Physical Science & Technology',$FunderGroup='NSF')
+    {
+        $funding_group_year = DB::table('funding')
+                        ->select(DB::raw('StartYear,count(StartYear) as year_count,SUM(FundingUSD) AS FundingUSD'))
+                        ->where('field',$field)
+                        ->where('FunderGroup_display',$FunderGroup)
+                        ->groupBy('StartYear')
+                        ->get();
+        return $funding_group_year;
+    }
+
 }
