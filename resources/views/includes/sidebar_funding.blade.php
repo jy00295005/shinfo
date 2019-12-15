@@ -5,7 +5,7 @@
     </li>
 
     <li class="nav-item col-12 p-0">
-        <a href="{{URL('test')}}" class="nav-item btn btn-block">资助机构及强度</a>
+        <a href="{{URL('test/funding_group')}}" class="nav-item btn btn-block">资助机构及强度</a>
     </li>
 
     <li class="nav-item col-12 p-0">

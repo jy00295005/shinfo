@@ -1,15 +1,6 @@
 @extends("layouts.funding")
 @section("content")
 
-    <!-- change nav bar text color -->
-    <script>
-        $(".nav-top").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").css("color","#cccccc");
-        });
-        $(".nav-top>li:nth-child(2) a").css("color","#ffffff");
-    </script>
-
     <!-- filter -->
     <div class="my-4">
         @include("includes.filter_funding")
