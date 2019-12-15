@@ -27,6 +27,8 @@ Route::get('/paper/compare', function () {
     return view('compare');
 });
 
+// pages
+
 Route::get('/test', function () {
     return view('pages.home');
 });
@@ -35,16 +37,16 @@ Route::get('/test/influence', function () {
     return view('pages.influence');
 });
 
-Route::get('/test/theme/cs', function () {
-    return view('pages.theme_cs');
-});
-
 Route::get('/test/multiple_comparison', function () {
     return view('pages.multiple_comparison');
 });
 
 Route::get('/test/subject_analyzing', function () {
     return view('pages.subject_analyzing');
+});
+
+Route::get('/test/research_projects', function () {
+    return view('pages.research_projects');
 });
 
 Route::get('/test/list', function () {
