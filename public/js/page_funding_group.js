@@ -113,12 +113,14 @@ app.controller('controller', function($scope, $http) {
         $http.get(baseUrl+"/NIH")
             .success(function (response) {
 
-                let fundingYear=[];
+                let fundingName=[];
                 let fundingUSD=[];
+                let fundingStr=[];
 
                 for(let i=0;i<response.length;i++){
-                    fundingYear.push(response[i]["StartYear"]);
+                    fundingName.push(response[i]["Org_stand"]);
                     fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
                 var NIH = Highcharts.chart('group-NIH', {
@@ -126,22 +128,37 @@ app.controller('controller', function($scope, $http) {
                         text: 'NIH'
                     },
                     xAxis: [{
-                        categories: fundingYear,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value} (百万)',
+                            format: '{value}',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
-                            text: '',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -158,10 +175,17 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: 'USD',
                         type: 'column',
-                        yAxis: 0,
+                        yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
                             valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
                         }
                     }],
                     exporting: {
@@ -234,12 +258,14 @@ app.controller('controller', function($scope, $http) {
         $http.get(baseUrl+"/NSF")
             .success(function (response) {
 
-                let fundingYear=[];
+                let fundingName=[];
                 let fundingUSD=[];
+                let fundingStr=[];
 
                 for(let i=0;i<response.length;i++){
-                    fundingYear.push(response[i]["StartYear"]);
+                    fundingName.push(response[i]["Org_stand"]);
                     fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
                 var DOD = Highcharts.chart('group-DOD', {
@@ -247,22 +273,37 @@ app.controller('controller', function($scope, $http) {
                         text: 'NSF'
                     },
                     xAxis: [{
-                        categories: fundingYear,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value} (百万)',
+                            format: '{value}',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
-                            text: '',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -279,10 +320,17 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: 'USD',
                         type: 'column',
-                        yAxis: 0,
+                        yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
                             valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
                         }
                     }],
                     exporting: {
@@ -355,12 +403,14 @@ app.controller('controller', function($scope, $http) {
         $http.get(baseUrl+"/DOE")
             .success(function (response) {
 
-                let fundingYear=[];
+                let fundingName=[];
                 let fundingUSD=[];
+                let fundingStr=[];
 
                 for(let i=0;i<response.length;i++){
-                    fundingYear.push(response[i]["StartYear"]);
+                    fundingName.push(response[i]["Org_stand"]);
                     fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
                 var DOE = Highcharts.chart('group-DOE', {
@@ -368,22 +418,37 @@ app.controller('controller', function($scope, $http) {
                         text: 'DOE'
                     },
                     xAxis: [{
-                        categories: fundingYear,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value} (百万)',
+                            format: '{value}',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
-                            text: '',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -400,10 +465,17 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: 'USD',
                         type: 'column',
-                        yAxis: 0,
+                        yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
                             valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
                         }
                     }],
                     exporting: {
@@ -476,12 +548,14 @@ app.controller('controller', function($scope, $http) {
         $http.get(baseUrl+"/UKRI")
             .success(function (response) {
 
-                let fundingYear=[];
+                let fundingName=[];
                 let fundingUSD=[];
+                let fundingStr=[];
 
                 for(let i=0;i<response.length;i++){
-                    fundingYear.push(response[i]["StartYear"]);
+                    fundingName.push(response[i]["Org_stand"]);
                     fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
                 var UKRI = Highcharts.chart('group-UKRI', {
@@ -489,22 +563,37 @@ app.controller('controller', function($scope, $http) {
                         text: 'UKRI'
                     },
                     xAxis: [{
-                        categories: fundingYear,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value} (百万)',
+                            format: '{value}',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
-                            text: '',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -521,10 +610,17 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: 'USD',
                         type: 'column',
-                        yAxis: 0,
+                        yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
                             valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
                         }
                     }],
                     exporting: {
@@ -597,35 +693,52 @@ app.controller('controller', function($scope, $http) {
         $http.get(baseUrl+"/EC-ERC")
             .success(function (response) {
 
-                let fundingYear=[];
+                let fundingName=[];
                 let fundingUSD=[];
+                let fundingStr=[];
 
                 for(let i=0;i<response.length;i++){
-                    fundingYear.push(response[i]["StartYear"]);
+                    fundingName.push(response[i]["Org_stand"]);
                     fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
-                var UKRI = Highcharts.chart('group-ECERC', {
+                var ECERC = Highcharts.chart('group-ECERC', {
                     title: {
-                        text: 'EC-ERC'
+                        text: 'EC-ERH'
                     },
                     xAxis: [{
-                        categories: fundingYear,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value} (百万)',
+                            format: '{value}',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
-                            text: '',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -642,10 +755,17 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: 'USD',
                         type: 'column',
-                        yAxis: 0,
+                        yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
                             valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
                         }
                     }],
                     exporting: {
@@ -718,12 +838,14 @@ app.controller('controller', function($scope, $http) {
         $http.get(baseUrl+"/NASA")
             .success(function (response) {
 
-                let fundingYear=[];
+                let fundingName=[];
                 let fundingUSD=[];
+                let fundingStr=[];
 
                 for(let i=0;i<response.length;i++){
-                    fundingYear.push(response[i]["StartYear"]);
+                    fundingName.push(response[i]["Org_stand"]);
                     fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
                 var NASA = Highcharts.chart('group-NASA', {
@@ -731,22 +853,37 @@ app.controller('controller', function($scope, $http) {
                         text: 'NASA'
                     },
                     xAxis: [{
-                        categories: fundingYear,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value} (百万)',
+                            format: '{value}',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
                         title: {
-                            text: '',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
-                        }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -763,10 +900,17 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: 'USD',
                         type: 'column',
-                        yAxis: 0,
+                        yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
                             valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
                         }
                     }],
                     exporting: {
