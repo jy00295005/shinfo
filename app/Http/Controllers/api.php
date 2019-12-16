@@ -392,15 +392,50 @@ class Api extends Controller
             'funding_FunderGroup_display'=>$funding_FunderGroup_display
         ];
     }
+
     public function show_funding_group($field='Physical Science & Technology',$FunderGroup='NSF')
     {
-        $funding_group_year = DB::table('funding')
-                        ->select(DB::raw('StartYear,count(StartYear) as year_count,SUM(FundingUSD) AS FundingUSD'))
+        $funding_org_year = DB::table('funding')
+                        ->select(DB::raw('Org_stand,count(Org_stand) as org_count,SUM(FundingUSD) AS FundingUSD'))
                         ->where('field',$field)
                         ->where('FunderGroup_display',$FunderGroup)
-                        ->groupBy('StartYear')
+                        ->where('Org_stand','not like','%;%')
+                        ->groupBy('Org_stand')
+                        ->orderBy('FundingUSD', 'desc')
+                        ->limit(10)
                         ->get();
-        return $funding_group_year;
+
+
+
+        $total_org = DB::table('funding')
+                    ->select(DB::raw('count(*) as total_group_count'))
+                    ->where('field',$field)
+                    ->where('FunderGroup_display',$FunderGroup)
+                    ->where('Org_stand','not like','%;%')
+                    ->get();
+        $total_org = $total_org[0]->total_group_count;
+
+
+        $total_org_usd = DB::table('funding')
+                    ->select(DB::raw('SUM(FundingUSD) as total_FundingUSD'))
+                    ->where('field',$field)
+                    ->where('FunderGroup_display',$FunderGroup)
+                    ->where('Org_stand','not like','%;%')
+                    ->get();
+
+        $total_org_usd = $total_org_usd[0]->total_FundingUSD;
+
+
+        foreach ($funding_org_year as $key => $value) {
+            $org_count =  $value->org_count;
+            $org_USD =  $value->FundingUSD;
+
+            $funding_str = ($org_count*.05/$total_org+$org_USD*.05/$total_org_usd);
+            $funding_org_year[$key]->funding_str = $funding_str;
+        }
+        
+
+        return  $funding_org_year;
     }
 
 }
