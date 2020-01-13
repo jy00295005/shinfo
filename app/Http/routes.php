@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -142,6 +143,11 @@ Route::group(['as' => 'api::'], function () {
 
     ##项目资助机构
     Route::get('api/output/funding_group/{fields}/{FunderGroup}', 'api@show_funding_group');
+
+
+    Route::get('api/output/get_funding_coo_top_orgs/{field}', 'api@show_funding_coo_top_orgs');
+
+    Route::get('api/output/funding_cooccurrence/{field}/{org}', 'api@show_funding_cooccurrence');
 
 
 

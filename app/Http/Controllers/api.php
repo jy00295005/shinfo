@@ -370,10 +370,9 @@ class Api extends Controller
                         ->get();
 
         $funding_country = DB::table('funding')
-                        ->select(DB::raw('country,count(country) as country_count'))
+                        ->select(DB::raw('Funder_Country,count(Funder_Country) as country_count'))
                         ->where('field',$field)
-                        ->where('country','not like','%;%')
-                        ->groupBy('country')
+                        ->groupBy('Funder_Country')
                         ->orderBy('country_count', 'desc')
                         ->limit(10)
                         ->get();
@@ -385,11 +384,33 @@ class Api extends Controller
                         ->orderBy('FunderGroup_display_count', 'desc')
                         ->limit(10)
                         ->get();
+
+        $funding_ORG_display = DB::table('funding_org')
+                        ->select(DB::raw('org,count(org) as org_count,sum(fullUSD) as OrgFundingUSD'))
+                        ->where('field',$field)
+                        ->groupBy('org')
+                        ->orderBy('org_count', 'desc')
+                        ->limit(10)
+                        ->get();
+
+        $funding_researcher_display = DB::table('funding_researcher')
+                        ->select(DB::raw('researcher,count(researcher) as researcher_count,sum(fullUSD) as researcherFundingUSD'))
+                        ->where('field',$field)
+                        ->groupBy('researcher')
+                        ->orderBy('researcher_count', 'desc')
+                        ->limit(10)
+                        ->get();
+
+
+
+
         return [
             'funding_year'=>$funding_year,
             'funding_cate'=>$funding_cate,
             'funding_country'=>$funding_country,
-            'funding_FunderGroup_display'=>$funding_FunderGroup_display
+            'funding_FunderGroup_display'=>$funding_FunderGroup_display,
+            'funding_ORG_display'=>$funding_ORG_display,
+            'funding_researcher_display'=>$funding_researcher_display
         ];
     }
 
@@ -436,6 +457,50 @@ class Api extends Controller
         
 
         return  $funding_org_year;
+    }
+
+    public function show_funding_cooccurrence($field='Physical Science & Technology',$org='University of Manchester')
+    {   
+        
+        $data = DB::table('funding_cooccurrence')
+                ->select('source','target','weight')
+                ->where('org', $org)
+                ->where('cate', $field)
+                ->get();
+
+        $nodes = [];
+        foreach ($data as $key => $value) {
+            $nodes[] = $value->source;
+            $nodes[] = $value->target;
+            // var_dump($value);
+        }
+        $nodes_count_value = (array_count_values($nodes));
+
+        $nodes_return = [];
+        foreach ($nodes_count_value as $key => $value) {
+            $nodes_return[] = ['id'=>$key,'size'=>floatval($value)];
+        }
+
+        // var_dump($nodes_return);
+
+        return [
+            'nodes'=>$nodes_return,
+            'links'=>$data
+        ];
+
+
+
+
+    }
+
+     public function show_funding_coo_top_orgs($field='Physical Science & Technology')
+    {   
+        return DB::table('funding_cooccurrence')
+                        ->select(DB::raw('org,count(org) as org_count'))
+                        ->where('cate',$field)
+                        ->groupBy('org')
+                        ->orderBy('org_count', 'desc')
+                        ->get();
     }
 
 }
