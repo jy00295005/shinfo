@@ -137,16 +137,17 @@ Route::group(['as' => 'api::'], function () {
                 ];
     }]);
 
-    ##项目分析
+    ##项目分析~按照文档的要求返回6个结果
     Route::get('api/output/funding/{fields}', 'api@show_funding');
 
 
     ##项目资助机构
     Route::get('api/output/funding_group/{fields}/{FunderGroup}', 'api@show_funding_group');
 
-
+    ##项目分析~主题分析，先返回在一个领域下有多少个top机构
     Route::get('api/output/get_funding_coo_top_orgs/{field}', 'api@show_funding_coo_top_orgs');
-
+    
+    ##项目分析~主题分析，按照机构和领域查询获得共现关系绘制图谱
     Route::get('api/output/funding_cooccurrence/{field}/{org}', 'api@show_funding_cooccurrence');
 
 
