@@ -54,6 +54,10 @@ Route::get('/test/funding_group', function () {
     return view('pages.funding_group');
 });
 
+Route::get('/test/funding_analyzing', function () {
+    return view('pages.funding_analyzing');
+});
+
 Route::get('/test/list', function () {
     return view('pages.list');
 });

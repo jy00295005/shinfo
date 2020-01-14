@@ -43,6 +43,21 @@
                     </div>
                 </div>
             </div>
+            <!-- research org -->
+            <div>
+                <div class="row mx-0 justify-content-between">
+                    <div></div>
+                    <div class="btn-group-sm mr-5">
+                        <button class="btn btn-outline-primary" onclick="zoomChart('research-org')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#researchOrgModal">显示数据表格</button>
+                    </div>
+                </div>
+                <div id="research-org" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -71,6 +86,21 @@
                     </div>
                 </div>
                 <div id="fund-group" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- funding_researcher -->
+            <div>
+                <div class="row mx-0 justify-content-between">
+                    <div></div>
+                    <div class="btn-group-sm mr-5">
+                        <button class="btn btn-outline-primary" onclick="zoomChart('fund-researcher')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#fundResearcherModal">显示数据表格</button>
+                    </div>
+                </div>
+                <div id="fund-researcher" class="mx-5 mb-5 c">
                     <div class="loading-container">
                         <div class="loading"></div>
                     </div>
@@ -128,6 +158,38 @@
             </div>
         </div>
         <div class="modal fade" id="fundGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="researchOrgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="fundResearcherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

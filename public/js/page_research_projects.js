@@ -97,6 +97,8 @@ app.controller('controller', function($scope, $http) {
         $("#fund-country").highcharts().showLoading();
         $("#fund-cate").highcharts().showLoading();
         $("#fund-group").highcharts().showLoading();
+        $("#research-org").highcharts().showLoading();
+        $("#fund-researcher").highcharts().showLoading();
 
         // 刷新图表
         $scope.getFunding();
@@ -131,7 +133,7 @@ app.controller('controller', function($scope, $http) {
                 let fundingConCount=[];
 
                 for(let i=0;i<fundingCountry.length;i++){
-                    fundingConCon.push(fundingCountry[i]["country"]);
+                    fundingConCon.push(fundingCountry[i]["Funder_Country"]);
                     fundingConCount.push(fundingCountry[i]["country_count"]);
                 }
 
@@ -143,6 +145,26 @@ app.controller('controller', function($scope, $http) {
                 for(let i=0;i<fundingGroup.length;i++){
                     fundingGroupDisplay.push(fundingGroup[i]["FunderGroup_display"]);
                     fundingGroupCount.push(fundingGroup[i]["FunderGroup_display_count"]);
+                }
+
+                // 研究机构Data
+                let researchOrg=response["funding_ORG_display"];
+                let org=[];
+                let orgCount=[];
+
+                for(let i=0;i<researchOrg.length;i++){
+                    org.push(researchOrg[i]["org"]);
+                    orgCount.push(researchOrg[i]["org_count"]);
+                }
+
+                // 申请人分布Data
+                let fundingResearcher=response["funding_researcher_display"];
+                let researcher=[];
+                let researcherCount=[];
+
+                for(let i=0;i<fundingResearcher.length;i++){
+                    researcher.push(fundingResearcher[i]["researcher"]);
+                    researcherCount.push(fundingResearcher[i]["researcher_count"]);
                 }
 
                 // 数量趋势Chart
@@ -561,6 +583,214 @@ app.controller('controller', function($scope, $http) {
                     });
                 });
 
+                // 研究机构Chart
+                var researchingOrg = Highcharts.chart('research-org', {
+                    title: {
+                        text: '研究机构'
+                    },
+                    xAxis: [{
+                        categories: org,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: '',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        }
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                    },
+                    series: [{
+                        name: '数量',
+                        type: 'column',
+                        yAxis: 0,
+                        data: orgCount,
+                        tooltip: {
+                            valueSuffix: ' '
+                        }
+                    }],
+                    exporting: {
+                        showTable: true,
+                        allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {}
+                            }
+                        }
+                    }
+                }, function () {
+                    Highcharts.addEvent($('#research-org').highcharts(), 'render', function () {
+                        var table = this.dataTableDiv;
+                        if (table) {
+
+                            // Apply styles inline because stylesheets are not passed to the exported SVG
+                            Highcharts.css(table.querySelector('table'), {
+                                'border-collapse': 'collapse',
+                                'border-spacing': 0,
+                                background: 'white',
+                                'min-width': '100%',
+                                'font-family': 'sans-serif',
+                                'font-size': '14px'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                                Highcharts.css(elem, {
+                                    border: '1px solid silver',
+                                    padding: '0.5em'
+                                });
+                            });
+
+                            Highcharts.css(table.querySelector('caption'), {
+                                'border-bottom': 'none',
+                                'font-size': '1.1em',
+                                'font-weight': 'bold'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                                if (i % 2) {
+                                    Highcharts.css(elem, {
+                                        background: '#f8f8f8'
+                                    });
+                                }
+                            });
+
+                            // Add the table as the subtitle to make it part of the export
+                            $("#researchOrgModal .modal-title").html(this.title.textStr);
+                            $("#researchOrgModal .modal-body").html(table.outerHTML);
+
+                            if (table.parentNode) {
+                                table.parentNode.removeChild(table);
+                            }
+                            delete this.dataTableDiv;
+                        }
+                    });
+                });
+
+                // 申请人分布Chart
+                var fundResearcher = Highcharts.chart('fund-researcher', {
+                    title: {
+                        text: '申请人分布'
+                    },
+                    xAxis: [{
+                        categories: researcher,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: '',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        }
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                    },
+                    series: [{
+                        name: '数量',
+                        type: 'column',
+                        yAxis: 0,
+                        data: researcherCount,
+                        tooltip: {
+                            valueSuffix: ' '
+                        }
+                    }],
+                    exporting: {
+                        showTable: true,
+                        allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {}
+                            }
+                        }
+                    }
+                }, function () {
+                    Highcharts.addEvent($('#fund-researcher').highcharts(), 'render', function () {
+                        var table = this.dataTableDiv;
+                        if (table) {
+
+                            // Apply styles inline because stylesheets are not passed to the exported SVG
+                            Highcharts.css(table.querySelector('table'), {
+                                'border-collapse': 'collapse',
+                                'border-spacing': 0,
+                                background: 'white',
+                                'min-width': '100%',
+                                'font-family': 'sans-serif',
+                                'font-size': '14px'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                                Highcharts.css(elem, {
+                                    border: '1px solid silver',
+                                    padding: '0.5em'
+                                });
+                            });
+
+                            Highcharts.css(table.querySelector('caption'), {
+                                'border-bottom': 'none',
+                                'font-size': '1.1em',
+                                'font-weight': 'bold'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                                if (i % 2) {
+                                    Highcharts.css(elem, {
+                                        background: '#f8f8f8'
+                                    });
+                                }
+                            });
+
+                            // Add the table as the subtitle to make it part of the export
+                            $("#fundResearcherModal .modal-title").html(this.title.textStr);
+                            $("#fundResearcherModal .modal-body").html(table.outerHTML);
+
+                            if (table.parentNode) {
+                                table.parentNode.removeChild(table);
+                            }
+                            delete this.dataTableDiv;
+                        }
+                    });
+                });
+
                 // 刷新数据
                 $("#fund-year").highcharts().reflow();
                 $("#fund-year").highcharts().hideLoading();
@@ -573,6 +803,12 @@ app.controller('controller', function($scope, $http) {
 
                 $("#fund-group").highcharts().reflow();
                 $("#fund-group").highcharts().hideLoading();
+
+                $("#research-org").highcharts().reflow();
+                $("#research-org").highcharts().hideLoading();
+
+                $("#fund-researcher").highcharts().reflow();
+                $("#fund-researcher").highcharts().hideLoading();
             });
     };
 
