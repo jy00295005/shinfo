@@ -124,10 +124,13 @@ Route::group(['as' => 'api::'], function () {
     ##项目筛选条件
     Route::get('api/output/funding_opt', ['as' => 'funding_opt', function () {
         $fields=[
-            'Physical Science & Technology'];
+            'Physical Science & Technology',
+            'Life Science'
+        ];
 
         $FunderGroup=[
-            'EC-ERC','UKRI','NASA','NIH','NSF','DoE'];
+            'EC-ERC','UKRI','NASA','NIH','NSF','DoE'
+        ];
 
         $description=[
             'fields'=>'项目学科',
@@ -139,6 +142,34 @@ Route::group(['as' => 'api::'], function () {
                 'fields'=>$fields,
                 'FunderGroup'=>$FunderGroup
                 ];
+    }]);
+
+
+     ##
+    Route::get('api/output/funding_group/{fields}', ['as' => 'funding_group', function ($field) {
+        switch ($field) {
+            case 'Physical Science & Technology':
+                $return=[
+                    'EC-ERC','UKRI','NASA','NIH','NSF','DoE'
+                ];
+                break;
+
+            case 'Life Science':
+                $return=[
+                    'BBSRC','CORDIS','MRC','NIH','NSF','Wellcome Trust'
+                ];
+                break;
+            
+            default:
+                $return = 'error';
+                break;
+        }
+
+        return $return;
+        
+        
+
+       
     }]);
 
     ##项目分析~按照文档的要求返回6个结果

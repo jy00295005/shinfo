@@ -259,7 +259,6 @@ class Api extends Controller
             $data->where('isCNS',1);
         }
         $count = $data->count();
-        // var_dump($count);
 
         if ($limit) {
             $data->limit($limit);
@@ -268,7 +267,6 @@ class Api extends Controller
         if ($offset) {
             $data->offset($offset);
         }
-        // var_dump($count);
         
         $return_data = $data
                         ->orderBy($sort, 'desc')
@@ -368,6 +366,8 @@ class Api extends Controller
         $funding_cate_data = DB::table('funding')
                         ->select(DB::raw('cate,count(cate) as cate_count'))
                         ->where('field',$field)
+                        ->whereNotNull('cate')
+                        ->where('cate', '<>', 'NULL')
                         ->where('cate','not like','%;%');
                     
         if ($topic != null) {
@@ -429,6 +429,7 @@ class Api extends Controller
             $funding_ORG_display = DB::table('funding')
                 ->join('funding_org', 'funding.GrantID', '=', 'funding_org.pid')
                 ->select(DB::raw('org,count(org) as org_count,sum(fullUSD) as OrgFundingUSD'))
+                ->where('funding.field',$field)
                 ->groupBy('org')
                 ->orderBy('org_count', 'desc')
                 ->limit(10)
@@ -437,6 +438,7 @@ class Api extends Controller
             $funding_researcher_display = DB::table('funding')
                 ->join('funding_researcher', 'funding.GrantID', '=', 'funding_researcher.pid')
                 ->select(DB::raw('researcher,count(researcher) as researcher_count,sum(fullUSD) as researcherFundingUSD'))
+                ->where('funding.field',$field)
                 ->groupBy('researcher')
                 ->orderBy('researcher_count', 'desc')
                 ->limit(10)
