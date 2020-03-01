@@ -13,7 +13,7 @@
     </li>
 
     <li class="nav-item col-12 p-0">
-        <a class="nav-item btn btn-block disabled" href="{{URL('test')}}">各主题项目概况</a>
+        <a class="nav-item btn btn-block" href="{{URL('test/funding_theme')}}">各主题项目概况</a>
     </li>
 
     <li class="nav-item col-12 p-0">

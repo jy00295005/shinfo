@@ -58,6 +58,10 @@ Route::get('/test/funding_analyzing', function () {
     return view('pages.funding_analyzing');
 });
 
+Route::get('/test/funding_theme', function () {
+    return view('pages.funding_theme');
+});
+
 Route::get('/test/list', function () {
     return view('pages.list');
 });
