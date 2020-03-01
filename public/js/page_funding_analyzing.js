@@ -8,6 +8,22 @@ app.controller('controller', function($scope, $http) {
     let orgUrl="/shinfo/public/api/output/get_funding_coo_top_orgs/"+field;
     let cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
 
+    let interval=400;
+
+    $scope.zoomUp=function(){
+        interval+=100;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
+
+    $scope.zoomDown=function(){
+        interval-=100;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
+
     $http.get(orgUrl)
         .success(function (response) {
             for(let i=0;i<response.length;i++){
@@ -44,7 +60,7 @@ app.controller('controller', function($scope, $http) {
             .velocityDecay(0.5)
             .force("link", d3.forceLink()
                 .id(function(d) { return d.id; })
-                .distance(400)
+                .distance(interval)
             )
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
