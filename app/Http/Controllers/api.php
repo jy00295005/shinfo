@@ -259,7 +259,6 @@ class Api extends Controller
             $data->where('isCNS',1);
         }
         $count = $data->count();
-        // var_dump($count);
 
         if ($limit) {
             $data->limit($limit);
@@ -268,7 +267,6 @@ class Api extends Controller
         if ($offset) {
             $data->offset($offset);
         }
-        // var_dump($count);
         
         $return_data = $data
                         ->orderBy($sort, 'desc')
@@ -352,54 +350,100 @@ class Api extends Controller
     }
 
 
-    public function show_funding($field='Physical Science & Technology')
+    public function show_funding($field='Physical Science & Technology', $topic = null )
     {
-        $funding_year = DB::table('funding')
+        $funding_year_data = DB::table('funding')
                         ->select(DB::raw('StartYear,count(StartYear) as year_count'))
-                        ->where('field',$field)
-                        ->groupBy('StartYear')
-                        ->get();
+                        ->where('field',$field);
+                        
+        if ($topic != null) {
+            $funding_year_data->where('Abstract_translated','like', '%'.$topic.'%');
+        }
 
-         $funding_cate = DB::table('funding')
+        $funding_year = $funding_year_data->groupBy('StartYear')->get();
+        // return $funding_year;
+
+        $funding_cate_data = DB::table('funding')
                         ->select(DB::raw('cate,count(cate) as cate_count'))
                         ->where('field',$field)
-                        ->where('cate','not like','%;%')
+                        ->whereNotNull('cate')
+                        ->where('cate', '<>', 'NULL')
+                        ->where('cate','not like','%;%');
+                    
+        if ($topic != null) {
+            $funding_cate_data->where('Abstract_translated','like', '%'.$topic.'%');
+        }
+
+        $funding_cate = $funding_cate_data
                         ->groupBy('cate')
                         ->orderBy('cate_count', 'desc')
                         ->limit(10)
                         ->get();
 
-        $funding_country = DB::table('funding')
+        // return $funding_cate;
+
+
+        $funding_country_data = DB::table('funding')
                         ->select(DB::raw('Funder_Country,count(Funder_Country) as country_count'))
-                        ->where('field',$field)
+                        ->where('field',$field);
+                        
+        if ($topic != null) {
+            $funding_country_data->where('Abstract_translated','like', '%'.$topic.'%');
+        }
+        $funding_country = $funding_country_data
                         ->groupBy('Funder_Country')
                         ->orderBy('country_count', 'desc')
-                        ->limit(10)
-                        ->get();
+                        ->limit(10)->get();
 
-        $funding_FunderGroup_display = DB::table('funding')
+
+        $funding_FunderGroup_display_data = DB::table('funding')
                         ->select(DB::raw('FunderGroup_display,count(FunderGroup_display) as FunderGroup_display_count'))
-                        ->where('field',$field)
-                        ->groupBy('FunderGroup_display')
-                        ->orderBy('FunderGroup_display_count', 'desc')
-                        ->limit(10)
-                        ->get();
+                        ->where('field',$field);
+                        
 
-        $funding_ORG_display = DB::table('funding_org')
+        if ($topic != null) {
+            $funding_FunderGroup_display_data->where('Abstract_translated','like', '%'.$topic.'%');
+        }
+        $funding_FunderGroup_display = $funding_FunderGroup_display_data->groupBy('FunderGroup_display')
+                        ->orderBy('FunderGroup_display_count', 'desc')
+                        ->limit(10)->get();
+
+        // return $funding_FunderGroup_display;
+
+        if ($topic == null) {
+            $funding_ORG_display = DB::table('funding_org')
                         ->select(DB::raw('org,count(org) as org_count,sum(fullUSD) as OrgFundingUSD'))
                         ->where('field',$field)
                         ->groupBy('org')
                         ->orderBy('org_count', 'desc')
-                        ->limit(10)
-                        ->get();
+                        ->limit(10)->get();
 
-        $funding_researcher_display = DB::table('funding_researcher')
+
+            $funding_researcher_display = DB::table('funding_researcher')
                         ->select(DB::raw('researcher,count(researcher) as researcher_count,sum(fullUSD) as researcherFundingUSD'))
                         ->where('field',$field)
                         ->groupBy('researcher')
                         ->orderBy('researcher_count', 'desc')
-                        ->limit(10)
-                        ->get();
+                        ->limit(10)->get();
+        }else{
+            $funding_ORG_display = DB::table('funding')
+                ->join('funding_org', 'funding.GrantID', '=', 'funding_org.pid')
+                ->select(DB::raw('org,count(org) as org_count,sum(fullUSD) as OrgFundingUSD'))
+                ->where('funding.field',$field)
+                ->groupBy('org')
+                ->orderBy('org_count', 'desc')
+                ->limit(10)
+                ->get();
+
+            $funding_researcher_display = DB::table('funding')
+                ->join('funding_researcher', 'funding.GrantID', '=', 'funding_researcher.pid')
+                ->select(DB::raw('researcher,count(researcher) as researcher_count,sum(fullUSD) as researcherFundingUSD'))
+                ->where('funding.field',$field)
+                ->groupBy('researcher')
+                ->orderBy('researcher_count', 'desc')
+                ->limit(10)
+                ->get();
+        }
 
 
 
