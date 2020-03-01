@@ -17,7 +17,7 @@ app.controller('controller', function($scope, $http) {
 
     $("#org").change(function () {
         org=$(this).val();
-        cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
+        cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
@@ -25,7 +25,7 @@ app.controller('controller', function($scope, $http) {
 
     $("#field").change(function () {
         field=$(this).val();
-        cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
+        cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
@@ -44,10 +44,9 @@ app.controller('controller', function($scope, $http) {
             .velocityDecay(0.5)
             .force("link", d3.forceLink()
                 .id(function(d) { return d.id; })
-                .distance(60)
+                .distance(400)
             )
             .force("charge", d3.forceManyBody())
-            // .force("charge",d3.forceManyBody().strength(-10))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         d3.json(cooUrl, function(error, graph) {
@@ -110,20 +109,18 @@ app.controller('controller', function($scope, $http) {
                 .links(graph.links);
 
             function ticked() {
-                link
-                    .attr("x1", function(d) { return d.source.x; })
+                link.attr("x1", function(d) { return d.source.x; })
                     .attr("y1", function(d) { return d.source.y; })
                     .attr("x2", function(d) { return d.target.x; })
                     .attr("y2", function(d) { return d.target.y; });
 
-                node
-                    .attr("transform", function(d) {
+                node.attr("transform", function(d) {
                         return "translate(" + d.x + "," + d.y + ")";
-                    })
+                    });
             }
 
             function dragstarted(d) {
-                if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                if (!d3.event.active) simulation.alphaTarget(1).restart();
                 d.fx = d.x;
                 d.fy = d.y;
             }

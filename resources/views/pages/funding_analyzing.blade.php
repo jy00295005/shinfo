@@ -22,7 +22,7 @@
     <script src="{{URL::asset('js/d3.v4.min.js')}}"></script>
 
     <div class="row col-12">
-        <div class="form-group mt-3 ml-4 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
+        <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
             <strong>机构选择</strong>
             <select class="form-control" id="org">
                 <option ng-repeat="x in orgName" value=@{{x}}>@{{x}}</option>
@@ -40,7 +40,7 @@
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div>
-                <svg id="coo" class="mx-4 mb-5 c col-11" height="1000"></svg>
+                <svg id="coo" class="mb-5 c col-11" height="1000"></svg>
             </div>
         </div>
     </div>
