@@ -7,7 +7,7 @@
             $(this).find("a").removeClass("btn-primary");
             $(this).find("div").addClass("collapse");
         });
-        $("#side_link>li:nth-child(4) a").addClass("btn-primary text-white");
+        $("#side_link>li:nth-child(4)>a").addClass("btn-primary text-white");
     </script>
 
     <!-- filter -->
@@ -16,7 +16,7 @@
     </div>
 
     <div class="row ml-1">
-        @include("includes.filter_funding_theme_body")
+        @include("includes.filter_funding_body")
     </div>
 
     <!-- graph -->

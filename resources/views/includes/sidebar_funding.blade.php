@@ -14,6 +14,11 @@
 
     <li class="nav-item col-12 p-0">
         <a class="nav-item btn btn-block" href="{{URL('test/funding_theme')}}">各主题项目概况</a>
+        <ul class="nav nav-fill flex-column">
+            <li class="nav-item" ng-repeat="x in topics">
+                <a href="#" class="nav-link topic" ng-click="chooseTopic(x)">@{{x}}</a>
+            </li>
+        </ul>
     </li>
 
     <li class="nav-item col-12 p-0">
