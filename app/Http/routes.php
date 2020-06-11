@@ -90,15 +90,19 @@ Route::group(['as' => 'api::'], function () {
             '上交大', '上科大', '中科大', '剑桥', '加州伯克利', '加州理工', 
             '北大', '南科大', '哈佛', '国科大', '复旦', '斯坦福', '清华', 
             '牛津', '苏黎世理工', '麻省理工'];
+
         $dicipline=[
             'Physics', 'Chemistry', 'Molecular Biology & Genetics', 'Biology & Biochemistry',
             'Neuroscience & Behavior', 'Engineering', 'Materials Science', 'Computer Science', 
             'Immunology','Microbiology'];
 
+        $patent_cate = ['Fog Computing'];
+
         return [
                 'time_range'=>$time_range,
                 'universityName'=>$universityName,
-                'dicipline'=>$dicipline
+                'dicipline'=>$dicipline,
+                'patent_cate'=>$patent_cate                
                 ];
     }]);
 
@@ -169,11 +173,7 @@ Route::group(['as' => 'api::'], function () {
                 break;
         }
 
-        return $return;
-        
-        
-
-       
+        return $return;       
     }]);
 
     ##项目分析~按照文档的要求返回6个结果
@@ -209,9 +209,12 @@ Route::group(['as' => 'api::'], function () {
         return $return;
     }]);
 
+    ###专利接口###
+    Route::get('api/output/patent_yearly_trend/{cate}', 'api@patent_yearly_trend');
+    Route::get('api/output/patent_mix/{cate}', 'api@patent_mix');
+    Route::get('api/output/patent_topic/{cate}', 'api@patent_topic');
 
-    // 
-
+    // test
     // #机构被引次数统计
     // Route::get('api/output/inst_citation_count/{update_time}/{uni}/{cate}', 'api@show_unv_citaion');
 
