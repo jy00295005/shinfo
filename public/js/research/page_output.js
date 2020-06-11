@@ -163,7 +163,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("type","发文总量");
                                     localStorage.setItem("cate",dicipline);
                                     localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
+                                    window.open("platform/list");
                                 }
                             }
                         }
@@ -296,7 +296,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("cate",dicipline);
                                     localStorage.setItem("year",event.point.category);
                                     localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
+                                    window.open("platform/list");
                                 }
                             }
                         }
@@ -462,7 +462,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
                                     localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
+                                    window.open("platform/list");
                                 }
                             }
                         }
@@ -627,7 +627,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
                                     localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
+                                    window.open("platform/list");
                                 }
                             }
                         }
@@ -792,7 +792,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
                                     localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
+                                    window.open("platform/list");
                                 }
                             }
                         }
@@ -957,7 +957,7 @@ app.controller('controller', function($scope, $http) {
                                     localStorage.setItem("type",this.name);
                                     localStorage.setItem("cate",dicipline);
                                     localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
+                                    window.open("platform/list");
                                 }
                             }
                         }

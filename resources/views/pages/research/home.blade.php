@@ -1,11 +1,11 @@
 @extends("layouts.default")
 @section("content")
     <div class="my-4">
-        @include("includes.filter")
+        @include("filter.filter")
     </div>
 
     <div class="row ml-1">
-        @include("includes.filter_body")
+        @include("filter.filter_body")
     </div>
 
     <div class="row mt-2">
@@ -197,6 +197,6 @@
             </div>
         </div>
     </div>
-    <script src="{{URL::asset('js/operation.js')}}"></script>
-    <script src="{{URL::asset('js/page_output.js')}}"></script>
+    <script src="{{URL::asset('js/global/operation.js')}}"></script>
+    <script src="{{URL::asset('js/research/page_output.js')}}"></script>
 @stop

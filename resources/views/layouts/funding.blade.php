@@ -14,7 +14,7 @@
     <div class="row">
 
         <div class="col-lg-2 col-xl-2 float-left pt-4 side-customize pr-0">
-            @include('includes.sidebar_funding')
+            @include('sidebar.sidebar_funding')
         </div>
 
         <div class="col-lg-10 col-xl-10">

@@ -5,10 +5,10 @@
 
         <ul class="nav nav-top">
             <li class="nav-item active">
-                <a href="{{URL('test')}}" class="nav-link" style="color: #ffffff">科研对标</a>
+                <a href="{{URL('platform')}}" class="nav-link" style="color: #ffffff">科研对标</a>
             </li>
             <li class="nav-item">
-                <a href="{{URL('test/research_projects')}}" class="nav-link" style="color: #cccccc">项目基金</a>
+                <a href="{{URL('platform/research_projects')}}" class="nav-link" style="color: #cccccc">项目基金</a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link" style="color: #cccccc">技术专利</a>

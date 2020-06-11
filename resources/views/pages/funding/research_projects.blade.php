@@ -1,22 +1,13 @@
 @extends("layouts.funding")
 @section("content")
 
-    <script>
-        $("#side_link").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").removeClass("btn-primary");
-            $(this).find("div").addClass("collapse");
-        });
-        $("#side_link>li:nth-child(4)>a").addClass("btn-primary text-white");
-    </script>
-
     <!-- filter -->
     <div class="my-4">
-        @include("includes.filter_funding")
+        @include("filter.filter_funding")
     </div>
 
     <div class="row ml-1">
-        @include("includes.filter_funding_body")
+        @include("filter.filter_funding_body")
     </div>
 
     <!-- graph -->
@@ -216,5 +207,5 @@
         </div>
     </div>
 
-    <script src="{{URL::asset('js/page_funding_theme.js')}}"></script>
+    <script src="{{URL::asset('js/funding/page_research_projects.js')}}"></script>
 @stop

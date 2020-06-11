@@ -42,5 +42,5 @@
             </div>
         </div>
     </div>
-    <script src="{{URL::asset('js/page_list.js')}}"></script>
+    <script src="{{URL::asset('js/research/page_list.js')}}"></script>
 @stop

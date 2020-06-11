@@ -79,5 +79,5 @@
             </div>
         </div>
     </div>
-    <script src="{{URL::asset('js/page_multiple_comparison.js')}}"></script>
+    <script src="{{URL::asset('js/research/page_multiple_comparison.js')}}"></script>
 @stop

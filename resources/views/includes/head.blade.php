@@ -4,10 +4,10 @@
 <!--  Angularjs-->
 <script src="{{URL::asset('js/angular.min.js')}}"></script>
 <!--  Bootstrap-->
-<link rel="stylesheet" type="text/css" href="{{URL::asset('css/bootstrap.css')}}">
+<link rel="stylesheet" type="text/css" href="{{URL::asset('css/bootstrap.min.css')}}">
 <script src="{{URL::asset('js/jquery.min.js')}}"></script>
 <script src="{{URL::asset('js/jquery-ui.min.js')}}"></script>
-<script src="{{URL::asset('js/bootstrap.bundle.js')}}"></script>
+<script src="{{URL::asset('js/bootstrap.bundle.min.js')}}"></script>
 <!--  highcharts-->
 <script src="{{URL::asset('js/highcharts.js')}}"></script>
 <script src="{{URL::asset('js/highcharts-more.js')}}"></script>

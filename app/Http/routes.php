@@ -12,57 +12,51 @@
 |
 */
 
-Route::get('/', function () {
+// research pages
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/paper', function () {
-    return view('paper');
+Route::get('/platform', function () {
+    return view('pages.research.home');
 });
 
-Route::get('/paper/research_subs', function () {
-    return view('research_subs');
+Route::get('/platform/influence', function () {
+    return view('pages.research.influence');
 });
 
-Route::get('/paper/compare', function () {
-    return view('compare');
+Route::get('/platform/multiple_comparison', function () {
+    return view('pages.research.multiple_comparison');
 });
 
-// pages
-
-Route::get('/test', function () {
-    return view('pages.home');
+Route::get('/platform/subject_analyzing', function () {
+    return view('pages.research.subject_analyzing');
 });
 
-Route::get('/test/influence', function () {
-    return view('pages.influence');
+
+// funding pages
+
+Route::get('/platform/research_projects', function () {
+    return view('pages.funding.research_projects');
 });
 
-Route::get('/test/multiple_comparison', function () {
-    return view('pages.multiple_comparison');
+Route::get('/platform/funding_group', function () {
+    return view('pages.funding.funding_group');
 });
 
-Route::get('/test/subject_analyzing', function () {
-    return view('pages.subject_analyzing');
+Route::get('/platform/funding_analyzing', function () {
+    return view('pages.funding.funding_analyzing');
 });
 
-Route::get('/test/research_projects', function () {
-    return view('pages.research_projects');
+Route::get('/platform/funding_theme', function () {
+    return view('pages.funding.funding_theme');
 });
 
-Route::get('/test/funding_group', function () {
-    return view('pages.funding_group');
-});
 
-Route::get('/test/funding_analyzing', function () {
-    return view('pages.funding_analyzing');
-});
+// other pages
 
-Route::get('/test/funding_theme', function () {
-    return view('pages.funding_theme');
-});
-
-Route::get('/test/list', function () {
+Route::get('/platform/list', function () {
     return view('pages.list');
 });
 
