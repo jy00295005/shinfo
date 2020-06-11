@@ -1,6 +1,6 @@
 // 放大图表（显示浮层）
 function zoomChart(c){
-    var element="#"+c;
+    let element="#"+c;
     $(".c").parent().each(function () {
         $(this).addClass("display-none");
     });
@@ -25,11 +25,11 @@ function closeF(){
 }
 
 // 全选操作
-var ischecked1=true;
-var ischecked2=true;
+let ischecked1=true;
+let ischecked2=true;
 
 function checkAll(e){
-    var element=$(e);
+    let element=$(e);
     if (e=="#all1"){ // 选择对哪个列表进行操作
         element.checked=ischecked1;
     } else{
@@ -57,7 +57,7 @@ $(".btn-customize button")[1].onclick=function () {
 };
 
 
-var app = angular.module('shinfo', []);
+let app = angular.module('shinfo', []);
 
 app.controller('controller', function($scope, $http) {
 
@@ -71,42 +71,37 @@ app.controller('controller', function($scope, $http) {
 
     let field="Physical Science & Technology";
     let fundingUrl="/shinfo/public/api/output/funding/"+field;
+    let topicUrl="/shinfo/public/api/output/get_funding_topic_name/"+field;
+    let topic="";
 
-    $scope.getTopic=function(){
-        let field="";
-
-        $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
-            field=$(this).val();
+    // 获得topic
+    $http.get(topicUrl)
+        .success(function (response) {
+            let topics=[];
+            for(let item in response){
+                topics.push(item);
+            }
+            $scope.topics=topics;
         });
 
-        if(field=="") field="Physical Science & Technology";
-
-        let topicUrl="/shinfo/public/api/output/get_funding_topic_name/"+field;
-
-        $http.get(topicUrl)
-            .success(function (response) {
-                let topics=[];
-                for(let item in response){
-                    topics.push(item);
-                }
-                $scope.topic=topics;
-                $("#hint").hide();
-            });
+    // 选择topic
+    $scope.chooseTopic=function(value){
+        console.log($(this)[0].$index);
+        let index=$(this)[0].$index;
+        $(".topic").css({color: "rgb(0, 123, 255)", background: ""});
+        $(".topic").eq(index).css({color: "#ffffff", background: "rgb(0, 123, 255)"});
+        topic=value;
+        $scope.filterss();
     };
+
 
     // 筛选&刷新
     $scope.filterss=function(){
-
         let field="";
-        let topic="";
 
         // 多选框
         $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
             field=$(this).val();
-        });
-
-        $("#topic .checkboxs input[type='checkbox']:checked").each(function () {
-            topic=$(this).val();
         });
 
         // 如果没有选中项，默认

@@ -1,12 +1,28 @@
-var app = angular.module('shinfo', []);
+let app = angular.module('shinfo', []);
 
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
-    var updateDate="2019-06-20";
-    var uni="上交大";
-    var dic="Physics";
-    var optionsUrl="/shinfo/public/api/output/get_options";
-    var cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+    let updateDate="2019-06-20";
+    let uni="上交大";
+    let dic="Physics";
+    let optionsUrl="/shinfo/public/api/output/get_options";
+    let cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+
+    let interval=400;
+
+    $scope.zoomUp=function(){
+        interval+=100;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
+
+    $scope.zoomDown=function(){
+        interval-=100;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
 
     $http.get(optionsUrl)
         .success(function (response) {
@@ -43,7 +59,7 @@ app.controller('controller', function($scope, $http) {
             .velocityDecay(0.5)
             .force("link", d3.forceLink()
                 .id(function(d) { return d.id; })
-                .distance(60)
+                .distance(interval)
             )
             .force("charge", d3.forceManyBody())
             // .force("charge",d3.forceManyBody().strength(-10))

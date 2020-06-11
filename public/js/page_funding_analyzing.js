@@ -1,4 +1,4 @@
-var app = angular.module('shinfo', []);
+let app = angular.module('shinfo', []);
 
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
