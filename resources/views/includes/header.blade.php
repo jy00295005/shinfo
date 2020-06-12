@@ -11,7 +11,7 @@
                 <a href="{{URL('platform/research_projects')}}" class="nav-link" style="color: #cccccc">项目基金</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" style="color: #cccccc">技术专利</a>
+                <a href="{{URL('platform/patent_application')}}" class="nav-link" style="color: #cccccc">技术专利</a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link" style="color: #cccccc">战略政策</a>

@@ -54,6 +54,13 @@ Route::get('/platform/funding_theme', function () {
 });
 
 
+// patent pages
+
+Route::get('/platform/patent_application', function () {
+    return view('pages.patent.patent_application');
+});
+
+
 // other pages
 
 Route::get('/platform/list', function () {

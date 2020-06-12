@@ -1,5 +1,4 @@
 <nav class="nav nav-fill flex-column" id="side_link">
-
     <li class="nav-item active col-12 p-0">
         <a href="{{URL('platform/research_projects')}}" class="nav-item btn btn-primary btn-block">科研项目情况</a>
     </li>
@@ -24,5 +23,4 @@
     <li class="nav-item col-12 p-0">
         <a class="nav-item btn btn-block disabled" href="{{URL('platform')}}">多项对比</a>
     </li>
-
 </nav>
