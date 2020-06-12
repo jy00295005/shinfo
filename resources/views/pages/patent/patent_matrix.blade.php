@@ -1,5 +1,13 @@
 @extends("layouts.patent")
 @section("content")
+    <script>
+        $("#side_link").children().each(function () {
+            $(this).removeClass("active");
+            $(this).find("a").removeClass("btn-primary");
+            $(this).find("div").addClass("collapse");
+        });
+        $("#side_link>li:nth-child(2) a").addClass("btn-primary text-white");
+    </script>
 
     <!-- filter -->
     <div class="my-4">
@@ -13,31 +21,46 @@
     <!-- graph -->
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <!-- 专利申请及公开趋势 -->
+            <!-- 技术市场&活跃期 -->
             <div>
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('apply-public')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#applyPublicModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('cvy')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#cvyModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="apply-public" class="mx-5 mb-5 c">
+                <div id="cvy" class="mx-5 mb-5 c">
                     <div class="loading-container">
                         <div class="loading"></div>
                     </div>
                 </div>
             </div>
-            <!-- 专利权人分布 -->
+            <!-- 专利权人&活跃期 -->
             <div>
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('patentees')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#patenteesModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('avs')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#avsModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="patentees" class="mx-5 mb-5 c">
+                <div id="avs" class="mx-5 mb-5 c">
+                    <div class="loading-container">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 技术发展趋势 -->
+            <div>
+                <div class="row mx-0 justify-content-between">
+                    <div></div>
+                    <div class="btn-group-sm mr-5">
+                        <button class="btn btn-outline-primary" onclick="zoomChart('ivy')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#ivyModal">显示数据表格</button>
+                    </div>
+                </div>
+                <div id="ivy" class="mx-5 mb-5 c">
                     <div class="loading-container">
                         <div class="loading"></div>
                     </div>
@@ -46,31 +69,31 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <!-- 申请国家/地区 -->
+            <!-- 技术市场&技术分布 -->
             <div>
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('country-area')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#countryAreaModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('cvi')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#cviModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="country-area" class="mx-5 mb-5 c">
+                <div id="cvi" class="mx-5 mb-5 c">
                     <div class="loading-container">
                         <div class="loading"></div>
                     </div>
                 </div>
             </div>
-            <!-- IPC技术构成 -->
+            <!-- 专利权人&技术分布 -->
             <div>
                 <div class="row mx-0 justify-content-between">
                     <div></div>
                     <div class="btn-group-sm mr-5">
-                        <button class="btn btn-outline-primary" onclick="zoomChart('ipc-tech')">放大</button>
-                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#ipcTechModal">显示数据表格</button>
+                        <button class="btn btn-outline-primary" onclick="zoomChart('avi')">放大</button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#aviModal">显示数据表格</button>
                     </div>
                 </div>
-                <div id="ipc-tech" class="mx-5 mb-5 c">
+                <div id="avi" class="mx-5 mb-5 c">
                     <div class="loading-container">
                         <div class="loading"></div>
                     </div>
@@ -79,7 +102,7 @@
         </div>
 
         <!-- 弹框 -->
-        <div class="modal fade" id="applyPublicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="cvyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -95,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="patenteesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="avsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="width: 1000px;">
                     <div class="modal-header">
@@ -111,7 +134,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="countryAreaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="ivyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -127,7 +150,23 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="ipcTechModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="cviModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="aviModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -146,5 +185,5 @@
     </div>
 
     <script src="{{URL::asset('js/global/operation.js')}}"></script>
-    <script src="{{URL::asset('js/patent/page_patent_application.js')}}"></script>
+    <script src="{{URL::asset('js/patent/page_patent_matrix.js')}}"></script>
 @stop

@@ -60,6 +60,10 @@ Route::get('/platform/patent_application', function () {
     return view('pages.patent.patent_application');
 });
 
+Route::get('/platform/patent_matrix', function () {
+    return view('pages.patent.patent_matrix');
+});
+
 
 // other pages
 

@@ -4,7 +4,7 @@
     </li>
 
     <li class="nav-item col-12 p-0">
-        <a href="{{URL('platform')}}" class="nav-item btn btn-block">专利矩阵</a>
+        <a href="{{URL('platform/patent_matrix')}}" class="nav-item btn btn-block">专利矩阵</a>
     </li>
 
     <li class="nav-item col-12 p-0">
