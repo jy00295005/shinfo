@@ -1,64 +1,6 @@
-// 放大图表（显示浮层）
-function zoomChart(c){
-    let element="#"+c;
-    $(".c").parent().each(function () {
-        $(this).addClass("display-none");
-    });
-    $(element).parent().removeClass("display-none");
-    $(element).addClass("zoom");
-    $(element).prepend("<button class='btn-sm btn-danger closeB' style='position: relative; float: right' onclick='closeF()'>关闭</button>");
-    $(element).highcharts().reflow();
-}
-
-// 关闭浮层
-function closeF(){
-    $(".c").parent().each(function () {
-        $(this).removeClass("display-none");
-    });
-    $(".c").each(function () {
-        $(this).removeClass("zoom");
-    });
-    $(".c").each(function () {
-        $(this).highcharts().reflow();
-    });
-    $(".closeB").remove();
-}
-
-// 全选操作
-let ischecked1=true;
-let ischecked2=true;
-
-function checkAll(e){
-    let element=$(e);
-    if (e=="#all1"){ // 选择对哪个列表进行操作
-        element.checked=ischecked1;
-    } else{
-        element.checked=ischecked2;
-    }
-
-    if (element.checked){
-        element.parent().parent().parent().find("input").each(function () {
-            $(this)[0].checked=true;
-        });
-        if (e=="#all1") ischecked1=false;
-        else ischecked2=false;
-    } else{
-        element.parent().parent().parent().find("input").each(function () {
-            $(this)[0].checked=false;
-        });
-        if (e=="#all1") ischecked1=true;
-        else ischecked2=true;
-    }
-}
-
-// 控制筛选body的隐藏
-$(".btn-customize button")[1].onclick=function () {
-    $("#filter_body").collapse('hide');
-};
-
+changeNavbarLink(2);
 
 let app = angular.module('shinfo', []);
-
 app.controller('controller', function($scope, $http) {
 
     // 获得选项
@@ -190,7 +132,7 @@ app.controller('controller', function($scope, $http) {
                 }
 
                 // 数量趋势Chart
-                var fundYear = Highcharts.chart('fund-year', {
+                let fundYear = Highcharts.chart('fund-year', {
                     title: {
                         text: '数量趋势'
                     },
@@ -247,7 +189,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-year').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG
@@ -294,7 +236,7 @@ app.controller('controller', function($scope, $http) {
                 });
 
                 // 学科分布Chart
-                var fundCate = Highcharts.chart('fund-cate', {
+                let fundCate = Highcharts.chart('fund-cate', {
                     title: {
                         text: '学科分布'
                     },
@@ -351,7 +293,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-cate').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG
@@ -398,7 +340,7 @@ app.controller('controller', function($scope, $http) {
                 });
 
                 // 资助国家Chart
-                var fundCountry = Highcharts.chart('fund-country', {
+                let fundCountry = Highcharts.chart('fund-country', {
                     title: {
                         text: '资助国家/地区'
                     },
@@ -455,7 +397,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-country').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG
@@ -502,7 +444,7 @@ app.controller('controller', function($scope, $http) {
                 });
 
                 // 资助机构Chart
-                var fundGroup = Highcharts.chart('fund-group', {
+                let fundGroup = Highcharts.chart('fund-group', {
                     title: {
                         text: '资助机构'
                     },
@@ -559,7 +501,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-group').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG
@@ -606,7 +548,7 @@ app.controller('controller', function($scope, $http) {
                 });
 
                 // 研究机构Chart
-                var researchingOrg = Highcharts.chart('research-org', {
+                let researchingOrg = Highcharts.chart('research-org', {
                     title: {
                         text: '研究机构'
                     },
@@ -663,7 +605,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#research-org').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG
@@ -710,7 +652,7 @@ app.controller('controller', function($scope, $http) {
                 });
 
                 // 申请人分布Chart
-                var fundResearcher = Highcharts.chart('fund-researcher', {
+                let fundResearcher = Highcharts.chart('fund-researcher', {
                     title: {
                         text: '申请人分布'
                     },
@@ -767,7 +709,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-researcher').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG

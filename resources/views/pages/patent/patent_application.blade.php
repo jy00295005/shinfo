@@ -1,6 +1,5 @@
 @extends("layouts.patent")
 @section("content")
-
     <!-- filter -->
     <div class="my-4">
         @include("filter.filter_patent")

@@ -1,5 +1,7 @@
-let app = angular.module('shinfo', []);
+changeNavbarLink(3);
+changeSidebarLink(2);
 
+let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
 
     // 获得选项

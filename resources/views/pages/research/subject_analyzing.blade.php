@@ -1,15 +1,5 @@
 @extends("layouts.default")
 @section("content")
-
-    <script>
-        $("#side_link").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").removeClass("btn-primary");
-            $(this).find("div").addClass("collapse");
-        });
-        $("#side_link>li:nth-child(3) a").addClass("btn-primary text-white");
-    </script>
-
     <script src="{{URL::asset('js/d3.v4.min.js')}}"></script>
 
     <div class="row col-12">
@@ -43,5 +33,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{URL::asset('js/global/operation.js')}}"></script>
     <script src="{{URL::asset('js/research/page_subject_analyzing.js')}}"></script>
 @stop

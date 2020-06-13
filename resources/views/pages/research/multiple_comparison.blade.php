@@ -1,15 +1,5 @@
 @extends("layouts.default")
 @section("content")
-
-    <script>
-        $("#side_link").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").removeClass("btn-primary");
-            $(this).find("div").addClass("collapse");
-        });
-        $("#side_link>li:nth-child(4) a").addClass("btn-primary text-white");
-    </script>
-
     <div class="row col-12 justify-content-between">
         <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
             <strong>机构选择</strong>
@@ -79,5 +69,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{URL::asset('js/global/operation.js')}}"></script>
     <script src="{{URL::asset('js/research/page_multiple_comparison.js')}}"></script>
 @stop

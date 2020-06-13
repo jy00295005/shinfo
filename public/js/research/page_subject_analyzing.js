@@ -1,5 +1,6 @@
-let app = angular.module('shinfo', []);
+changeSidebarLink(3);
 
+let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
     let updateDate="2019-06-20";
@@ -47,13 +48,13 @@ app.controller('controller', function($scope, $http) {
     });
 
     $scope.getCoo=function(){
-        var svg = d3.select("#coo"),
+        let svg = d3.select("#coo"),
             width = +$("#coo").width(),
             height = +svg.attr("height");
 
-        var color = d3.scaleOrdinal(d3.schemeCategory20);
+        let color = d3.scaleOrdinal(d3.schemeCategory20);
 
-        var simulation = d3.forceSimulation()
+        let simulation = d3.forceSimulation()
             .alphaDecay(0.05)
             .alphaMin(0.1)
             .velocityDecay(0.5)
@@ -66,25 +67,25 @@ app.controller('controller', function($scope, $http) {
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         d3.json(cooUrl, function(error, graph) {
-            var link = svg.append("g")
+            let link = svg.append("g")
                 .attr("class", "links")
                 .selectAll("line")
                 .data(graph.links)
                 .enter().append("line")
                 .attr("stroke-width", function(d) { return Math.sqrt(d.weight); });
 
-            var node = svg.append("g")
+            let node = svg.append("g")
                 .attr("class", "nodes")
                 .selectAll("g")
                 .data(graph.nodes)
                 .enter().append("g");
 
             // Define the div for the tooltip
-            var div = d3.select("body").append("div")
+            let div = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-            var circles = node.append("circle")
+            let circles = node.append("circle")
                 .attr("r", function (d) {
                     return Math.sqrt(d.size)*4;
                 })
@@ -107,7 +108,7 @@ app.controller('controller', function($scope, $http) {
                         .style("opacity", 0);
                 });
 
-            var lables = node.append("text")
+            let lables = node.append("text")
                 .text(function(d) {
                     return d.id;
                 })

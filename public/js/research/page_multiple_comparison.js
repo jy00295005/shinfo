@@ -1,5 +1,6 @@
-var app = angular.module('shinfo', []);
+changeSidebarLink(4);
 
+var app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     var optionsUrl="/shinfo/public/api/output/get_options";
     var mcUrl="/shinfo/public/api/output/high_quality_paper/Q1/2019-06-20/上交大,上科大/Physics,Chemistry,Molecular Biology & Genetics,Biology & Biochemistry,Neuroscience & Behavior";

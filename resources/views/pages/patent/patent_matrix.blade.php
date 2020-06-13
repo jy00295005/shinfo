@@ -1,14 +1,5 @@
 @extends("layouts.patent")
 @section("content")
-    <script>
-        $("#side_link").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").removeClass("btn-primary");
-            $(this).find("div").addClass("collapse");
-        });
-        $("#side_link>li:nth-child(2) a").addClass("btn-primary text-white");
-    </script>
-
     <!-- filter -->
     <div class="my-4">
         @include("filter.filter_patent")

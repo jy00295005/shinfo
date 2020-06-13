@@ -207,5 +207,6 @@
         </div>
     </div>
 
+    <script src="{{URL::asset('js/global/operation.js')}}"></script>
     <script src="{{URL::asset('js/funding/page_research_projects.js')}}"></script>
 @stop

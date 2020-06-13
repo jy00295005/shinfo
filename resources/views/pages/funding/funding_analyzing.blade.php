@@ -1,24 +1,5 @@
 @extends("layouts.funding")
 @section("content")
-
-    <script>
-        $("#side_link").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").removeClass("btn-primary");
-            $(this).find("div").addClass("collapse");
-        });
-        $("#side_link>li:nth-child(3) a").addClass("btn-primary text-white");
-    </script>
-
-    <!-- change nav bar text color -->
-    <script>
-        $(".nav-top").children().each(function () {
-            $(this).removeClass("active");
-            $(this).find("a").css("color","#cccccc");
-        });
-        $(".nav-top>li:nth-child(2) a").css("color","#ffffff");
-    </script>
-
     <script src="{{URL::asset('js/d3.v4.min.js')}}"></script>
 
     <div class="row col-12">
@@ -49,5 +30,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{URL::asset('js/global/operation.js')}}"></script>
     <script src="{{URL::asset('js/funding/page_funding_analyzing.js')}}"></script>
 @stop

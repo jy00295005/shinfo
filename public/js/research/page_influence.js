@@ -1,5 +1,6 @@
-var app = angular.module('shinfo', []);
+changeSidebarLink(2);
 
+var app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
 

@@ -1,5 +1,5 @@
 function zoomChart(c){ // 放大图表
-    var element="#"+c;
+    let element="#"+c;
     $(".c").parent().each(function () {
         $(this).addClass("display-none");
     });
@@ -22,14 +22,17 @@ function closeF(){ // 关闭浮层
     $(".closeB").remove();
 }
 
-var ischecked1=true;
-var ischecked2=true;
-function checkAll(e){ // 全选
-    var element=$(e);
+// 全选操作
+
+let isChecked1=true;
+let isChecked2=true;
+
+function checkAll(e){
+    let element=$(e);
     if (e=="#all1"){
-        element.checked=ischecked1;
+        element.checked=isChecked1;
     } else{
-        element.checked=ischecked2;
+        element.checked=isChecked2;
     }
 
     if (element.checked){
@@ -38,9 +41,9 @@ function checkAll(e){ // 全选
             $(this)[0].checked=true;
         });
         if (e=="#all1"){
-            ischecked1=false;
+            isChecked1=false;
         } else{
-            ischecked2=false;
+            isChecked2=false;
         }
     } else{
         element.parent().parent().parent().find("input").each(function () {
@@ -48,13 +51,39 @@ function checkAll(e){ // 全选
             $(this)[0].checked=false;
         });
         if (e=="#all1"){
-            ischecked1=true;
+            isChecked1=true;
         } else{
-            ischecked2=true;
+            isChecked2=true;
         }
     }
 }
 
-$(".btn-customize button")[1].onclick=function () {
-    $("#filter_body").collapse('hide');
+// 改变Sidebar链接颜色
+function changeSidebarLink(position){
+    $("#side_link").children().each(function () {
+        $(this).removeClass("active");
+        $(this).find("a").removeClass("btn-primary");
+        $(this).find("div").addClass("collapse");
+    });
+    let query="#side_link>li:nth-child("+position+") a";
+    $(query).addClass("btn-primary text-white");
+}
+
+// 改变Navbar链接颜色
+function changeNavbarLink(position){
+    $(".nav-top").children().each(function () {
+        $(this).removeClass("active");
+        $(this).find("a").css("color","#cccccc");
+    });
+    let query=".nav-top>li:nth-child("+position+") a";
+    $(query).css("color","#ffffff");
+}
+
+// 隐藏筛选
+try {
+    $(".btn-customize button")[1].onclick = function () {
+        $("#filter_body").collapse('hide');
+    };
+} catch (e) {
+    console.error("未找到筛选功能");
 }
