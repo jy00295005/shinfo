@@ -93,7 +93,6 @@ app.controller('controller', function($scope, $http) {
                 let ipcObj33={};
                 let ipcNum3=0;
                 let yAxisList5=[];
-                console.log(response);
 
                 for(let i=0;i<ivy.length;i++){
                     let ivyList=[];
@@ -301,8 +300,8 @@ app.controller('controller', function($scope, $http) {
 
 
                 // 刷新数据
-                $("#ivy").highcharts().reflow();
-                $("#ivy").highcharts().hideLoading();
+                $("#kvy").highcharts().reflow();
+                $("#kvy").highcharts().hideLoading();
 
                 $("#avi").highcharts().reflow();
                 $("#avi").highcharts().hideLoading();
