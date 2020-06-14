@@ -112,11 +112,6 @@ text {
     font-size: 10px;
 }
 
-#cooo{
-    border: 1px solid #c2cad2;
-    border-radius: 10px;
-}
-
 div.tooltip {
     position: absolute;
     text-align: center;

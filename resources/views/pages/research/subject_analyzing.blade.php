@@ -20,10 +20,13 @@
 
     <div class="row mt-1 ml-1 mr-1" id="cooo">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="btn-group mb-2 mt-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary" ng-click="zoomUp()">放大</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary" ng-click="zoomDown()">缩小</button>
+            <div class="col-12">
+                <div class="btn-group float-right">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" ng-click="zoomUp()">放大</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" ng-click="zoomDown()">缩小</button>
+                </div>
             </div>
+
             <div>
                 <svg id="coo" class="mx-4 mb-5 c col-11" height="1000">
 {{--                    <div class="loading-container">--}}
