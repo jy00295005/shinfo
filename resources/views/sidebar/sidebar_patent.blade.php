@@ -8,6 +8,6 @@
     </li>
 
     <li class="nav-item col-12 p-0">
-        <a class="nav-item btn btn-block" href="{{URL('platform')}}">主题分布</a>
+        <a class="nav-item btn btn-block" href="{{URL('platform/patent_theme')}}">主题分布</a>
     </li>
 </nav>
