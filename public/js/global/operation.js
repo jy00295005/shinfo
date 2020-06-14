@@ -71,11 +71,10 @@ function changeSidebarLink(position){
 
 // 改变Navbar链接颜色
 function changeNavbarLink(position){
-    $(".nav-top").children().each(function () {
-        $(this).removeClass("active");
-        $(this).find("a").css("color","#cccccc");
+    $(".nav-links").children().each(function () {
+        $(this).css("color","#cccccc");
     });
-    let query=".nav-top>li:nth-child("+position+") a";
+    let query=".nav-links>a:nth-child("+position+")";
     $(query).css("color","#ffffff");
 }
 
