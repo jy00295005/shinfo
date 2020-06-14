@@ -5,11 +5,12 @@ function zoomChart(c){ // 放大图表
     });
     $(element).parent().removeClass("display-none");
     $(element).addClass("zoom");
-    $(element).prepend("<button class='btn-sm btn-danger closeB' style='position: relative; float: right' onclick='closeF()'>关闭</button>");
+    // $(element).prepend("<button class='btn-sm btn-danger close-button' style='position: relative; float: right' onclick='closeFloat()'>关闭</button>");
+    $(element).prepend("<button class='btn-sm btn-danger close-button' style='position: relative; margin: 3px;' onclick='closeFloat()'>关闭</button>");
     $(element).highcharts().reflow();
 }
 
-function closeF(){ // 关闭浮层
+function closeFloat(){ // 关闭浮层
     $(".c").parent().each(function () {
         $(this).removeClass("display-none");
     });
@@ -19,7 +20,7 @@ function closeF(){ // 关闭浮层
     $(".c").each(function () {
         $(this).highcharts().reflow();
     });
-    $(".closeB").remove();
+    $(".close-button").remove();
 }
 
 // 全选操作
