@@ -37,31 +37,7 @@
                     <div class="row">
                         <div class="element col-4 pl-0"></div>
                         <div class="col-3 mt-3">
-                            <div class="form-group mt-5">
-                                <select class="form-control" id="diciplineSelect1">
-                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-4">
-                                <select class="form-control" id="diciplineSelect2">
-                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-4">
-                                <select class="form-control" id="diciplineSelect3">
-                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-4">
-                                <select class="form-control" id="diciplineSelect4">
-                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-4">
-                                <select class="form-control" id="diciplineSelect5">
-                                    <option ng-repeat="x in dicipline" value=@{{x}}>@{{x}}</option>
-                                </select>
-                            </div>
+                            <div class="mt-5 text-center rounded border mc-item" ng-repeat="x in dicipline">@{{x}}</div>
                         </div>
                         <div class="element col-4 pr-0"></div>
                     </div>

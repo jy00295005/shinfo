@@ -1,9 +1,8 @@
 changeSidebarLink(4);
 
-var app = angular.module('shinfo', []);
+let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
-    var optionsUrl="/shinfo/public/api/output/get_options";
-    var mcUrl="/shinfo/public/api/output/high_quality_paper/Q1/2019-06-20/上交大,上科大/Physics,Chemistry,Molecular Biology & Genetics,Biology & Biochemistry,Neuroscience & Behavior";
+    let optionsUrl="/shinfo/public/api/output/get_options";
 
     $http.get(optionsUrl)
         .success(function (response) {
@@ -11,19 +10,11 @@ app.controller('controller', function($scope, $http) {
             $scope.dicipline=response.dicipline;
         });
 
-    var uni1="上交大";
-    var uni2="上科大";
-    var category="Q1";
-    var subject=["Physics","Chemistry","Molecular Biology & Genetics","Biology & Biochemistry","Neuroscience & Behavior"];
-
-    for(let i=1;i<6;i++){
-        var query="#diciplineSelect"+i;
-        $(query).change(function () {
-            subject[i-1]=$(this).val();
-            mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
-            $scope.mc();
-        });
-    }
+    let subject=["Physics","Chemistry","Molecular Biology & Genetics","Biology & Biochemistry","Neuroscience & Behavior","Engineering","Materials Science","Computer Science","Immunology","Microbiology"];
+    let category="Q1";
+    let uni1="上交大";
+    let uni2="上科大";
+    let mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
 
     $("#institution1").change(function () {
         uni1=$(this).val();
@@ -45,15 +36,16 @@ app.controller('controller', function($scope, $http) {
 
     $scope.mc=function() {
         $http.get(mcUrl).success(function (response){
-            var allData=[];
-            var all1=[];
-            var all2=[];
+            console.log(response)
+            let allData=[];
+            let all1=[];
+            let all2=[];
 
-            for (var key in response) {
+            for (let key in response) {
                 allData.push(response[key]);
             }
 
-            var cate="";
+            let cate="";
             switch (category) {
                 case "Q1": cate="Q1论文数量"; break;
                 case "HQ": cate="高被引论文数"; break;
@@ -65,12 +57,12 @@ app.controller('controller', function($scope, $http) {
                 case "RF": cate="进入RF的论文"; break;
             }
 
-            for(var i=0;i<5;i++){
+            for(let i=0;i<allData[0].length;i++){
                 all1.push(allData[0][i][cate]);
                 all2.push(allData[1][i][cate]);
             }
 
-            var duoxiangduibi = [],
+            let duoxiangduibi = [],
                 $containers = $('.ddbar .element'),
                 datasets = [
                     {
@@ -127,7 +119,8 @@ app.controller('controller', function($scope, $http) {
                         title: {
                             text: null
                         },
-                        reversed: dataset.isReversed
+                        reversed: dataset.isReversed,
+                        // tickInterval: 500
                     },
                     legend: {
                         enabled: false
@@ -143,8 +136,8 @@ app.controller('controller', function($scope, $http) {
                                 click: function (event) {
                                     if(cate=="Q1论文数量"||cate=="高被引论文数"||cate=="热点论文数"||cate=="CNS论文数") {
                                         localStorage.setItem("uni", event.point.series.name);
-                                        var num = parseInt(event.point.category) + parseInt(1);
-                                        var idText = "#diciplineSelect" + num + " option:selected";
+                                        let num = parseInt(event.point.category) + parseInt(1);
+                                        let idText = "#diciplineSelect" + num + " option:selected";
                                         localStorage.setItem("type", cate);
                                         localStorage.setItem("cate", $(idText).text());
                                         localStorage.setItem("ifdg", false);
@@ -157,69 +150,8 @@ app.controller('controller', function($scope, $http) {
                 }));
             });
             $('.ddbar .element').highcharts().reflow();
-            conflictSolve();
         });
-    }
+    };
 
     $scope.mc();
-
-
-
 });
-
-function conflictSolve(){ // 去除五个select之间的冲突
-    $("#institution2 option:nth-child(2)").attr("selected", "selected");
-
-    var dicipline=[];
-    for(var i=1;i<6;i++) {
-        var query = "#diciplineSelect" + i + " option:nth-child(" + i + ")"
-        $(query).attr("selected", "selected");
-        var query2 = "#diciplineSelect" + i;
-        dicipline.push($(query2).val());
-    }
-
-    for(var i=0;i<5;i++) {
-        for (var j = 1; j < 6; j++) {
-            var query = "#diciplineSelect" + j + " option";
-            $(query).each(function () {
-                if ($(this).val() == dicipline[i]) {
-                    $(this).attr("disabled", "disabled");
-                }
-            });
-        }
-    }
-
-    var diciplineS=[dicipline.length];
-    for(var i=0;i<dicipline.length;i++){
-        diciplineS[i]=dicipline[i];
-    }
-
-    for(let i=1;i<6;i++){
-        var query="#diciplineSelect"+i;
-        var thisVal="";
-        $(query).change(function () {
-            thisVal=diciplineS[this.id.replace(/[^0-9]/ig,"")-1];
-            for(let j=1;j<6;j++){
-                var query="#diciplineSelect"+j+" option";
-                $(query).each(function () {
-                    if(dicipline.indexOf(thisVal)>-1){
-                        $(this).removeAttr("disabled");
-                    }
-                });
-            }
-
-            dicipline.splice(dicipline.indexOf(thisVal),1);
-            thisVal=$(this).val();
-            dicipline.push(thisVal);
-
-            for(let j=1;j<6;j++){
-                var query="#diciplineSelect"+j+" option";
-                $(query).each(function () {
-                    if(dicipline.indexOf($(this).val())>-1){
-                        $(this).attr("disabled","disabled");
-                    }
-                });
-            }
-        });
-    }
-}

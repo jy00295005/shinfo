@@ -29,7 +29,13 @@
 }
 
 .element{
-    height: 400px;
+    height: 800px;
+}
+
+.mc-item{
+    max-width: 240px;
+    max-height: 30px;
+    overflow: hidden;
 }
 
 .highcharts-table-caption{
