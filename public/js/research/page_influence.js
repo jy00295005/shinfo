@@ -492,7 +492,7 @@ app.controller('controller', function($scope, $http) {
                 }
 
                 for(var i=0;i<length;i++){
-                    hqRatio[i]=hqAll[i]/sciAll[i];
+                    hqRatio[i]=(hqAll[i]/sciAll[i])*100;
                 }
 
                 var q1 = Highcharts.chart('hq', { // Q1
@@ -505,7 +505,7 @@ app.controller('controller', function($scope, $http) {
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value}',
+                            format: '{value}%',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -557,7 +557,7 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: hqRatio,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '%'
                         }
                     }],
                     exporting: {
@@ -771,7 +771,7 @@ app.controller('controller', function($scope, $http) {
                 }
 
                 for(var i=0;i<length;i++){
-                    cnsRatio[i]=cnsAll[i]/sciAll[i];
+                    cnsRatio[i]=(cnsAll[i]/sciAll[i])*100;
                 }
 
                 var q1 = Highcharts.chart('cns', { // Q1
@@ -784,7 +784,7 @@ app.controller('controller', function($scope, $http) {
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value}',
+                            format: '{value}%',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -836,7 +836,7 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: cnsRatio,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '%'
                         }
                     }],
                     exporting: {

@@ -379,8 +379,8 @@ app.controller('controller', function($scope, $http) {
                     q1All.push(q1);
                 }
 
-                for(var i=0;i<length;i++){
-                    q1Ratio[i]=q1All[i]/sciAll[i];
+                for(let i=0;i<length;i++){
+                    q1Ratio[i]=(q1All[i]/sciAll[i])*100;
                 }
 
                 var q1 = Highcharts.chart('q1', { // Q1
@@ -393,7 +393,7 @@ app.controller('controller', function($scope, $http) {
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value}',
+                            format: '{value}%',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -445,7 +445,7 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: q1Ratio,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '%'
                         }
                     }],
                     exporting: {
@@ -545,7 +545,7 @@ app.controller('controller', function($scope, $http) {
                 }
 
                 for(var i=0;i<length;i++){
-                    hqRatio[i]=hqAll[i]/sciAll[i];
+                    hqRatio[i]=(hqAll[i]/sciAll[i])*100;
                 }
 
                 var q1 = Highcharts.chart('hq', { // Q1
@@ -558,7 +558,7 @@ app.controller('controller', function($scope, $http) {
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value}',
+                            format: '{value}%',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -610,7 +610,7 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: hqRatio,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '%'
                         }
                     }],
                     exporting: {
@@ -710,7 +710,7 @@ app.controller('controller', function($scope, $http) {
                 }
 
                 for(var i=0;i<length;i++){
-                    hotRatio[i]=hotAll[i]/sciAll[i];
+                    hotRatio[i]=(hotAll[i]/sciAll[i])*100;
                 }
 
                 var q1 = Highcharts.chart('hot', { // Q1
@@ -723,7 +723,7 @@ app.controller('controller', function($scope, $http) {
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value}',
+                            format: '{value}%',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -775,7 +775,7 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: hotRatio,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '%'
                         }
                     }],
                     exporting: {
@@ -875,7 +875,7 @@ app.controller('controller', function($scope, $http) {
                 }
 
                 for(var i=0;i<length;i++){
-                    cnsRatio[i]=cnsAll[i]/sciAll[i];
+                    cnsRatio[i]=(cnsAll[i]/sciAll[i])*100;
                 }
 
                 var q1 = Highcharts.chart('cns', { // Q1
@@ -888,7 +888,7 @@ app.controller('controller', function($scope, $http) {
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
-                            format: '{value}',
+                            format: '{value}%',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -940,7 +940,7 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: cnsRatio,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '%'
                         }
                     }],
                     exporting: {
