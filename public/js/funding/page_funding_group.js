@@ -13,6 +13,11 @@ app.controller('controller', function($scope, $http) {
         });
 
     let field="Physical Science & Technology";
+
+    if(localStorage.getItem("funding_field")!=null){
+        field=localStorage.getItem("funding_field");
+    }
+
     let baseUrl="/shinfo/public/api/output/funding_group/"+field;
 
     // 筛选&刷新
@@ -32,6 +37,8 @@ app.controller('controller', function($scope, $http) {
         // 显示提示
         $(".info-display").css("display","flex");
         $(".info-display span")[0].innerHTML=field;
+
+        localStorage.setItem("funding_field", field);
 
         baseUrl="/shinfo/public/api/output/funding_group/"+field;
 
@@ -928,4 +935,7 @@ app.controller('controller', function($scope, $http) {
     $scope.getUKRI();
     $scope.getECERC();
     $scope.getNASA();
+
+    $(".info-display").css("display","flex");
+    $(".info-display span")[0].innerHTML=field;
 });

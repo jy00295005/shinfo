@@ -12,6 +12,11 @@ app.controller('controller', function($scope, $http) {
         });
 
     let field="Physical Science & Technology";
+
+    if(localStorage.getItem("funding_field")!=null){
+        field=localStorage.getItem("funding_field");
+    }
+
     let fundingUrl="/shinfo/public/api/output/funding/"+field;
 
     // 筛选&刷新
@@ -31,6 +36,8 @@ app.controller('controller', function($scope, $http) {
         // 显示提示
         $(".info-display").css("display","flex");
         $(".info-display span")[0].innerHTML=field;
+
+        localStorage.setItem("funding_field", field);
 
         fundingUrl="/shinfo/public/api/output/funding/"+field;
 
@@ -755,5 +762,8 @@ app.controller('controller', function($scope, $http) {
     };
 
     $scope.getFunding();
+
+    $(".info-display").css("display","flex");
+    $(".info-display span")[0].innerHTML=field;
 
 });

@@ -13,6 +13,11 @@ app.controller('controller', function($scope, $http) {
         });
 
     let cate="Fog Computing";
+
+    if(localStorage.getItem("patent_cate")!=null){
+        cate=localStorage.getItem("patent_cate");
+    }
+
     let patentUrl="/shinfo/public/api/output/patent_topic/"+cate;
 
     // 筛选&刷新
@@ -32,6 +37,8 @@ app.controller('controller', function($scope, $http) {
         // 显示提示
         $(".info-display").css("display","flex");
         $(".info-display span")[0].innerHTML=cate;
+
+        localStorage.setItem("patent_cate", cate);
 
         patentUrl="/shinfo/public/api/output/patent_topic/"+cate;
 
@@ -309,5 +316,8 @@ app.controller('controller', function($scope, $http) {
     };
 
     $scope.getPatent();
+
+    $(".info-display").css("display","flex");
+    $(".info-display span")[0].innerHTML=cate;
 
 });
