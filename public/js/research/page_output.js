@@ -25,9 +25,15 @@ app.controller('controller', function($scope, $http) {
         }
     };
 
-    var updateDate="2019-06-20";
-    var university="all";
-    var dicipline="all";
+    let updateDate="2019-06-20";
+    let university="all";
+    let dicipline="all";
+
+    if(localStorage.getItem("research_updateDate")!=null){
+        updateDate=localStorage.getItem("research_updateDate");
+        university=localStorage.getItem("research_university");
+        dicipline=localStorage.getItem("research_dicipline");
+    }
 
     var optionsUrl="/shinfo/public/api/output/get_options";
     var noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
@@ -38,7 +44,7 @@ app.controller('controller', function($scope, $http) {
     var cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
 
     $scope.filterss=function(){
-        var timeSlider = $("#timeslider").dateRangeSlider("values");
+        // var timeSlider = $("#timeslider").dateRangeSlider("values");
         university="";
         dicipline="";
         $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {
@@ -65,6 +71,10 @@ app.controller('controller', function($scope, $http) {
         $(".info-display span")[0].innerHTML=updateDate;
         $(".info-display span")[1].innerHTML=university;
         $(".info-display span")[2].innerHTML=dicipline;
+
+        localStorage.setItem("research_updateDate", updateDate);
+        localStorage.setItem("research_university", university);
+        localStorage.setItem("research_dicipline", dicipline);
 
         toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
         noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
@@ -1018,5 +1028,10 @@ app.controller('controller', function($scope, $http) {
     $scope.getHq();
     $scope.getHot();
     $scope.getCns();
+
+    $(".info-display").css("display","flex");
+    $(".info-display span")[0].innerHTML=updateDate;
+    $(".info-display span")[1].innerHTML=university;
+    $(".info-display span")[2].innerHTML=dicipline;
 
 });

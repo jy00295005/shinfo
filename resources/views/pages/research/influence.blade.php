@@ -1,6 +1,6 @@
 @extends("layouts.default")
 @section("content")
-    <div class="btn-toolbar my-4">
+    <div class="my-4">
         @include("filter.filter")
     </div>
 

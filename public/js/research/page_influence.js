@@ -31,6 +31,12 @@ app.controller('controller', function($scope, $http) {
     var university="all";
     var dicipline="all";
 
+    if(localStorage.getItem("research_updateDate")!=null){
+        updateDate=localStorage.getItem("research_updateDate");
+        university=localStorage.getItem("research_university");
+        dicipline=localStorage.getItem("research_dicipline");
+    }
+
     var optionsUrl="/shinfo/public/api/output/get_options";
     var noppUrl="/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
     var toppUrl="/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
@@ -67,6 +73,10 @@ app.controller('controller', function($scope, $http) {
         $(".info-display span")[0].innerHTML=updateDate;
         $(".info-display span")[1].innerHTML=university;
         $(".info-display span")[2].innerHTML=dicipline;
+
+        localStorage.setItem("research_updateDate", updateDate);
+        localStorage.setItem("research_university", university);
+        localStorage.setItem("research_dicipline", dicipline);
 
         toppUrl="/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
         noppUrl="/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
@@ -900,5 +910,10 @@ app.controller('controller', function($scope, $http) {
     $scope.getCoau();
     $scope.getCnci();
     $scope.getRf();
+
+    $(".info-display").css("display","flex");
+    $(".info-display span")[0].innerHTML=updateDate;
+    $(".info-display span")[1].innerHTML=university;
+    $(".info-display span")[2].innerHTML=dicipline;
 
 });
