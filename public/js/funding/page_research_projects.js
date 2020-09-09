@@ -19,11 +19,18 @@ app.controller('controller', function($scope, $http) {
 
     let fundingUrl="/shinfo/public/api/output/funding/"+field;
 
+    // $(document).ready(function(){
+    //     $(".checkboxs input[type='checkbox']").click(function () {
+    //         $scope.filterss();
+    //     });
+    //     $("#all2").click(function () {
+    //         $scope.filterss();
+    //     });
+    // });
+
     // 筛选&刷新
     $scope.filterss=function(){
-
         field="";
-
         // 多选框
         $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
             field=$(this).val();

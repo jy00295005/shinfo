@@ -45,8 +45,20 @@ app.controller('controller', function($scope, $http) {
     var cnciUrl="/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
     var rfUrl="/shinfo/public/api/output/high_quality_paper/RF/"+updateDate+"/"+university+"/"+dicipline;
 
+    $(document).ready(function(){
+        $(".checkboxs input[type='checkbox']").click(function () {
+            $scope.filterss();
+        });
+        $("#all1").click(function () {
+            $scope.filterss();
+        });
+        $("#all2").click(function () {
+            $scope.filterss();
+        });
+    });
+
     $scope.filterss=function(){
-        var timeSlider = $("#timeslider").dateRangeSlider("values");
+        // var timeSlider = $("#timeslider").dateRangeSlider("values");
         university="";
         dicipline="";
         $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {

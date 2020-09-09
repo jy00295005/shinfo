@@ -20,6 +20,15 @@ app.controller('controller', function($scope, $http) {
 
     let patentUrl="/shinfo/public/api/output/patent_topic/"+cate;
 
+    // $(document).ready(function(){
+    //     $(".checkboxs input[type='checkbox']").click(function () {
+    //         $scope.updateFilter();
+    //     });
+    //     $("#all2").click(function () {
+    //         $scope.updateFilter();
+    //     });
+    // });
+
     // 筛选&刷新
     $scope.updateFilter=function(){
 

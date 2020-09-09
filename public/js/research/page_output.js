@@ -43,6 +43,18 @@ app.controller('controller', function($scope, $http) {
     var hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
     var cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
 
+    $(document).ready(function(){
+        $(".checkboxs input[type='checkbox']").click(function () {
+            $scope.filterss();
+        });
+        $("#all1").click(function () {
+            $scope.filterss();
+        });
+        $("#all2").click(function () {
+            $scope.filterss();
+        });
+    });
+
     $scope.filterss=function(){
         // var timeSlider = $("#timeslider").dateRangeSlider("values");
         university="";

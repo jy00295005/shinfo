@@ -41,6 +41,14 @@ app.controller('controller', function($scope, $http) {
         $scope.filterss();
     };
 
+    // $(document).ready(function(){
+    //     $(".checkboxs input[type='checkbox']").click(function () {
+    //         $scope.filterss();
+    //     });
+    //     $("#all2").click(function () {
+    //         $scope.filterss();
+    //     });
+    // });
 
     // 筛选&刷新
     $scope.filterss=function(){
