@@ -1,118 +1,93 @@
-var app = angular.module('shinfo', []);
+changeNavbarLink(2);
+changeSidebarLink(2);
 
+let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
-    $scope.isFirst=true;
 
-    $scope.loadTime=function () {
-        if($scope.isFirst){
-            $("#timeslider").dateRangeSlider({
-                bounds: {
-                    min: new Date(2010, 2, 1),
-                    max: new Date(2020, 11, 31)
-                },
-                defaultValues: {
-                    min: new Date(2010, 3, 1),
-                    max: new Date(2020, 10, 31)
-                },
-                formatter: function(val){
-                    var year = val.getFullYear()+"年";
-                    return year;
-                },
-                step: {
-                    years: 1
-                }
-            });
-            $scope.isFirst=false;
-        }
-    };
-
-    var updateDate="2019-06-20";
-    var university="all";
-    var dicipline="all";
-
-    var optionsUrl="/shinfo/public/api/output/get_options";
-    var noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-    var hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-    var hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-    var cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
-
-    $scope.filterss=function(){
-        var timeSlider = $("#timeslider").dateRangeSlider("values");
-        university="";
-        dicipline="";
-        $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {
-            university+=","+$(this).val();
-        });
-
-        $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
-            dicipline+=","+$(this).val();
-        });
-
-        university=university.replace(",","");
-        dicipline=dicipline.replace(",","");
-        // updateDate=timeSlider.min.getFullYear()+"&"+timeSlider.max.getFullYear();
-
-        if(university=="") university="all"; // 如果没有选中项，默认全选
-        if(dicipline=="") dicipline="all";
-
-        console.log("时间范围："+updateDate);
-        console.log("机构选择："+university);
-        console.log("研究领域："+dicipline);
-
-        $(".info-display").css("display","flex");
-
-        $(".info-display span")[0].innerHTML=updateDate;
-        $(".info-display span")[1].innerHTML=university;
-        $(".info-display span")[2].innerHTML=dicipline;
-
-        toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
-        q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-        hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-        hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-        cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
-
-        $("#nopp").highcharts().showLoading();
-        $("#topp").highcharts().showLoading();
-        $("#q1").highcharts().showLoading();
-        $("#hq").highcharts().showLoading();
-        $("#hot").highcharts().showLoading();
-        $("#cns").highcharts().showLoading();
-
-        $scope.getNopp();
-        $scope.getTopp();
-        $scope.getQ1();
-        $scope.getHq();
-        $scope.getHot();
-        $scope.getCns();
-    }
+    // 获得选项
+    let optionsUrl="/shinfo/public/api/output/funding_opt";
 
     $http.get(optionsUrl)
         .success(function (response) {
-            $scope.universityName=response.universityName;
-            $scope.dicipline=response.dicipline;
+            $scope.fields=response.fields;
         });
 
-    $scope.getNopp=function(){
-        $http.get(noppUrl)
+    let field="Physical Science & Technology";
+
+    if(localStorage.getItem("funding_field")!=null){
+        field=localStorage.getItem("funding_field");
+    }
+
+    let baseUrl="/shinfo/public/api/output/funding_group/"+field;
+
+    // $(document).ready(function(){
+    //     $(".checkboxs input[type='checkbox']").click(function () {
+    //         $scope.filterss();
+    //     });
+    //     $("#all2").click(function () {
+    //         $scope.filterss();
+    //     });
+    // });
+
+    // 筛选&刷新
+    $scope.filterss=function(){
+
+        field="";
+
+        // 多选框
+        $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
+            field=$(this).val();
+        });
+
+        // 如果没有选中项，默认
+        if(field=="") field="Physical Science & Technology";
+        console.log("研究领域："+field);
+
+        // 显示提示
+        $(".info-display").css("display","flex");
+        $(".info-display span")[0].innerHTML=field;
+
+        localStorage.setItem("funding_field", field);
+
+        baseUrl="/shinfo/public/api/output/funding_group/"+field;
+
+        // 显示加载动画
+        $("#group-NIH").highcharts().showLoading();
+        $("#group-DOE").highcharts().showLoading();
+        $("#group-ECERC").highcharts().showLoading();
+        $("#group-DOD").highcharts().showLoading();
+        $("#group-UKRI").highcharts().showLoading();
+        $("#group-NASA").highcharts().showLoading();
+
+        // 刷新图表
+        $scope.getNIH();
+        $scope.getDOD();
+        $scope.getDOE();
+        $scope.getUKRI();
+        $scope.getECERC();
+        $scope.getNASA();
+    };
+
+    $scope.getNIH=function(){
+        $http.get(baseUrl+"/NIH")
             .success(function (response) {
-                var disUniName=[];
-                var uniPaperCount=[];
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
-                }
-                for(var i=0;i<response.length;i++){
-                    uniPaperCount.push(response[i]["uni_paper_count"]);
+
+                let fundingName=[];
+                let fundingUSD=[];
+                let fundingStr=[];
+
+                for(let i=0;i<response.length;i++){
+                    fundingName.push(response[i]["Org_stand"]);
+                    fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
-                var nopp = Highcharts.chart('nopp', { //number of published papers
+                let NIH = Highcharts.chart('group-NIH', {
                     title: {
-                        text: '发文总量'
+                        text: 'NIH'
                     },
                     xAxis: [{
-                        categories: disUniName,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
@@ -123,284 +98,7 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: '',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        }
-                    }],
-                    tooltip: {
-                        shared: true
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        align: 'left',
-                        x: 120,
-                        verticalAlign: 'top',
-                        y: 100,
-                        floating: true,
-                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-                    },
-                    series: [{
-                        name: '总量',
-                        type: 'column',
-                        yAxis: 0,
-                        data: uniPaperCount,
-                        tooltip: {
-                            valueSuffix: ' '
-                        }
-                    }],
-                    exporting: {
-                        showTable: true,
-                        allowHTML: true
-                    },
-                    plotOptions: {
-                        series: {
-                            cursor: 'pointer',
-                            events: {
-                                click: function (event) {
-                                    localStorage.setItem("uni",event.point.category);
-                                    localStorage.setItem("type","发文总量");
-                                    localStorage.setItem("cate",dicipline);
-                                    localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
-                                }
-                            }
-                        }
-                    }
-                }, function () {
-                    Highcharts.addEvent($('#nopp').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
-                        if (table) {
-
-                            // Apply styles inline because stylesheets are not passed to the exported SVG
-                            Highcharts.css(table.querySelector('table'), {
-                                'border-collapse': 'collapse',
-                                'border-spacing': 0,
-                                background: 'white',
-                                'min-width': '100%',
-                                'font-family': 'sans-serif',
-                                'font-size': '14px'
-                            });
-
-                            [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
-                                Highcharts.css(elem, {
-                                    border: '1px solid silver',
-                                    padding: '0.5em'
-                                });
-                            });
-
-                            Highcharts.css(table.querySelector('caption'), {
-                                'border-bottom': 'none',
-                                'font-size': '1.1em',
-                                'font-weight': 'bold'
-                            });
-
-                            [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
-                                if (i % 2) {
-                                    Highcharts.css(elem, {
-                                        background: '#f8f8f8'
-                                    });
-                                }
-                            });
-
-                            // Add the table as the subtitle to make it part of the export
-                            $("#noppModal .modal-title").html(this.title.textStr);
-                            $("#noppModal .modal-body").html(table.outerHTML);
-
-                            if (table.parentNode) {
-                                table.parentNode.removeChild(table);
-                            }
-                            delete this.dataTableDiv;
-                        }
-                    });
-                });
-
-                $("#nopp").highcharts().reflow();
-                $("#nopp").highcharts().hideLoading();
-            });
-    }
-
-    $scope.getTopp=function(){
-        $http.get(toppUrl)
-            .success(function (response) {
-                var uniName=[];
-                var trendData=[];
-                var length=0;
-                for (var key in response) {
-                    uniName.push(key);
-                    trendData.push(response[key]);
-                    length++;
-                }
-
-                var series=[];
-                for(var i=0; i<length; i++){
-                    var data={};
-                    var dataData=[];
-                    for(var year=2015;year<2020;year++){
-                        dataData.push(trendData[i][year]);
-                    }
-                    data.data=dataData;
-                    data.name=uniName[i];
-                    series.push(data);
-                }
-
-                var topp = Highcharts.chart('topp', { //trend of published papers
-                    title: {
-                        text: '年发文趋势'
-                    },
-                    yAxis: {
-                        title: {
-                            text: '年发文量'
-                        }
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        align: 'right',
-                        verticalAlign: 'middle'
-                    },
-                    series: series,
-                    responsive: {
-                        rules: [{
-                            condition: {
-                                maxWidth: 500
-                            },
-                            chartOptions: {
-                                legend: {
-                                    layout: 'horizontal',
-                                    align: 'center',
-                                    verticalAlign: 'bottom'
-                                }
-                            }
-                        }]
-                    },
-                    exporting: {
-                        showTable: true,
-                        allowHTML: true
-                    },
-                    loading: {
-                        hideDuration: 1000,
-                        showDuration: 1000
-                    },
-                    plotOptions: {
-                        series: {
-                            label: {
-                                connectorAllowed: false
-                            },
-                            pointStart: 2015,
-                            cursor: 'pointer',
-                            events: {
-                                click: function (event) {
-                                    localStorage.setItem("uni",event.point.series.name);
-                                    localStorage.setItem("type","年发文趋势");
-                                    localStorage.setItem("cate",dicipline);
-                                    localStorage.setItem("year",event.point.category);
-                                    localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
-                                }
-                            }
-                        }
-                    }
-                }, function () {
-                    Highcharts.addEvent($('#topp').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
-                        if (table) {
-                            // Apply styles inline because stylesheets are not passed to the exported SVG
-                            Highcharts.css(table.querySelector('table'), {
-                                'border-collapse': 'collapse',
-                                'border-spacing': 0,
-                                background: 'white',
-                                'min-width': '100%',
-                                'font-family': 'sans-serif',
-                                'font-size': '14px'
-                            });
-
-                            [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
-                                Highcharts.css(elem, {
-                                    border: '1px solid silver',
-                                    padding: '0.5em'
-                                });
-                            });
-
-                            Highcharts.css(table.querySelector('caption'), {
-                                'border-bottom': 'none',
-                                'font-size': '1.1em',
-                                'font-weight': 'bold'
-                            });
-
-                            [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
-                                if (i % 2) {
-                                    Highcharts.css(elem, {
-                                        background: '#f8f8f8'
-                                    });
-                                }
-                            });
-
-                            // Add the table as the subtitle to make it part of the export
-                            $("#toppModal .modal-title").html(this.title.textStr);
-                            $("#toppModal .modal-body").html(table.outerHTML);
-
-                            if (table.parentNode) {
-                                table.parentNode.removeChild(table);
-                            }
-                            delete this.dataTableDiv;
-                        }
-                    });
-                });
-
-                $("#topp").highcharts().reflow();
-                $("#topp").highcharts().hideLoading();
-            });
-    }
-
-    $scope.getQ1=function(){
-        $http.get(q1Url)
-            .success(function (response) {
-                var disUniName=[];
-                var allData=[];
-                var sciAll=[];
-                var q1All=[];
-                var q1Ratio=[];
-
-                var length=0;
-                for (var key in response) {
-                    disUniName.push(key);
-                    allData.push(response[key]);
-                    length++;
-                }
-
-                for(var i=0;i<length;i++){
-                    var sci=0;
-                    var q1=0;
-                    for(var j=0;j<allData[i].length;j++) {
-                        sci+=allData[i][j]["SCI论文总数"];
-                        q1+=allData[i][j]["Q1论文数量"];
-                    }
-                    sciAll.push(sci);
-                    q1All.push(q1);
-                }
-
-                for(var i=0;i<length;i++){
-                    q1Ratio[i]=q1All[i]/sciAll[i];
-                }
-
-                var q1 = Highcharts.chart('q1', { // Q1
-                    title: {
-                        text: 'Q1文章及比例'
-                    },
-                    xAxis: [{
-                        categories: disUniName,
-                        crosshair: true
-                    }],
-                    yAxis: [{ // Primary yAxis
-                        labels: {
-                            format: '{value}',
-                            style: {
-                                color: Highcharts.getOptions().colors[1]
-                            }
-                        },
-                        title: {
-                            text: 'Q1文章比例',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -409,13 +107,13 @@ app.controller('controller', function($scope, $http) {
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
-                                'Q1文章数量',
+                                '美金',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         },
                         labels: {
-                            format: '{value}',
+                            format: '{value} (百万)',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
@@ -434,17 +132,17 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: 'Q1文章数量',
+                        name: 'USD',
                         type: 'column',
                         yAxis: 1,
-                        data: q1All,
+                        data: fundingUSD,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '百万'
                         }
                     }, {
-                        name: 'Q1文章比例',
+                        name: '资助强度',
                         type: 'spline',
-                        data: q1Ratio,
+                        data: fundingStr,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -457,20 +155,15 @@ app.controller('controller', function($scope, $http) {
                         series: {
                             cursor: 'pointer',
                             events: {
-                                click: function (event) {
-                                    localStorage.setItem("uni",event.point.category);
-                                    localStorage.setItem("type",this.name);
-                                    localStorage.setItem("cate",dicipline);
-                                    localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
-                                }
+                                click: function (event) {}
                             }
                         }
                     }
                 }, function () {
-                    Highcharts.addEvent($('#q1').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                    Highcharts.addEvent($('#group-NIH').highcharts(), 'render', function () {
+                        let table = this.dataTableDiv;
                         if (table) {
+
                             // Apply styles inline because stylesheets are not passed to the exported SVG
                             Highcharts.css(table.querySelector('table'), {
                                 'border-collapse': 'collapse',
@@ -503,8 +196,8 @@ app.controller('controller', function($scope, $http) {
                             });
 
                             // Add the table as the subtitle to make it part of the export
-                            $("#q1Modal .modal-title").html(this.title.textStr);
-                            $("#q1Modal .modal-body").html(table.outerHTML);
+                            $("#groupNIHModal .modal-title").html(this.title.textStr);
+                            $("#groupNIHModal .modal-body").html(table.outerHTML);
 
                             if (table.parentNode) {
                                 table.parentNode.removeChild(table);
@@ -513,48 +206,33 @@ app.controller('controller', function($scope, $http) {
                         }
                     });
                 });
-                $("#q1").highcharts().reflow();
-                $("#q1").highcharts().hideLoading();
+
+                // 刷新数据
+                $("#group-NIH").highcharts().reflow();
+                $("#group-NIH").highcharts().hideLoading();
             });
-    }
+    };
 
-    $scope.getHq=function(){
-        $http.get(hqUrl)
+    $scope.getDOD=function(){
+        $http.get(baseUrl+"/NSF")
             .success(function (response) {
-                var disUniName=[];
-                var allData=[];
-                var sciAll=[];
-                var hqAll=[];
-                var hqRatio=[];
 
-                var length=0;
-                for (var key in response) {
-                    disUniName.push(key);
-                    allData.push(response[key]);
-                    length++;
+                let fundingName=[];
+                let fundingUSD=[];
+                let fundingStr=[];
+
+                for(let i=0;i<response.length;i++){
+                    fundingName.push(response[i]["Org_stand"]);
+                    fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
-                for(var i=0;i<length;i++){
-                    var sci=0;
-                    var hq=0;
-                    for(var j=0;j<allData[i].length;j++) {
-                        sci+=allData[i][j]["SCI论文总数"];
-                        hq+=allData[i][j]["高被引论文数"];
-                    }
-                    sciAll.push(sci);
-                    hqAll.push(hq);
-                }
-
-                for(var i=0;i<length;i++){
-                    hqRatio[i]=hqAll[i]/sciAll[i];
-                }
-
-                var q1 = Highcharts.chart('hq', { // Q1
+                let DOD = Highcharts.chart('group-DOD', {
                     title: {
-                        text: '高被引论文及比例'
+                        text: 'NSF'
                     },
                     xAxis: [{
-                        categories: disUniName,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
@@ -565,7 +243,7 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: '高被引论文比例',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -574,13 +252,13 @@ app.controller('controller', function($scope, $http) {
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
-                                '高被引论文数量',
+                                '美金',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         },
                         labels: {
-                            format: '{value}',
+                            format: '{value} (百万)',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
@@ -599,17 +277,17 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '高被引论文数量',
+                        name: 'USD',
                         type: 'column',
                         yAxis: 1,
-                        data: hqAll,
+                        data: fundingUSD,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '百万'
                         }
                     }, {
-                        name: '高被引论文比例',
+                        name: '资助强度',
                         type: 'spline',
-                        data: hqRatio,
+                        data: fundingStr,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -622,20 +300,15 @@ app.controller('controller', function($scope, $http) {
                         series: {
                             cursor: 'pointer',
                             events: {
-                                click: function (event) {
-                                    localStorage.setItem("uni",event.point.category);
-                                    localStorage.setItem("type",this.name);
-                                    localStorage.setItem("cate",dicipline);
-                                    localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
-                                }
+                                click: function (event) {}
                             }
                         }
                     }
                 }, function () {
-                    Highcharts.addEvent($('#hq').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                    Highcharts.addEvent($('#group-DOD').highcharts(), 'render', function () {
+                        let table = this.dataTableDiv;
                         if (table) {
+
                             // Apply styles inline because stylesheets are not passed to the exported SVG
                             Highcharts.css(table.querySelector('table'), {
                                 'border-collapse': 'collapse',
@@ -668,8 +341,8 @@ app.controller('controller', function($scope, $http) {
                             });
 
                             // Add the table as the subtitle to make it part of the export
-                            $("#hqModal .modal-title").html(this.title.textStr);
-                            $("#hqModal .modal-body").html(table.outerHTML);
+                            $("#groupDODModal .modal-title").html(this.title.textStr);
+                            $("#groupDODModal .modal-body").html(table.outerHTML);
 
                             if (table.parentNode) {
                                 table.parentNode.removeChild(table);
@@ -678,48 +351,33 @@ app.controller('controller', function($scope, $http) {
                         }
                     });
                 });
-                $("#hq").highcharts().reflow();
-                $("#hq").highcharts().hideLoading();
+
+                // 刷新数据
+                $("#group-DOD").highcharts().reflow();
+                $("#group-DOD").highcharts().hideLoading();
             });
-    }
+    };
 
-    $scope.getHot=function(){
-        $http.get(hotUrl)
+    $scope.getDOE=function(){
+        $http.get(baseUrl+"/DOE")
             .success(function (response) {
-                var disUniName=[];
-                var allData=[];
-                var sciAll=[];
-                var hotAll=[];
-                var hotRatio=[];
 
-                var length=0;
-                for (var key in response) {
-                    disUniName.push(key);
-                    allData.push(response[key]);
-                    length++;
+                let fundingName=[];
+                let fundingUSD=[];
+                let fundingStr=[];
+
+                for(let i=0;i<response.length;i++){
+                    fundingName.push(response[i]["Org_stand"]);
+                    fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
-                for(var i=0;i<length;i++){
-                    var sci=0;
-                    var hot=0;
-                    for(var j=0;j<allData[i].length;j++) {
-                        sci+=allData[i][j]["SCI论文总数"];
-                        hot+=allData[i][j]["热点论文数"];
-                    }
-                    sciAll.push(sci);
-                    hotAll.push(hot);
-                }
-
-                for(var i=0;i<length;i++){
-                    hotRatio[i]=hotAll[i]/sciAll[i];
-                }
-
-                var q1 = Highcharts.chart('hot', { // Q1
+                let DOE = Highcharts.chart('group-DOE', {
                     title: {
-                        text: '热点论文及比例'
+                        text: 'DOE'
                     },
                     xAxis: [{
-                        categories: disUniName,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
@@ -730,7 +388,7 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: '热点论文比例',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -739,17 +397,17 @@ app.controller('controller', function($scope, $http) {
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
-                                '热点论文数量',
+                                '美金',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         },
                         labels: {
-                            format: '{value}',
+                            format: '{value} (百万)',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
-                        }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -764,17 +422,17 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: '热点论文数量',
+                        name: 'USD',
                         type: 'column',
                         yAxis: 1,
-                        data: hotAll,
+                        data: fundingUSD,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '百万'
                         }
                     }, {
-                        name: '热点论文比例',
+                        name: '资助强度',
                         type: 'spline',
-                        data: hotRatio,
+                        data: fundingStr,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -787,20 +445,15 @@ app.controller('controller', function($scope, $http) {
                         series: {
                             cursor: 'pointer',
                             events: {
-                                click: function (event) {
-                                    localStorage.setItem("uni",event.point.category);
-                                    localStorage.setItem("type",this.name);
-                                    localStorage.setItem("cate",dicipline);
-                                    localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
-                                }
+                                click: function (event) {}
                             }
                         }
                     }
                 }, function () {
-                    Highcharts.addEvent($('#hot').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                    Highcharts.addEvent($('#group-DOE').highcharts(), 'render', function () {
+                        let table = this.dataTableDiv;
                         if (table) {
+
                             // Apply styles inline because stylesheets are not passed to the exported SVG
                             Highcharts.css(table.querySelector('table'), {
                                 'border-collapse': 'collapse',
@@ -833,8 +486,8 @@ app.controller('controller', function($scope, $http) {
                             });
 
                             // Add the table as the subtitle to make it part of the export
-                            $("#hotModal .modal-title").html(this.title.textStr);
-                            $("#hotModal .modal-body").html(table.outerHTML);
+                            $("#groupDOEModal .modal-title").html(this.title.textStr);
+                            $("#groupDOEModal .modal-body").html(table.outerHTML);
 
                             if (table.parentNode) {
                                 table.parentNode.removeChild(table);
@@ -843,48 +496,33 @@ app.controller('controller', function($scope, $http) {
                         }
                     });
                 });
-                $("#hot").highcharts().reflow();
-                $("#hot").highcharts().hideLoading();
+
+                // 刷新数据
+                $("#group-DOE").highcharts().reflow();
+                $("#group-DOE").highcharts().hideLoading();
             });
-    }
+    };
 
-    $scope.getCns=function(){
-        $http.get(cnsUrl)
+    $scope.getUKRI=function(){
+        $http.get(baseUrl+"/UKRI")
             .success(function (response) {
-                var disUniName=[];
-                var allData=[];
-                var sciAll=[];
-                var cnsAll=[];
-                var cnsRatio=[];
 
-                var length=0;
-                for (var key in response) {
-                    disUniName.push(key);
-                    allData.push(response[key]);
-                    length++;
+                let fundingName=[];
+                let fundingUSD=[];
+                let fundingStr=[];
+
+                for(let i=0;i<response.length;i++){
+                    fundingName.push(response[i]["Org_stand"]);
+                    fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
                 }
 
-                for(var i=0;i<length;i++){
-                    var sci=0;
-                    var cns=0;
-                    for(var j=0;j<allData[i].length;j++) {
-                        sci+=allData[i][j]["SCI论文总数"];
-                        cns+=allData[i][j]["CNS论文数"];
-                    }
-                    sciAll.push(sci);
-                    cnsAll.push(cns);
-                }
-
-                for(var i=0;i<length;i++){
-                    cnsRatio[i]=cnsAll[i]/sciAll[i];
-                }
-
-                var q1 = Highcharts.chart('cns', { // Q1
+                let UKRI = Highcharts.chart('group-UKRI', {
                     title: {
-                        text: 'CNS论文及比例'
+                        text: 'UKRI'
                     },
                     xAxis: [{
-                        categories: disUniName,
+                        categories: fundingName,
                         crosshair: true
                     }],
                     yAxis: [{ // Primary yAxis
@@ -895,7 +533,7 @@ app.controller('controller', function($scope, $http) {
                             }
                         },
                         title: {
-                            text: 'CNS论文比例',
+                            text: '资助强度',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
@@ -904,17 +542,17 @@ app.controller('controller', function($scope, $http) {
                     }, { // Secondary yAxis
                         title: {
                             text: '\n' +
-                                'CNS论文数量',
+                                '美金',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
                         },
                         labels: {
-                            format: '{value}',
+                            format: '{value} (百万)',
                             style: {
                                 color: Highcharts.getOptions().colors[0]
                             }
-                        }
+                        },
                     }],
                     tooltip: {
                         shared: true
@@ -929,17 +567,17 @@ app.controller('controller', function($scope, $http) {
                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: 'CNS论文数量',
+                        name: 'USD',
                         type: 'column',
                         yAxis: 1,
-                        data: cnsAll,
+                        data: fundingUSD,
                         tooltip: {
-                            valueSuffix: ''
+                            valueSuffix: '百万'
                         }
                     }, {
-                        name: 'CNS论文比例',
+                        name: '资助强度',
                         type: 'spline',
-                        data: cnsRatio,
+                        data: fundingStr,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -952,20 +590,15 @@ app.controller('controller', function($scope, $http) {
                         series: {
                             cursor: 'pointer',
                             events: {
-                                click: function (event) {
-                                    localStorage.setItem("uni",event.point.category);
-                                    localStorage.setItem("type",this.name);
-                                    localStorage.setItem("cate",dicipline);
-                                    localStorage.setItem("ifdg",false);
-                                    window.open("test/list");
-                                }
+                                click: function (event) {}
                             }
                         }
                     }
                 }, function () {
-                    Highcharts.addEvent($('#cns').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                    Highcharts.addEvent($('#group-UKRI').highcharts(), 'render', function () {
+                        let table = this.dataTableDiv;
                         if (table) {
+
                             // Apply styles inline because stylesheets are not passed to the exported SVG
                             Highcharts.css(table.querySelector('table'), {
                                 'border-collapse': 'collapse',
@@ -998,8 +631,8 @@ app.controller('controller', function($scope, $http) {
                             });
 
                             // Add the table as the subtitle to make it part of the export
-                            $("#cnsModal .modal-title").html(this.title.textStr);
-                            $("#cnsModal .modal-body").html(table.outerHTML);
+                            $("#groupUKRIModal .modal-title").html(this.title.textStr);
+                            $("#groupUKRIModal .modal-body").html(table.outerHTML);
 
                             if (table.parentNode) {
                                 table.parentNode.removeChild(table);
@@ -1008,16 +641,310 @@ app.controller('controller', function($scope, $http) {
                         }
                     });
                 });
-                $("#cns").highcharts().reflow();
-                $("#cns").highcharts().hideLoading();
+
+                // 刷新数据
+                $("#group-UKRI").highcharts().reflow();
+                $("#group-UKRI").highcharts().hideLoading();
             });
-    }
+    };
 
-    $scope.getNopp();
-    $scope.getTopp();
-    $scope.getQ1();
-    $scope.getHq();
-    $scope.getHot();
-    $scope.getCns();
+    $scope.getECERC=function(){
+        $http.get(baseUrl+"/EC-ERC")
+            .success(function (response) {
 
+                let fundingName=[];
+                let fundingUSD=[];
+                let fundingStr=[];
+
+                for(let i=0;i<response.length;i++){
+                    fundingName.push(response[i]["Org_stand"]);
+                    fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
+                }
+
+                let ECERC = Highcharts.chart('group-ECERC', {
+                    title: {
+                        text: 'EC-ERH'
+                    },
+                    xAxis: [{
+                        categories: fundingName,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: '资助强度',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                    },
+                    series: [{
+                        name: 'USD',
+                        type: 'column',
+                        yAxis: 1,
+                        data: fundingUSD,
+                        tooltip: {
+                            valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
+                        }
+                    }],
+                    exporting: {
+                        showTable: true,
+                        allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {}
+                            }
+                        }
+                    }
+                }, function () {
+                    Highcharts.addEvent($('#group-ECERC').highcharts(), 'render', function () {
+                        let table = this.dataTableDiv;
+                        if (table) {
+
+                            // Apply styles inline because stylesheets are not passed to the exported SVG
+                            Highcharts.css(table.querySelector('table'), {
+                                'border-collapse': 'collapse',
+                                'border-spacing': 0,
+                                background: 'white',
+                                'min-width': '100%',
+                                'font-family': 'sans-serif',
+                                'font-size': '14px'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                                Highcharts.css(elem, {
+                                    border: '1px solid silver',
+                                    padding: '0.5em'
+                                });
+                            });
+
+                            Highcharts.css(table.querySelector('caption'), {
+                                'border-bottom': 'none',
+                                'font-size': '1.1em',
+                                'font-weight': 'bold'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                                if (i % 2) {
+                                    Highcharts.css(elem, {
+                                        background: '#f8f8f8'
+                                    });
+                                }
+                            });
+
+                            // Add the table as the subtitle to make it part of the export
+                            $("#groupECERCModal .modal-title").html(this.title.textStr);
+                            $("#groupECERCModal .modal-body").html(table.outerHTML);
+
+                            if (table.parentNode) {
+                                table.parentNode.removeChild(table);
+                            }
+                            delete this.dataTableDiv;
+                        }
+                    });
+                });
+
+                // 刷新数据
+                $("#group-ECERC").highcharts().reflow();
+                $("#group-ECERC").highcharts().hideLoading();
+            });
+    };
+
+    $scope.getNASA=function(){
+        $http.get(baseUrl+"/NASA")
+            .success(function (response) {
+
+                let fundingName=[];
+                let fundingUSD=[];
+                let fundingStr=[];
+
+                for(let i=0;i<response.length;i++){
+                    fundingName.push(response[i]["Org_stand"]);
+                    fundingUSD.push(response[i]["FundingUSD"]/1000000);
+                    fundingStr.push(parseFloat(response[i]["funding_str"].toString().slice(0,7)));
+                }
+
+                let NASA = Highcharts.chart('group-NASA', {
+                    title: {
+                        text: 'NASA'
+                    },
+                    xAxis: [{
+                        categories: fundingName,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: '资助强度',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    }, { // Secondary yAxis
+                        title: {
+                            text: '\n' +
+                                '美金',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} (百万)',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                    },
+                    series: [{
+                        name: 'USD',
+                        type: 'column',
+                        yAxis: 1,
+                        data: fundingUSD,
+                        tooltip: {
+                            valueSuffix: '百万'
+                        }
+                    }, {
+                        name: '资助强度',
+                        type: 'spline',
+                        data: fundingStr,
+                        tooltip: {
+                            valueSuffix: ''
+                        }
+                    }],
+                    exporting: {
+                        showTable: true,
+                        allowHTML: true
+                    },
+                    plotOptions: {
+                        series: {
+                            cursor: 'pointer',
+                            events: {
+                                click: function (event) {}
+                            }
+                        }
+                    }
+                }, function () {
+                    Highcharts.addEvent($('#group-NASA').highcharts(), 'render', function () {
+                        let table = this.dataTableDiv;
+                        if (table) {
+
+                            // Apply styles inline because stylesheets are not passed to the exported SVG
+                            Highcharts.css(table.querySelector('table'), {
+                                'border-collapse': 'collapse',
+                                'border-spacing': 0,
+                                background: 'white',
+                                'min-width': '100%',
+                                'font-family': 'sans-serif',
+                                'font-size': '14px'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('td, th, caption'), function (elem) {
+                                Highcharts.css(elem, {
+                                    border: '1px solid silver',
+                                    padding: '0.5em'
+                                });
+                            });
+
+                            Highcharts.css(table.querySelector('caption'), {
+                                'border-bottom': 'none',
+                                'font-size': '1.1em',
+                                'font-weight': 'bold'
+                            });
+
+                            [].forEach.call(table.querySelectorAll('caption, tr'), function (elem, i) {
+                                if (i % 2) {
+                                    Highcharts.css(elem, {
+                                        background: '#f8f8f8'
+                                    });
+                                }
+                            });
+
+                            // Add the table as the subtitle to make it part of the export
+                            $("#groupNASAModal .modal-title").html(this.title.textStr);
+                            $("#groupNASAModal .modal-body").html(table.outerHTML);
+
+                            if (table.parentNode) {
+                                table.parentNode.removeChild(table);
+                            }
+                            delete this.dataTableDiv;
+                        }
+                    });
+                });
+
+                // 刷新数据
+                $("#group-NASA").highcharts().reflow();
+                $("#group-NASA").highcharts().hideLoading();
+            });
+    };
+
+    $scope.getNIH();
+    $scope.getDOD();
+    $scope.getDOE();
+    $scope.getUKRI();
+    $scope.getECERC();
+    $scope.getNASA();
+
+    $(".info-display").css("display","flex");
+    $(".info-display span")[0].innerHTML=field;
 });

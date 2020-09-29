@@ -1,75 +1,91 @@
-var app = angular.module('shinfo', []);
+changeSidebarLink(3);
 
+let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
-    $scope.orgName=[];
-    let field="Physical Science & Technology";
-    let org="Michigan State University";
-    let orgUrl="/shinfo/public/api/output/get_funding_coo_top_orgs/"+field;
-    let cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
+    let updateDate="2019-06-20";
+    let uni="上交大";
+    let dic="Physics";
+    let optionsUrl="/shinfo/public/api/output/get_options";
+    let cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
 
-    $http.get(orgUrl)
+    let interval=400;
+
+    $scope.zoomUp=function(){
+        interval+=100;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
+
+    $scope.zoomDown=function(){
+        interval-=100;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
+
+    $http.get(optionsUrl)
         .success(function (response) {
-            for(let i=0;i<response.length;i++){
-                $scope.orgName.push(response[i]["org"]);
-            }
+            $scope.universityName=response.universityName;
+            $scope.dicipline=response.dicipline;
         });
 
-    $("#org").change(function () {
-        org=$(this).val();
-        cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
+    $("#institution").change(function () {
+        uni=$(this).val();
+        cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
     });
 
-    $("#field").change(function () {
-        field=$(this).val();
-        cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
+    $("#dicipline").change(function () {
+        dic=$(this).val();
+        cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
     });
 
     $scope.getCoo=function(){
-        var svg = d3.select("#coo"),
+        let svg = d3.select("#coo"),
             width = +$("#coo").width(),
             height = +svg.attr("height");
 
-        var color = d3.scaleOrdinal(d3.schemeCategory20);
+        let color = d3.scaleOrdinal(d3.schemeCategory20);
 
-        var simulation = d3.forceSimulation()
+        let simulation = d3.forceSimulation()
             .alphaDecay(0.05)
             .alphaMin(0.1)
             .velocityDecay(0.5)
             .force("link", d3.forceLink()
                 .id(function(d) { return d.id; })
-                .distance(60)
+                .distance(interval)
             )
             .force("charge", d3.forceManyBody())
             // .force("charge",d3.forceManyBody().strength(-10))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         d3.json(cooUrl, function(error, graph) {
-            var link = svg.append("g")
+            let link = svg.append("g")
                 .attr("class", "links")
                 .selectAll("line")
                 .data(graph.links)
                 .enter().append("line")
                 .attr("stroke-width", function(d) { return Math.sqrt(d.weight); });
 
-            var node = svg.append("g")
+            let node = svg.append("g")
                 .attr("class", "nodes")
                 .selectAll("g")
                 .data(graph.nodes)
                 .enter().append("g");
 
             // Define the div for the tooltip
-            var div = d3.select("body").append("div")
+            let div = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-            var circles = node.append("circle")
+            let circles = node.append("circle")
                 .attr("r", function (d) {
                     return Math.sqrt(d.size)*4;
                 })
@@ -92,7 +108,7 @@ app.controller('controller', function($scope, $http) {
                         .style("opacity", 0);
                 });
 
-            var lables = node.append("text")
+            let lables = node.append("text")
                 .text(function(d) {
                     return d.id;
                 })
@@ -138,6 +154,14 @@ app.controller('controller', function($scope, $http) {
                 d.fx = null;
                 d.fy = null;
             }
+
+            $("circle").click(function () {
+                localStorage.setItem("uni",uni);
+                localStorage.setItem("cate",dic);
+                localStorage.setItem("keyWord",$(this).parent()[0].lastChild.innerHTML);
+                localStorage.setItem("ifdg",true);
+                window.open("list");
+            });
         });
     };
 

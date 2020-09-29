@@ -10,7 +10,7 @@
 
     <div class="row col-12 px-0 mx-0">
         <div class="col-lg-2 col-xl-2 float-left pt-4 side-customize px-0">
-            @include('sidebar.sidebar')
+            @include('sidebar.sidebar_patent')
         </div>
 
         <div class="col-lg-10 col-xl-10">

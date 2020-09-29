@@ -12,53 +12,66 @@
 |
 */
 
-Route::get('/', function () {
+// research pages
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/paper', function () {
-    return view('paper');
+Route::get('/platform', function () {
+    return view('pages.research.home');
 });
 
-Route::get('/paper/research_subs', function () {
-    return view('research_subs');
+Route::get('/platform/influence', function () {
+    return view('pages.research.influence');
 });
 
-Route::get('/paper/compare', function () {
-    return view('compare');
+Route::get('/platform/multiple_comparison', function () {
+    return view('pages.research.multiple_comparison');
 });
 
-// pages
-
-Route::get('/test', function () {
-    return view('pages.home');
+Route::get('/platform/subject_analyzing', function () {
+    return view('pages.research.subject_analyzing');
 });
 
-Route::get('/test/influence', function () {
-    return view('pages.influence');
+
+// funding pages
+
+Route::get('/platform/research_projects', function () {
+    return view('pages.funding.research_projects');
 });
 
-Route::get('/test/multiple_comparison', function () {
-    return view('pages.multiple_comparison');
+Route::get('/platform/funding_group', function () {
+    return view('pages.funding.funding_group');
 });
 
-Route::get('/test/subject_analyzing', function () {
-    return view('pages.subject_analyzing');
+Route::get('/platform/funding_analyzing', function () {
+    return view('pages.funding.funding_analyzing');
 });
 
-Route::get('/test/research_projects', function () {
-    return view('pages.research_projects');
+Route::get('/platform/funding_theme', function () {
+    return view('pages.funding.funding_theme');
 });
 
-Route::get('/test/funding_group', function () {
-    return view('pages.funding_group');
+
+// patent pages
+
+Route::get('/platform/patent_application', function () {
+    return view('pages.patent.patent_application');
 });
 
-Route::get('/test/funding_analyzing', function () {
-    return view('pages.funding_analyzing');
+Route::get('/platform/patent_matrix', function () {
+    return view('pages.patent.patent_matrix');
 });
 
-Route::get('/test/list', function () {
+Route::get('/platform/patent_theme', function () {
+    return view('pages.patent.patent_theme');
+});
+
+
+// other pages
+
+Route::get('/platform/list', function () {
     return view('pages.list');
 });
 
@@ -86,15 +99,19 @@ Route::group(['as' => 'api::'], function () {
             '上交大', '上科大', '中科大', '剑桥', '加州伯克利', '加州理工', 
             '北大', '南科大', '哈佛', '国科大', '复旦', '斯坦福', '清华', 
             '牛津', '苏黎世理工', '麻省理工'];
+
         $dicipline=[
             'Physics', 'Chemistry', 'Molecular Biology & Genetics', 'Biology & Biochemistry',
             'Neuroscience & Behavior', 'Engineering', 'Materials Science', 'Computer Science', 
             'Immunology','Microbiology'];
 
+        $patent_cate = ['Fog Computing'];
+
         return [
                 'time_range'=>$time_range,
                 'universityName'=>$universityName,
-                'dicipline'=>$dicipline
+                'dicipline'=>$dicipline,
+                'patent_cate'=>$patent_cate                
                 ];
     }]);
 
@@ -165,11 +182,7 @@ Route::group(['as' => 'api::'], function () {
                 break;
         }
 
-        return $return;
-        
-        
-
-       
+        return $return;       
     }]);
 
     ##项目分析~按照文档的要求返回6个结果
@@ -205,9 +218,12 @@ Route::group(['as' => 'api::'], function () {
         return $return;
     }]);
 
+    ###专利接口###
+    Route::get('api/output/patent_yearly_trend/{cate}', 'api@patent_yearly_trend');
+    Route::get('api/output/patent_mix/{cate}', 'api@patent_mix');
+    Route::get('api/output/patent_topic/{cate}', 'api@patent_topic');
 
-    // 
-
+    // test
     // #机构被引次数统计
     // Route::get('api/output/inst_citation_count/{update_time}/{uni}/{cate}', 'api@show_unv_citaion');
 

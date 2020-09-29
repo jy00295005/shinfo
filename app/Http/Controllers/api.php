@@ -537,7 +537,7 @@ class Api extends Controller
 
     }
 
-     public function show_funding_coo_top_orgs($field='Physical Science & Technology')
+    public function show_funding_coo_top_orgs($field='Physical Science & Technology')
     {   
         return DB::table('funding_cooccurrence')
                         ->select(DB::raw('org,count(org) as org_count'))
@@ -546,5 +546,145 @@ class Api extends Controller
                         ->orderBy('org_count', 'desc')
                         ->get();
     }
+
+    public function patent_yearly_trend($cate='Fog Computing')
+    {
+
+        $app_year = DB::select("select app_year as 'application_year', count(app_year) as count from patent where cate = '".$cate."' group by app_year order by app_year");
+
+        $pub_year = DB::select("select pub_year as 'public_year', count(pub_year) as count from patent where cate = '".$cate."' group by pub_year order by pub_year");
+
+        $app_country = DB::select("select app_country as 'app_country', count(app_country) as count from patent where cate = '".$cate."' group by app_country order by count desc limit 10");
+
+        $applicant = DB::select("select applicant as 'applicant', count(applicant) as count from pat_applicant where cate = '".$cate."' group by applicant order by count desc limit 10");
+
+        $IPC = DB::select("select ipc_subgroup as 'IPC', count(ipc_subgroup) as count from pat_ipc_subgroup where cate = '".$cate."' group by ipc_subgroup order by count desc limit 10");
+
+
+        return [
+            'app_year'=>$app_year,
+            'pub_year'=>$pub_year,
+            'app_country'=>$app_country,
+            'applicant'=>$applicant,
+            'IPC'=>$IPC,
+        ];
+    }
+
+    public function patent_mix($cate='Fog Computing')
+    {
+        $top_countries = DB::select("select app_country as 'app_country' from patent where cate = '".$cate."' group by app_country order by count(app_country) desc limit 10");
+        $top_countries_li =array();
+        foreach ($top_countries as $key => $value) {
+            array_push($top_countries_li,$value->app_country);
+        }
+        $top_countries_str = "'" . implode ( "', '", $top_countries_li ) . "'";
+
+
+        $top_IPC = DB::select("select ipc_subgroup as 'IPC' from pat_ipc_subgroup where cate = '".$cate."' group by ipc_subgroup order by count(ipc_subgroup) desc limit 10");
+        $top_IPC_li =array();
+        foreach ($top_IPC as $key => $value) {
+            array_push($top_IPC_li,$value->IPC);
+        }
+        $top_IPC_str = "'" . implode ( "', '", $top_IPC_li ) . "'";
+
+
+        $top_applicant = DB::select("select applicant as 'applicant' from pat_applicant where cate = '".$cate."' group by applicant order by count(applicant) desc limit 10");
+        $top_applicant_li =array();
+        foreach ($top_applicant as $key => $value) {
+            array_push($top_applicant_li,$value->applicant);
+        }
+
+        $top_applicant_str = "'" . implode ( "', '", $top_applicant_li ) . "'";
+
+
+       
+       
+
+
+
+        $applicantVSIPC = DB::select('select applicant,ipc_subgroup as IPC, count(ipc_subgroup) as count from pat_applicant as a
+                                        join pat_ipc_subgroup as b
+                                        on a.pid = b.pid
+                                        where applicant in ('.$top_applicant_str.') and ipc_subgroup in ('.$top_IPC_str.')
+                                        group by applicant,ipc_subgroup'
+        );
+
+
+        $ipcVSyear = DB::select('select app_year, b.ipc_subgroup as IPC, count(b.ipc_subgroup) as count
+                            from patent as a 
+                            join pat_ipc_subgroup as b
+                            on a.id=b.pid
+                            where b.ipc_subgroup IN ('.$top_IPC_str.') and b.cate = "'.$cate.'"
+                            group by app_year, b.ipc_subgroup order by app_year, b.ipc_subgroup');
+
+
+
+        $applicantVSyear = DB::select('select app_year, b.applicant as applicant, count(b.applicant) as count
+                            from patent as a 
+                            join pat_applicant as b
+                            on a.id=b.pid
+                            where b.applicant IN ('.$top_applicant_str.') and b.cate = "'.$cate.'"
+                            group by app_year, b.applicant order by app_year, b.applicant');
+
+
+        $countriesVSyear = DB::select('SELECT app_year,app_country, count(app_country) as count FROM patent where app_country IN ('.$top_countries_str.') and cate = "'.$cate.'" group by app_year,app_country order by app_year,app_country');
+
+
+        $countriesVSipc = DB::select('select app_country,b.ipc_subgroup as IPC, count(b.ipc_subgroup) as count from patent as a join pat_ipc_subgroup as b on a.id=b.pid where app_country in ('.$top_countries_str.') and b.ipc_subgroup in ('.$top_IPC_str.') and b.cate = "'.$cate.'" group by app_country, b.ipc_subgroup  order by app_country,b.ipc_subgroup');
+        
+
+        return [
+            'countriesVSyear'=>$countriesVSyear,
+            'countriesVSipc'=>$countriesVSipc,
+            'applicantVSyear'=>$applicantVSyear,
+            'ipcVSyear'=>$ipcVSyear,
+            'applicantVSIPC'=>$applicantVSIPC
+        ];
+
+        
+
+        // return($key_techVSyear);
+    }
+    public function patent_topic($cate='Fog Computing')
+        {
+            $top_key_tech = DB::select("select key_tech as 'key_tech' from pat_key_tech where cate = '".$cate."' group by key_tech order by count(key_tech) desc limit 10");
+            $top_key_tech_li =array();
+            foreach ($top_key_tech as $key => $value) {
+                array_push($top_key_tech_li,$value->key_tech);
+            }
+            $top_key_tech_str = "'" . implode ( "', '", $top_key_tech_li ) . "'";
+
+
+            $top_applicant = DB::select("select applicant as 'applicant' from pat_applicant where cate = '".$cate."' group by applicant order by count(applicant) desc limit 10");
+            $top_applicant_li =array();
+            foreach ($top_applicant as $key => $value) {
+                array_push($top_applicant_li,$value->applicant);
+            }
+
+            $top_applicant_str = "'" . implode ( "', '", $top_applicant_li ) . "'";
+
+
+            $applicantVSIPC = DB::select('select applicant,key_tech as key_tech, count(key_tech) as count 
+                                        from pat_applicant as a
+                                        join pat_key_tech as b
+                                        on a.pid = b.pid
+                                        where applicant in ('.$top_applicant_str.') and key_tech in ('.$top_key_tech_str.')
+                                        group by applicant,key_tech'
+            );
+
+
+
+            $key_techVSyear = DB::select('select app_year, b.key_tech as key_tech, count(b.key_tech) as count
+                                from patent as a 
+                                join pat_key_tech as b
+                                on a.id=b.pid
+                                where b.key_tech IN ('.$top_key_tech_str.') and b.cate = "'.$cate.'"
+                                group by app_year, b.key_tech order by app_year, b.key_tech');
+
+            return [
+                'applicantVSIPC'=>$applicantVSIPC,
+                'key_techVSyear'=>$key_techVSyear
+            ];
+        }
 
 }
