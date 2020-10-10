@@ -52,13 +52,6 @@ class Api extends Controller
         }
 
         $uni_paper_count = $uni_paper_count->get();
-        // $count = $count->count();
-
-
-
-        // foreach ($uni_paper_count as $key => $value) {
-        //     $value->{"precent"} = ($value->uni_paper_count/$count)*100;
-        // }
 
         return $uni_paper_count;
 
@@ -377,7 +370,7 @@ class Api extends Controller
         $funding_cate = $funding_cate_data
                         ->groupBy('cate')
                         ->orderBy('cate_count', 'desc')
-                        ->limit(10)
+                        ->limit(50)
                         ->get();
 
         // return $funding_cate;
@@ -393,7 +386,7 @@ class Api extends Controller
         $funding_country = $funding_country_data
                         ->groupBy('Funder_Country')
                         ->orderBy('country_count', 'desc')
-                        ->limit(10)->get();
+                        ->limit(50)->get();
 
 
         $funding_FunderGroup_display_data = DB::table('funding')
@@ -406,7 +399,7 @@ class Api extends Controller
         }
         $funding_FunderGroup_display = $funding_FunderGroup_display_data->groupBy('FunderGroup_display')
                         ->orderBy('FunderGroup_display_count', 'desc')
-                        ->limit(10)->get();
+                        ->limit(50)->get();
 
         // return $funding_FunderGroup_display;
 
@@ -416,7 +409,7 @@ class Api extends Controller
                         ->where('field',$field)
                         ->groupBy('org')
                         ->orderBy('org_count', 'desc')
-                        ->limit(10)->get();
+                        ->limit(50)->get();
 
 
             $funding_researcher_display = DB::table('funding_researcher')
@@ -424,7 +417,7 @@ class Api extends Controller
                         ->where('field',$field)
                         ->groupBy('researcher')
                         ->orderBy('researcher_count', 'desc')
-                        ->limit(10)->get();
+                        ->limit(50)->get();
         }else{
             $funding_ORG_display = DB::table('funding')
                 ->join('funding_org', 'funding.GrantID', '=', 'funding_org.pid')
@@ -432,7 +425,7 @@ class Api extends Controller
                 ->where('funding.field',$field)
                 ->groupBy('org')
                 ->orderBy('org_count', 'desc')
-                ->limit(10)
+                ->limit(50)
                 ->get();
 
             $funding_researcher_display = DB::table('funding')
@@ -441,7 +434,7 @@ class Api extends Controller
                 ->where('funding.field',$field)
                 ->groupBy('researcher')
                 ->orderBy('researcher_count', 'desc')
-                ->limit(10)
+                ->limit(50)
                 ->get();
         }
 
@@ -467,7 +460,7 @@ class Api extends Controller
                         ->where('Org_stand','not like','%;%')
                         ->groupBy('Org_stand')
                         ->orderBy('FundingUSD', 'desc')
-                        ->limit(10)
+                        ->limit(50)
                         ->get();
 
 
@@ -554,11 +547,11 @@ class Api extends Controller
 
         $pub_year = DB::select("select pub_year as 'public_year', count(pub_year) as count from patent where cate = '".$cate."' group by pub_year order by pub_year");
 
-        $app_country = DB::select("select app_country as 'app_country', count(app_country) as count from patent where cate = '".$cate."' group by app_country order by count desc limit 10");
+        $app_country = DB::select("select app_country as 'app_country', count(app_country) as count from patent where cate = '".$cate."' group by app_country order by count desc limit 50");
 
-        $applicant = DB::select("select applicant as 'applicant', count(applicant) as count from pat_applicant where cate = '".$cate."' group by applicant order by count desc limit 10");
+        $applicant = DB::select("select applicant as 'applicant', count(applicant) as count from pat_applicant where cate = '".$cate."' group by applicant order by count desc limit 50");
 
-        $IPC = DB::select("select ipc_subgroup as 'IPC', count(ipc_subgroup) as count from pat_ipc_subgroup where cate = '".$cate."' group by ipc_subgroup order by count desc limit 10");
+        $IPC = DB::select("select ipc_subgroup as 'IPC', count(ipc_subgroup) as count from pat_ipc_subgroup where cate = '".$cate."' group by ipc_subgroup order by count desc limit 50");
 
 
         return [
