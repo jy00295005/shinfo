@@ -28,6 +28,26 @@ app.controller('controller', function($scope, $http) {
     //     });
     // });
 
+    let patenteesNum=10;
+    let countryNum=10;
+    let ipcNum=10;
+
+    // 改变柱状图x坐标显示数量
+    $scope.changeNum=function(type,num){
+        if(type=="patentees"){
+            patenteesNum=num;
+            $("#patentees").highcharts().showLoading();
+        } else if(type=="country-area"){
+            countryNum=num;
+            $("#country-area").highcharts().showLoading();
+        } else if(type=="ipc-tech"){
+            ipcNum=num;
+            $("#ipc-tech").highcharts().showLoading();
+        }
+        // 刷新图表
+        $scope.getPatent(patenteesNum,countryNum,ipcNum);
+    };
+
     // 筛选&刷新
     $scope.updateFilter=function(){
         cate="";
@@ -55,10 +75,10 @@ app.controller('controller', function($scope, $http) {
         $("#ipc-tech").highcharts().showLoading();
 
         // 刷新图表
-        $scope.getPatent();
+        $scope.getPatent(patenteesNum,countryNum,ipcNum);
     };
 
-    $scope.getPatent=function(){
+    $scope.getPatent=function(patenteesNum,countryNum,ipcNum){
         $http.get(patentUrl)
             .success(function (response) {
                 // 专利申请及公开趋势Data
@@ -222,7 +242,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: applicantName,
-                        crosshair: true
+                        crosshair: true,
+                        max: patenteesNum
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -325,7 +346,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: appCountryCountry,
-                        crosshair: true
+                        crosshair: true,
+                        max: countryNum
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -428,7 +450,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: ipcName,
-                        crosshair: true
+                        crosshair: true,
+                        max: ipcNum
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -540,7 +563,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getPatent();
+    $scope.getPatent(patenteesNum,countryNum,ipcNum);
 
     $(".info-display").css("display","flex");
     $(".info-display span")[0].innerHTML=cate;

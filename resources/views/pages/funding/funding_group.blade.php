@@ -13,20 +13,20 @@
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <!-- NIH -->
-            @include("includes.chart", ["id"=>"group-NIH", "modal"=>"groupNIH"])
+            @include("includes.chart_num", ["id"=>"group-NIH", "modal"=>"groupNIH"])
             <!-- DOE -->
-            @include("includes.chart", ["id"=>"group-DOE", "modal"=>"groupDOE"])
+            @include("includes.chart_num", ["id"=>"group-DOE", "modal"=>"groupDOE"])
             <!-- EC-ERC -->
-            @include("includes.chart", ["id"=>"group-ECERC", "modal"=>"groupECERC"])
+            @include("includes.chart_num", ["id"=>"group-ECERC", "modal"=>"groupECERC"])
         </div>
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <!-- DOD -->
-            @include("includes.chart", ["id"=>"group-DOD", "modal"=>"groupDOD"])
+            @include("includes.chart_num", ["id"=>"group-DOD", "modal"=>"groupDOD"])
             <!-- UKRI -->
-            @include("includes.chart", ["id"=>"group-UKRI", "modal"=>"groupUKRI"])
+            @include("includes.chart_num", ["id"=>"group-UKRI", "modal"=>"groupUKRI"])
             <!-- NASA -->
-            @include("includes.chart", ["id"=>"group-NASA", "modal"=>"groupNASA"])
+            @include("includes.chart_num", ["id"=>"group-NASA", "modal"=>"groupNASA"])
         </div>
     </div>
 

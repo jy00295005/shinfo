@@ -50,6 +50,17 @@ app.controller('controller', function($scope, $http) {
     //     });
     // });
 
+    let orgNumber=10;
+    let researcherNum=10;
+
+    // 改变柱状图x坐标显示数量
+    $scope.changeNum=function(type,num){
+        if(type=="research-org") orgNumber=num;
+        else if(type=="fund-researcher") researcherNum=num;
+        // 刷新图表
+        $scope.getFunding(orgNumber,researcherNum);
+    };
+
     // 筛选&刷新
     $scope.filterss=function(){
         let field="";
@@ -80,10 +91,10 @@ app.controller('controller', function($scope, $http) {
         $("#fund-researcher").highcharts().showLoading();
 
         // 刷新图表
-        $scope.getFunding();
+        $scope.getFunding(orgNumber,researcherNum);
     };
 
-    $scope.getFunding=function(){
+    $scope.getFunding=function(orgNumber,researcherNum){
         $http.get(fundingUrl)
             .success(function (response) {
                 // 数量趋势Data
@@ -569,7 +580,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: org,
-                        crosshair: true
+                        crosshair: true,
+                        max: orgNumber
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -673,7 +685,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: researcher,
-                        crosshair: true
+                        crosshair: true,
+                        max: researcherNum,
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -791,7 +804,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getFunding();
+    $scope.getFunding(orgNumber,researcherNum);
 
     $(".info-display").css("display","flex");
     $(".info-display span")[0].innerHTML=field;

@@ -15,14 +15,14 @@
             <!-- 专利申请及公开趋势 -->
             @include("includes.chart", ["id"=>"apply-public", "modal"=>"applyPublic"])
             <!-- 专利权人分布 -->
-            @include("includes.chart", ["id"=>"patentees", "modal"=>"patentees"])
+            @include("includes.chart_num", ["id"=>"patentees", "modal"=>"patentees"])
         </div>
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <!-- 申请国家/地区 -->
-            @include("includes.chart", ["id"=>"country-area", "modal"=>"countryArea"])
+            @include("includes.chart_num", ["id"=>"country-area", "modal"=>"countryArea"])
             <!-- IPC技术构成 -->
-            @include("includes.chart", ["id"=>"ipc-tech", "modal"=>"ipcTech"])
+            @include("includes.chart_num", ["id"=>"ipc-tech", "modal"=>"ipcTech"])
         </div>
     </div>
 

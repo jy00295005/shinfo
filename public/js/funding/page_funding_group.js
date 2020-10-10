@@ -29,6 +29,43 @@ app.controller('controller', function($scope, $http) {
     //     });
     // });
 
+    let NIHNum=10;
+    let DODNum=10;
+    let DOENum=10;
+    let UKRINum=10;
+    let ECERCNum=10;
+    let NASANum=10;
+
+    // 改变柱状图x坐标显示数量
+    $scope.changeNum=function(type,num){
+        switch (type) {
+            case "group-NIH":
+                NIHNum = num;
+                $scope.getNIH(NIHNum);
+                break;
+            case "group-DOE":
+                DOENum = num;
+                $scope.getDOE(DOENum);
+                break;
+            case "group-ECERC":
+                ECERCNum = num;
+                $scope.getECERC(ECERCNum);
+                break;
+            case "group-DOD":
+                DODNum = num;
+                $scope.getDOD(DODNum);
+                break;
+            case "group-UKRI":
+                UKRINum = num;
+                $scope.getUKRI(UKRINum);
+                break;
+            case "group-NASA":
+                NASANum = num;
+                $scope.getNASA(NASANum);
+                break;
+        }
+    };
+
     // 筛选&刷新
     $scope.filterss=function(){
 
@@ -60,15 +97,15 @@ app.controller('controller', function($scope, $http) {
         $("#group-NASA").highcharts().showLoading();
 
         // 刷新图表
-        $scope.getNIH();
-        $scope.getDOD();
-        $scope.getDOE();
-        $scope.getUKRI();
-        $scope.getECERC();
-        $scope.getNASA();
+        $scope.getNIH(NIHNum);
+        $scope.getDOD(DODNum);
+        $scope.getDOE(DOENum);
+        $scope.getUKRI(UKRINum);
+        $scope.getECERC(ECERCNum);
+        $scope.getNASA(NASANum);
     };
 
-    $scope.getNIH=function(){
+    $scope.getNIH=function(num){
         $http.get(baseUrl+"/NIH")
             .success(function (response) {
 
@@ -88,7 +125,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: fundingName,
-                        crosshair: true
+                        crosshair: true,
+                        max: num
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -213,7 +251,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getDOD=function(){
+    $scope.getDOD=function(num){
         $http.get(baseUrl+"/NSF")
             .success(function (response) {
 
@@ -233,7 +271,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: fundingName,
-                        crosshair: true
+                        crosshair: true,
+                        max: num
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -358,7 +397,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getDOE=function(){
+    $scope.getDOE=function(num){
         $http.get(baseUrl+"/DOE")
             .success(function (response) {
 
@@ -378,7 +417,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: fundingName,
-                        crosshair: true
+                        crosshair: true,
+                        max: num
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -503,7 +543,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getUKRI=function(){
+    $scope.getUKRI=function(num){
         $http.get(baseUrl+"/UKRI")
             .success(function (response) {
 
@@ -523,7 +563,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: fundingName,
-                        crosshair: true
+                        crosshair: true,
+                        max: num
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -648,7 +689,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getECERC=function(){
+    $scope.getECERC=function(num){
         $http.get(baseUrl+"/EC-ERC")
             .success(function (response) {
 
@@ -668,7 +709,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: fundingName,
-                        crosshair: true
+                        crosshair: true,
+                        max: num
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -793,7 +835,7 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getNASA=function(){
+    $scope.getNASA=function(num){
         $http.get(baseUrl+"/NASA")
             .success(function (response) {
 
@@ -813,7 +855,8 @@ app.controller('controller', function($scope, $http) {
                     },
                     xAxis: [{
                         categories: fundingName,
-                        crosshair: true
+                        crosshair: true,
+                        max: num
                     }],
                     yAxis: [{ // Primary yAxis
                         labels: {
@@ -938,12 +981,12 @@ app.controller('controller', function($scope, $http) {
             });
     };
 
-    $scope.getNIH();
-    $scope.getDOD();
-    $scope.getDOE();
-    $scope.getUKRI();
-    $scope.getECERC();
-    $scope.getNASA();
+    $scope.getNIH(NIHNum);
+    $scope.getDOD(DODNum);
+    $scope.getDOE(DOENum);
+    $scope.getUKRI(UKRINum);
+    $scope.getECERC(ECERCNum);
+    $scope.getNASA(NASANum);
 
     $(".info-display").css("display","flex");
     $(".info-display span")[0].innerHTML=field;
