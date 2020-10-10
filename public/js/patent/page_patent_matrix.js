@@ -227,7 +227,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '技术市场&活跃期'
@@ -255,13 +256,7 @@ app.controller('controller', function($scope, $http) {
                         name:'技术市场&活跃期',
                         data: cvyAllList,
                         marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
+
                         }
                     },]
                 }, function () {
@@ -316,7 +311,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '技术市场&技术分布'
@@ -349,16 +345,7 @@ app.controller('controller', function($scope, $http) {
                     },
                     series: [{
                         name:'技术市场&技术分布',
-                        data: cviAllList,
-                        marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
-                        }
+                        data: cviAllList
                     },]
                 }, function () {
                     Highcharts.addEvent($('#cvi').highcharts(), 'render', function () {
@@ -412,7 +399,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '专利权人&活跃期'
@@ -439,16 +427,7 @@ app.controller('controller', function($scope, $http) {
                     },
                     series: [{
                         name:'专利权人&活跃期',
-                        data: avsAllList,
-                        marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
-                        }
+                        data: avsAllList
                     },]
                 }, function () {
                     Highcharts.addEvent($('#avs').highcharts(), 'render', function () {
@@ -502,7 +481,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '专利权人&技术分布'
@@ -536,16 +516,7 @@ app.controller('controller', function($scope, $http) {
                     },
                     series: [{
                         name:'专利权人&技术分布',
-                        data: aviAllList,
-                        marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
-                        }
+                        data: aviAllList
                     },]
                 }, function () {
                     Highcharts.addEvent($('#avi').highcharts(), 'render', function () {
@@ -599,7 +570,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '技术发展趋势'
@@ -625,16 +597,7 @@ app.controller('controller', function($scope, $http) {
                     },
                     series: [{
                         name:'技术发展趋势',
-                        data: ivyAllList,
-                        marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
-                        }
+                        data: ivyAllList
                     },]
                 }, function () {
                     Highcharts.addEvent($('#ivy').highcharts(), 'render', function () {

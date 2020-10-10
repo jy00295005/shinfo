@@ -3,6 +3,10 @@
     color: #ffffff !important;
 }
 
+.chart-matrix{
+    height: 700px !important;
+}
+
 @media (min-width: 992px) {
     .side-customize{
         min-height: 100vh;

@@ -133,7 +133,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '专利权人&关键技术'
@@ -167,16 +168,7 @@ app.controller('controller', function($scope, $http) {
                     },
                     series: [{
                         name:'专利权人&关键技术',
-                        data: aviAllList,
-                        marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
-                        }
+                        data: aviAllList
                     },]
                 }, function () {
                     Highcharts.addEvent($('#avi').highcharts(), 'render', function () {
@@ -230,7 +222,8 @@ app.controller('controller', function($scope, $http) {
                     chart: {
                         type: 'bubble',
                         plotBorderWidth: 1,
-                        zoomType: 'xy'
+                        zoomType: 'xy',
+                        className: "chart-matrix"
                     },
                     title: {
                         text: '关键技术&申请年'
@@ -256,16 +249,7 @@ app.controller('controller', function($scope, $http) {
                     },
                     series: [{
                         name:'关键技术&申请年',
-                        data: ivyAllList,
-                        marker: {
-                            fillColor: {
-                                radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
-                                stops: [
-                                    [0, 'rgba(255,255,255,0.5)'],
-                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
-                                ]
-                            }
-                        }
+                        data: ivyAllList
                     },]
                 }, function () {
                     Highcharts.addEvent($('#kvy').highcharts(), 'render', function () {

@@ -8,12 +8,22 @@ app.controller('controller', function($scope, $http) {
     let field="Physical Science & Technology";
     let org="Michigan State University";
     let orgUrl="/shinfo/public/api/output/get_funding_coo_top_orgs/"+field;
-    let cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org
+    let cooUrl="/shinfo/public/api/output/funding_cooccurrence/"+field+"/"+org;
 
     let interval=400;
+    let fontSize=13;
+    let limitWeight=0;
+
+    $scope.weight=function(weight){
+        limitWeight=weight;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getCoo();
+    };
 
     $scope.zoomUp=function(){
         interval+=100;
+        fontSize+=3;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
@@ -21,6 +31,7 @@ app.controller('controller', function($scope, $http) {
 
     $scope.zoomDown=function(){
         interval-=100;
+        fontSize-=3;
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
@@ -68,12 +79,32 @@ app.controller('controller', function($scope, $http) {
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         d3.json(cooUrl, function(error, graph) {
+            let nodes=[];
+            console.log(graph);
+
+            for(let i=graph.links.length-1;i>-1;i--){
+                if(graph.links[i]["weight"]<=limitWeight){
+                    graph.links.splice(i,1);
+                }else{
+                    nodes.push(graph.links[i]["source"]);
+                    nodes.push(graph.links[i]["target"]);
+                }
+            }
+
+            for(let i=graph.nodes.length-1;i>-1;i--){
+                if(nodes.indexOf(graph.nodes[i]["id"])==-1){
+                    graph.nodes.splice(i,1);
+                }
+            }
+
             let link = svg.append("g")
                 .attr("class", "links")
                 .selectAll("line")
                 .data(graph.links)
                 .enter().append("line")
-                .attr("stroke-width", function(d) { return Math.sqrt(d.weight); });
+                .attr("stroke-width", function(d) {
+                    return Math.sqrt(d.weight);
+                });
 
             let node = svg.append("g")
                 .attr("class", "nodes")
@@ -90,7 +121,9 @@ app.controller('controller', function($scope, $http) {
                 .attr("r", function (d) {
                     return Math.sqrt(d.size)*4;
                 })
-                .attr("fill", function(d) { return color(d.size); })
+                .attr("fill", function(d) {
+                    return color(d.size);
+                })
                 .call(d3.drag()
                     .on("start", dragstarted)
                     .on("drag", dragged)
@@ -114,10 +147,15 @@ app.controller('controller', function($scope, $http) {
                     return d.id;
                 })
                 .attr('x', 6)
-                .attr('y', 3);
+                .attr('y', 3)
+                .style("font-size", fontSize+"px")
+                .style("text-transform", "uppercase");
 
             node.append("title")
-                .text(function(d) { return d.id; });
+                .text(function(d) {
+                    return d.id;
+                })
+                .attr("font-size", 50);
 
             simulation
                 .nodes(graph.nodes)
