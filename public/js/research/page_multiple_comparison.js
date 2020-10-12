@@ -34,9 +34,12 @@ app.controller('controller', function($scope, $http) {
         $scope.mc();
     });
 
+    // x坐标比例尺
+    let ti=undefined;
+    let tp=undefined;
+
     $scope.mc=function() {
         $http.get(mcUrl).success(function (response){
-            console.log(response)
             let allData=[];
             let all1=[];
             let all2=[];
@@ -61,6 +64,23 @@ app.controller('controller', function($scope, $http) {
                 all1.push(allData[0][i][cate]);
                 all2.push(allData[1][i][cate]);
             }
+
+            // x坐标比例尺
+            let all3=all1.concat(all2);
+            let max=Math.max(...all3);
+            max=parseInt(max/5)*5;
+
+            $("#scale").change(function() {
+                if($(this).is(':checked')){
+                    ti=max/5;
+                    tp=[0, max/5, max/5*2, max/5*3, max/5*4];
+                    $scope.mc();
+                }else{
+                    ti=undefined;
+                    tp=undefined;
+                    $scope.mc();
+                }
+            });
 
             let duoxiangduibi = [],
                 $containers = $('.ddbar .element'),
@@ -120,7 +140,9 @@ app.controller('controller', function($scope, $http) {
                             text: null
                         },
                         reversed: dataset.isReversed,
-                        // tickInterval: 500
+                        // x坐标比例尺
+                        tickInterval: ti,
+                        tickPositions: tp
                     },
                     legend: {
                         enabled: false

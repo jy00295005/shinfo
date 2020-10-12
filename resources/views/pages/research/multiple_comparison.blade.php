@@ -30,6 +30,11 @@
         </div>
     </div>
 
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="scale">
+        <label class="form-check-label" for="scale">统一比例尺</label>
+    </div>
+
     <div class="row mt-2">
         <div class="col-12">
             <div class="card card-body mr-2 p-0">
