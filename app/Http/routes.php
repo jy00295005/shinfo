@@ -90,14 +90,13 @@ Route::get('/', function () {
 ##api
 ##2020/10更新数据后重写论文元数据接口,
 ##默认返回数据中日期第一个的机构与领域的查询，增加日期查询后返回对应的数据
-    Route::get('api/output/get_paper_options/{version?}', ['as' => 'paper_options', function ($version=null) {
+    Route::get('api/output/get_options/{version?}', ['as' => 'paper_options', function ($version=null) {
         $date_data = DB::table('uni_hq_stat')
                 ->select('updateTime')
                 ->groupBy('updateTime')
                 ->orderBy('updateTime')
                 ->get();
         $dates = [];
-
         foreach ($date_data as $key => $value) {
             $dates[] = $value->updateTime;
         }
@@ -108,27 +107,47 @@ Route::get('/', function () {
             $default_date =$version;
         }
 
-        $uni_data = DB::table('uni_hq_stat')
-                ->select('dis_uni_name')
-                ->where('updateTime',$default_date)
-                ->where('dicipline','all')
-                ->groupBy('dis_uni_name')
-                ->get();
 
-        $feild_data = DB::table('uni_hq_stat')
-                ->select('dicipline')
-                ->where('updateTime',$default_date)
-                ->where('dicipline','!=',$default_date)
-                ->where('dicipline','!=','all')
-                ->groupBy('dicipline')
-                ->get();
+        if ($default_date == '2019-06-20') {
+            $universityName = [
+            '上交大', '上科大', '中科大', '剑桥', '加州伯克利', '加州理工', 
+            '北大', '南科大', '哈佛', '国科大', '复旦', '斯坦福', '清华', 
+            '牛津', '苏黎世理工', '麻省理工'];
 
+            $dicipline=[
+                'Physics', 'Chemistry', 'Molecular Biology & Genetics', 'Biology & Biochemistry',
+                'Neuroscience & Behavior', 'Engineering', 'Materials Science', 'Computer Science', 
+                'Immunology','Microbiology'];
+        }else{
+            $uni_data = DB::table('uni_hq_stat')
+                    ->select('dis_uni_name')
+                    ->where('updateTime',$default_date)
+                    ->where('dicipline','all')
+                    ->groupBy('dis_uni_name')
+                    ->get();
+            $universityName = [];
+            foreach ($uni_data as $key => $value) {
+                $universityName[] = $value->dis_uni_name;
+            }
+
+            $feild_data = DB::table('uni_hq_stat')
+                    ->select('dicipline')
+                    ->where('updateTime',$default_date)
+                    ->where('dicipline','!=',$default_date)
+                    ->where('dicipline','!=','all')
+                    ->groupBy('dicipline')
+                    ->get();
+            $dicipline = [];
+            foreach ($feild_data as $key => $value) {
+                $dicipline[] = $value->dicipline;
+            }
+        }
         return [
                     'time_range'=>$date_data,
-                    'universityName'=>$uni_data,
-                    'dicipline'=>$feild_data,
+                    'universityName'=>$universityName,
+                    'dicipline'=>$dicipline,
                     'current_date'=>$default_date,              
-                    'patent_cate'=>$patent_cate            
+                    'patent_cate'=> ['Fog Computing']            
                 ];
     }]);
 

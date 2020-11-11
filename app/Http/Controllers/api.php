@@ -197,6 +197,10 @@ class Api extends Controller
                 $ind = "SCI论文总数";
                 break;
 
+            case 'all_citation':
+                $ind = "总被引数";
+                break;
+
             case 'cite_pp':
                 $ind = "篇均被引数";
                 break;
