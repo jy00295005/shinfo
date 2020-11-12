@@ -2,29 +2,6 @@ var app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
 
-    $scope.loadTime=function () {
-        if($scope.isFirst){
-            $("#timeslider").dateRangeSlider({
-                bounds: {
-                    min: new Date(2010, 2, 1),
-                    max: new Date(2020, 11, 31)
-                },
-                defaultValues: {
-                    min: new Date(2010, 3, 1),
-                    max: new Date(2020, 10, 31)
-                },
-                formatter: function(val){
-                    var year = val.getFullYear()+"年";
-                    return year;
-                },
-                step: {
-                    years: 1
-                }
-            });
-            $scope.isFirst=false;
-        }
-    };
-
     let updateDate="2019-06-20";
     let university="all";
     let dicipline="all";
@@ -53,12 +30,20 @@ app.controller('controller', function($scope, $http) {
         $("#all2").click(function () {
             $scope.filterss();
         });
+        $(".timeRange input").click(function () {
+            $(".timeRange input").each(function () {
+               $(this)[0].checked=false;
+            });
+            $(this)[0].checked=true;
+            $scope.filterss();
+        });
     });
 
     $scope.filterss=function(){
-        // var timeSlider = $("#timeslider").dateRangeSlider("values");
         university="";
         dicipline="";
+        updateDate="";
+
         $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {
             university+=","+$(this).val();
         });
@@ -67,9 +52,12 @@ app.controller('controller', function($scope, $http) {
             dicipline+=","+$(this).val();
         });
 
+        $(".timeRange input:checked").each(function () {
+            updateDate=$(this).val();
+        });
+
         university=university.replace(",","");
         dicipline=dicipline.replace(",","");
-        // updateDate=timeSlider.min.getFullYear()+"&"+timeSlider.max.getFullYear();
 
         if(university=="") university="all"; // 如果没有选中项，默认全选
         if(dicipline=="") dicipline="all";
@@ -108,17 +96,23 @@ app.controller('controller', function($scope, $http) {
         $scope.getHq();
         $scope.getHot();
         $scope.getCns();
-    }
+    };
 
     $http.get(optionsUrl)
         .success(function (response) {
+            console.log(response);
             $scope.universityName=response.universityName;
             $scope.dicipline=response.dicipline;
+            $scope.timeRange=[];
+            for(let i in response["time_range"]){
+                $scope.timeRange.push(response["time_range"][i]["updateTime"])
+            }
         });
 
     $scope.getNopp=function(){
         $http.get(noppUrl)
             .success(function (response) {
+                console.log(noppUrl);
                 var disUniName=[];
                 var uniPaperCount=[];
                 for(var i=0;i<response.length;i++){
