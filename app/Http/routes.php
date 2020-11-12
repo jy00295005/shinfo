@@ -88,7 +88,100 @@ Route::get('/', function () {
 
 
 ##api
-Route::group(['as' => 'api::'], function () {
+##2020/10更新数据后重写论文元数据接口,
+##默认返回数据中日期第一个的机构与领域的查询，增加日期查询后返回对应的数据
+    Route::get('api/output/get_options/{version?}', ['as' => 'paper_options', function ($version=null) {
+        $date_data = DB::table('uni_hq_stat')
+                ->select('updateTime')
+                ->groupBy('updateTime')
+                ->orderBy('updateTime')
+                ->get();
+        $dates = [];
+        foreach ($date_data as $key => $value) {
+            $dates[] = $value->updateTime;
+        }
+
+        $default_date = $date_data[0]->updateTime;
+
+        if ($version && in_array($version, $dates)) {
+            $default_date =$version;
+        }
+
+
+        if ($default_date == '2019-06-20') {
+            $universityName = [
+            '上交大', '上科大', '中科大', '剑桥', '加州伯克利', '加州理工', 
+            '北大', '南科大', '哈佛', '国科大', '复旦', '斯坦福', '清华', 
+            '牛津', '苏黎世理工', '麻省理工'];
+
+            $dicipline=[
+                'Physics', 'Chemistry', 'Molecular Biology & Genetics', 'Biology & Biochemistry',
+                'Neuroscience & Behavior', 'Engineering', 'Materials Science', 'Computer Science', 
+                'Immunology','Microbiology'];
+        }else{
+            $uni_data = DB::table('uni_hq_stat')
+                    ->select('dis_uni_name')
+                    ->where('updateTime',$default_date)
+                    ->where('dicipline','all')
+                    ->groupBy('dis_uni_name')
+                    ->get();
+            $universityName = [];
+            foreach ($uni_data as $key => $value) {
+                $universityName[] = $value->dis_uni_name;
+            }
+
+            $feild_data = DB::table('uni_hq_stat')
+                    ->select('dicipline')
+                    ->where('updateTime',$default_date)
+                    ->where('dicipline','!=',$default_date)
+                    ->where('dicipline','!=','all')
+                    ->groupBy('dicipline')
+                    ->get();
+            $dicipline = [];
+            foreach ($feild_data as $key => $value) {
+                $dicipline[] = $value->dicipline;
+            }
+        }
+        return [
+                    'time_range'=>$date_data,
+                    'universityName'=>$universityName,
+                    'dicipline'=>$dicipline,
+                    'current_date'=>$default_date,              
+                    'patent_cate'=> ['Fog Computing']            
+                ];
+    }]);
+
+
+
+    Route::group(['as' => 'api::'], function () {
+        Route::get('api/output/get_paper_options11', ['as' => 'paper_options11', function () {
+            // use DB;
+            $time_range = ["2018-12-31","2019-06-20"];
+                // "2018-12-31"=>[2014, 2015, 2016, 2017, 2018],
+                // "2019-06-20"=>[2015, 2016, 2017, 2018, 2019],
+            // ];
+            $universityName = [
+                '上交大', '上科大', '中科大', '剑桥', '加州伯克利', '加州理工', 
+                '北大', '南科大', '哈佛', '国科大', '复旦', '斯坦福', '清华', 
+                '牛津', '苏黎世理工', '麻省理工'];
+
+            $dicipline=[
+                'Physics', 'Chemistry', 'Molecular Biology & Genetics', 'Biology & Biochemistry',
+                'Neuroscience & Behavior', 'Engineering', 'Materials Science', 'Computer Science', 
+                'Immunology','Microbiology'];
+
+            $patent_cate = ['Fog Computing'];
+
+            return [
+                    'time_range'=>$time_range,
+                    'universityName'=>$universityName,
+                    'dicipline'=>$dicipline,
+                    'patent_cate'=>$patent_cate                
+                    ];
+        }]);
+
+
+
     Route::get('api/output/get_options', ['as' => 'inst_paper_count', function () {
         // use DB;
         $time_range = ["2018-12-31","2019-06-20"];

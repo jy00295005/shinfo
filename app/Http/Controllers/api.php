@@ -60,88 +60,151 @@ class Api extends Controller
 
     public function show_inst_paper_trend($type='paper',$update_time='2019-06-20',$uni = 'all',$cate = 'all')
     {   
-        $uni_paper_count = DB::table('paper_output');
-        switch ($type) {
-            case 'paper':
-                $uni_paper_count->select(
-                    DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count')
-                );
-                break;
-
-            case 'citation':
-                $uni_paper_count->select(
-                    DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count,sum(citation) as uni_year_citation')
-                );
-                break;
-            
-            default:
-                return ['error'=>'Wrong type value'];
-                break;
-        }
-
-        $uni_paper_count->where('updateTime',$update_time)
-                        ->whereNotNull('pubYear')
-                        ->groupBy('dis_uni_name','pubYear');
-
-
-        $uni_group_li = DB::table('paper_output')
-                    ->select(DB::raw('dis_uni_name'))
-                    ->where('updateTime',$update_time)
-                    ->groupBy('dis_uni_name');
-
+        #第一步：求涉及的机构
         if($uni != 'all'){
-            $uni_li = explode(',',$uni);
-            $uni_paper_count->whereIn('dis_uni_name', $uni_li);
+            $uni_names = explode(',',$uni);
+
+        }else{
+            $uni_data = DB::table('paper_indicator_yearly')
+                        ->select('dis_uni_name')
+                        ->where('updateTime',$update_time);
+
+            if($cate != 'all'){
+                $cate_li = explode(',',$cate);
+                $uni_data = $uni_data->whereIn('dicipline', $cate_li);
+            }else{
+                 $uni_data = $uni_data->where('dicipline','all');
+            }
+            $uni_data = $uni_data->groupBy('dis_uni_name')
+                        ->orderBy('dis_uni_name')
+                        ->get();
+            $uni_names = [];
+            foreach ($uni_data as $key => $value) {
+                $uni_names[] = $value->dis_uni_name;
+            }
         }
-        
+        // print_r($uni_names);
+        // 第二步：一次查询获得全部结果
+        $yearly_paper = DB::table('paper_indicator_yearly')
+                            ->select('dis_uni_name','year','paper_count')
+                            ->where('updateTime',$update_time)
+                            ->whereIn('dis_uni_name', $uni_names);
+                            
         if($cate != 'all'){
             $cate_li = explode(',',$cate);
-            $uni_paper_count->whereIn('dicipline', $cate_li);
-            $uni_group_li->whereIn('dicipline', $cate_li);
+            $yearly_paper = $yearly_paper->whereIn('dicipline', $cate_li);
+        }else{
+             $yearly_paper = $yearly_paper->where('dicipline','all');
         }
+        $yearly_paper = $yearly_paper->get();
 
-        $uni_paper_count = $uni_paper_count->get();
-        $uni_group_li = $uni_group_li->get();
-
-
-
-        switch ($type) {
-            case 'paper':
-                $return = [];
-                foreach ($uni_group_li as $key => $value) {
-                    $uni_name = $value->dis_uni_name;
-                    foreach ($uni_paper_count as $db_data) {
-                        if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
-                            $return[$uni_name][$db_data->pubYear] = $db_data->uni_year_count;
-                        }
-                    }
+        $return = [];
+        foreach ($uni_names as $uni_name) {
+            foreach ($yearly_paper as $key => $value) {
+                if ($uni_name == $value->dis_uni_name) {
+                   $return[$uni_name][$value->year] = $value->paper_count;
                 }
-                break;
-            case 'citation':
-                foreach ($uni_group_li as $key => $value) {
-                    $uni_name = $value->dis_uni_name;
-                    foreach ($uni_paper_count as $db_data) {
-                        if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
-                            $return[$uni_name][$db_data->pubYear]['paper_count'] = floatval($db_data->uni_year_count);
-                            $return[$uni_name][$db_data->pubYear]['paper_citaiton'] = floatval($db_data->uni_year_citation);
-                            $return[$uni_name][$db_data->pubYear]['paper_ave_citation'] = floatval($db_data->uni_year_count/$db_data->uni_year_citation);
-                        }
-                    }
-                }
-                
-                
-                break;
+            }
+        }
+        return ($return);
+
+ 
+
+        // // return $yearly_paper;
+        // $uni_paper_count = DB::table('paper_output');
+        // switch ($type) {
+        //     case 'paper':
+        //         $uni_paper_count->select(
+        //             DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count')
+        //         );
+        //         break;
+
+        //     case 'citation':
+        //         $uni_paper_count->select(
+        //             DB::raw('dis_uni_name,pubYear,count(pubYear) as uni_year_count,sum(citation) as uni_year_citation')
+        //         );
+        //         break;
             
-            default:
-                return ['error'=>'Wrong type value'];
-                break;
-        }
+        //     default:
+        //         return ['error'=>'Wrong type value'];
+        //         break;
+        // }
+
+        // $uni_paper_count->where('updateTime',$update_time)
+        //                 ->whereNotNull('pubYear')
+        //                 ->groupBy('dis_uni_name','pubYear');
+
+
+        // $uni_group_li = DB::table('paper_output')
+        //             ->select(DB::raw('dis_uni_name'))
+        //             ->where('updateTime',$update_time)
+        //             ->groupBy('dis_uni_name');
+
+        // if($uni != 'all'){
+        //     $uni_li = explode(',',$uni);
+        //     $uni_paper_count->whereIn('dis_uni_name', $uni_li);
+        // }
         
-        return $return;
+        // if($cate != 'all'){
+        //     $cate_li = explode(',',$cate);
+        //     $uni_paper_count->whereIn('dicipline', $cate_li);
+        //     $uni_group_li->whereIn('dicipline', $cate_li);
+        // }
+
+        // $uni_paper_count = $uni_paper_count->get();
+        // $uni_group_li = $uni_group_li->get();
+
+
+
+        // switch ($type) {
+        //     case 'paper':
+        //         $return = [];
+        //         foreach ($uni_group_li as $key => $value) {
+        //             $uni_name = $value->dis_uni_name;
+        //             foreach ($uni_paper_count as $db_data) {
+        //                 if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
+        //                     $return[$uni_name][$db_data->pubYear] = $db_data->uni_year_count;
+        //                 }
+        //             }
+        //         }
+        //         break;
+        //     case 'citation':
+        //         foreach ($uni_group_li as $key => $value) {
+        //             $uni_name = $value->dis_uni_name;
+        //             foreach ($uni_paper_count as $db_data) {
+        //                 if ($db_data->dis_uni_name == $uni_name && strlen($db_data->pubYear) == 4){
+        //                     $return[$uni_name][$db_data->pubYear]['paper_count'] = floatval($db_data->uni_year_count);
+        //                     $return[$uni_name][$db_data->pubYear]['paper_citaiton'] = floatval($db_data->uni_year_citation);
+        //                     $return[$uni_name][$db_data->pubYear]['paper_ave_citation'] = floatval($db_data->uni_year_count/$db_data->uni_year_citation);
+        //                 }
+        //             }
+        //         }
+                
+                
+        //         break;
+            
+        //     default:
+        //         return ['error'=>'Wrong type value'];
+        //         break;
+        // }
+        
+        // return $return;
     }
 
     public function show_high_quality_paper($type = 'Q1',$update_time='2019-06-20',$uni = 'all',$cate = 'all'){
         switch ($type) {
+            case 'all_paper':
+                $ind = "SCI论文总数";
+                break;
+
+            case 'all_citation':
+                $ind = "总被引数";
+                break;
+
+            case 'cite_pp':
+                $ind = "篇均被引数";
+                break;
+
             case 'Q1':
                 $ind = "Q1论文数量";
                 break;
