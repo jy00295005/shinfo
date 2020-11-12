@@ -1,31 +1,8 @@
 changeSidebarLink(2);
 
-var app = angular.module('shinfo', []);
+let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
-
-    $scope.loadTime=function () {
-        if($scope.isFirst){
-            $("#timeslider").dateRangeSlider({
-                bounds: {
-                    min: new Date(2010, 2, 1),
-                    max: new Date(2020, 11, 31)
-                },
-                defaultValues: {
-                    min: new Date(2010, 3, 1),
-                    max: new Date(2020, 10, 31)
-                },
-                formatter: function(val){
-                    var year = val.getFullYear()+"年";
-                    return year;
-                },
-                step: {
-                    years: 1
-                }
-            });
-            $scope.isFirst=false;
-        }
-    };
 
     var updateDate="2019-06-20";
     var university="all";
@@ -38,8 +15,8 @@ app.controller('controller', function($scope, $http) {
     }
 
     var optionsUrl="/shinfo/public/api/output/get_options";
-    var noppUrl="/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
-    var toppUrl="/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
+    var noppUrl="/shinfo/public/api/output/high_quality_paper/all_citation/"+updateDate+"/"+university+"/"+dicipline;
+    var toppUrl="/shinfo/public/api/output/high_quality_paper/cite_pp/"+updateDate+"/"+university+"/"+dicipline;
     var hUrl="/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
     var coauUrl="/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
     var cnciUrl="/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
@@ -58,7 +35,6 @@ app.controller('controller', function($scope, $http) {
     });
 
     $scope.filterss=function(){
-        // var timeSlider = $("#timeslider").dateRangeSlider("values");
         university="";
         dicipline="";
         $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {
@@ -71,7 +47,6 @@ app.controller('controller', function($scope, $http) {
 
         university=university.replace(",","");
         dicipline=dicipline.replace(",","");
-        // updateDate=timeSlider.min.getFullYear()+"&"+timeSlider.max.getFullYear();
 
         if(university=="") university="all"; // 如果没有选中项，默认全选
         if(dicipline=="") dicipline="all";
@@ -90,8 +65,8 @@ app.controller('controller', function($scope, $http) {
         localStorage.setItem("research_university", university);
         localStorage.setItem("research_dicipline", dicipline);
 
-        toppUrl="/shinfo/public/api/output/inst_paper_trend/citation/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="/shinfo/public/api/output/inst_paper_count/citation/"+updateDate+"/"+university+"/"+dicipline;
+        toppUrl="/shinfo/public/api/output/high_quality_paper/cite_pp/"+updateDate+"/"+university+"/"+dicipline;
+        noppUrl="/shinfo/public/api/output/high_quality_paper/all_citation/"+updateDate+"/"+university+"/"+dicipline;
         hUrl="/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
         coauUrl="/shinfo/public/api/output/high_quality_paper/COAU/"+updateDate+"/"+university+"/"+dicipline;
         cnciUrl="/shinfo/public/api/output/high_quality_paper/CNCI/"+updateDate+"/"+university+"/"+dicipline;
@@ -110,10 +85,11 @@ app.controller('controller', function($scope, $http) {
         $scope.getCoau();
         $scope.getCnci();
         $scope.getRf();
-    }
+    };
 
     $http.get(optionsUrl)
         .success(function (response) {
+            console.log(response);
             $scope.universityName=response.universityName;
             $scope.dicipline=response.dicipline;
         });
@@ -121,55 +97,67 @@ app.controller('controller', function($scope, $http) {
     $scope.getNopp=function(){
         $http.get(noppUrl)
             .success(function (response) {
-                var disUniName=[];
-                var uniPaperCount=[];
-                var sum=0;
-                var pieData=[];
+                let disUniName=[];
+                let sciAll=[];
+                let allData=[];
+                let ppAll=[];
 
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
+                let length=0;
+                for (let key in response) {
+                    disUniName.push(key);
+                    allData.push(response[key]);
+                    length++;
                 }
-                for(var i=0;i<response.length;i++){
-                    uniPaperCount.push(response[i]["uni_paper_count"]);
-                    sum+=response[i]["uni_paper_count"];
-                }
-                for(var i=0;i<response.length;i++){
-                    var noppData={};
-                    noppData.name=disUniName[i];
-                    noppData.y=uniPaperCount[i];
-                    pieData.push(noppData);
+
+                for(let i=0;i<length;i++) {
+                    let sci = 0;
+                    let pp = 0;
+                    for (let j = 0; j < allData[i].length; j++) {
+                        sci += allData[i][j]["SCI论文总数"];
+                        pp += allData[i][j]["总被引数"];
+                    }
+                    ppAll.push(pp);
+                    sciAll.push(sci);
                 }
 
                 var nopp = Highcharts.chart('nopp', {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
                     title: {
                         text: '总被引次数'
                     },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                }
+                    xAxis: [{
+                        categories: disUniName,
+                        crosshair: true
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        title: {
+                            text: '',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
                             }
                         }
+                    }],
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 120,
+                        verticalAlign: 'top',
+                        y: 100,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                     },
                     series: [{
-                        name: 'Brands',
-                        colorByPoint: true,
-                        data: pieData
+                        name: '总被引次数',
+                        type: 'column',
+                        data: ppAll,
+                        tooltip: {
+                            valueSuffix: ''
+                        }
                     }],
                     exporting: {
                         showTable: true,
@@ -177,7 +165,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#nopp').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
 
                             // Apply styles inline because stylesheets are not passed to the exported SVG
@@ -226,36 +214,35 @@ app.controller('controller', function($scope, $http) {
                 $("#nopp").highcharts().reflow();
                 $("#nopp").highcharts().hideLoading();
             });
-    }
+    };
 
     $scope.getTopp=function(){
         $http.get(toppUrl)
             .success(function (response) {
-                var disUniName=[];
-                var res=[];
-                for (var key in response) {
+                let disUniName=[];
+                let sciAll=[];
+                let allData=[];
+                let ppAll=[];
+
+                let length=0;
+                for (let key in response) {
                     disUniName.push(key);
-                    res.push(response[key])
+                    allData.push(response[key]);
+                    length++;
                 }
 
-                var paperCounts=[];
-                var paperCitaitons=[];
-                var paperAveCitations=[];
-                for(var x in res){
-                    var paperCount=0;
-                    var paperCitaiton=0;
-                    var paperAveCitation=0;
-                    for(var year=2015;year<2020;year++){
-                        paperCount=paperCount+res[x][year]["paper_count"];
-                        paperCitaiton=paperCitaiton+res[x][year]["paper_citaiton"];
+                for(let i=0;i<length;i++) {
+                    let sci = 0;
+                    let pp = 0;
+                    for (let j = 0; j < allData[i].length; j++) {
+                        sci += allData[i][j]["SCI论文总数"];
+                        pp += allData[i][j]["篇均被引数"];
                     }
-                    paperCounts.push(paperCount);
-                    paperCitaitons.push(paperCitaiton);
-                    paperAveCitation=paperCount/paperCitaiton;
-                    paperAveCitations.push(paperAveCitation);
+                    ppAll.push(pp);
+                    sciAll.push(sci);
                 }
 
-                var topp = Highcharts.chart('topp', { // Q1
+                let topp = Highcharts.chart('topp', {
                     title: {
                         text: '篇均被引'
                     },
@@ -277,15 +264,6 @@ app.controller('controller', function($scope, $http) {
                             }
                         }
                     }],
-                    tooltip: {
-                        shared: true,
-                        formatter: function(){
-                            console.log(this);
-                            this.count=paperCounts[this.points[0].point.index];
-                            this.citation=paperCitaitons[this.points[0].point.index];
-                            return this.x+"<br>"+"篇均被引: "+this.y+"<br>"+"被引总数: "+this.count+"<br>"+"文章总数: "+this.citation;
-                        }
-                    },
                     legend: {
                         layout: 'vertical',
                         align: 'left',
@@ -298,7 +276,7 @@ app.controller('controller', function($scope, $http) {
                     series: [{
                         name: '篇均被引',
                         type: 'column',
-                        data: paperAveCitations,
+                        data: ppAll,
                         tooltip: {
                             valueSuffix: ''
                         }
@@ -309,7 +287,7 @@ app.controller('controller', function($scope, $http) {
                     }
                 }, function () {
                     Highcharts.addEvent($('#topp').highcharts(), 'render', function () {
-                        var table = this.dataTableDiv;
+                        let table = this.dataTableDiv;
                         if (table) {
                             // Apply styles inline because stylesheets are not passed to the exported SVG
                             Highcharts.css(table.querySelector('table'), {
@@ -356,7 +334,7 @@ app.controller('controller', function($scope, $http) {
                 $("#topp").highcharts().reflow();
                 $("#topp").highcharts().hideLoading();
             });
-    }
+    };
 
     $scope.getH=function(){
         $http.get(hUrl)
@@ -484,7 +462,7 @@ app.controller('controller', function($scope, $http) {
                 $("#q1").highcharts().reflow();
                 $("#q1").highcharts().hideLoading();
             });
-    }
+    };
 
     $scope.getCoau=function(){
         $http.get(coauUrl)
@@ -635,7 +613,7 @@ app.controller('controller', function($scope, $http) {
                 $("#hq").highcharts().reflow();
                 $("#hq").highcharts().hideLoading();
             });
-    }
+    };
 
     $scope.getCnci=function(){
         $http.get(cnciUrl)
@@ -763,7 +741,7 @@ app.controller('controller', function($scope, $http) {
                 $("#hot").highcharts().reflow();
                 $("#hot").highcharts().hideLoading();
             });
-    }
+    };
 
     $scope.getRf=function(){
         $http.get(rfUrl)
@@ -914,7 +892,7 @@ app.controller('controller', function($scope, $http) {
                 $("#cns").highcharts().reflow();
                 $("#cns").highcharts().hideLoading();
             });
-    }
+    };
 
     $scope.getNopp();
     $scope.getTopp();
