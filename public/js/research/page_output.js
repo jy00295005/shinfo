@@ -13,7 +13,7 @@ app.controller('controller', function($scope, $http) {
     }
 
     var optionsUrl="/shinfo/public/api/output/get_options";
-    var noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
+    let noppUrl="/shinfo/public/api/output/high_quality_paper/all_paper/"+updateDate+"/"+university+"/"+dicipline;
     var toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
     var q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
     var hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
@@ -77,7 +77,8 @@ app.controller('controller', function($scope, $http) {
         localStorage.setItem("research_dicipline", dicipline);
 
         toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="/shinfo/public/api/output/inst_paper_count/paper/"+updateDate+"/"+university+"/"+dicipline;
+        noppUrl="/shinfo/public/api/output/high_quality_paper/all_paper/"+updateDate+"/"+university+"/"+dicipline;
+
         q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
         hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
         hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
@@ -112,15 +113,25 @@ app.controller('controller', function($scope, $http) {
     $scope.getNopp=function(){
         $http.get(noppUrl)
             .success(function (response) {
-                console.log(noppUrl);
-                var disUniName=[];
-                var uniPaperCount=[];
-                for(var i=0;i<response.length;i++){
-                    disUniName.push(response[i]["dis_uni_name"]);
+                let disUniName=[];
+                let sciAll=[];
+                let allData=[];
+
+                let length=0;
+                for (let key in response) {
+                    disUniName.push(key);
+                    allData.push(response[key]);
+                    length++;
                 }
-                for(var i=0;i<response.length;i++){
-                    uniPaperCount.push(response[i]["uni_paper_count"]);
+
+                for(let i=0;i<length;i++) {
+                    let sci = 0;
+                    for (let j = 0; j < allData[i].length; j++) {
+                        sci += allData[i][j]["SCI论文总数"];
+                    }
+                    sciAll.push(sci);
                 }
+
 
                 var nopp = Highcharts.chart('nopp', { //number of published papers
                     title: {
@@ -160,7 +171,7 @@ app.controller('controller', function($scope, $http) {
                         name: '总量',
                         type: 'column',
                         yAxis: 0,
-                        data: uniPaperCount,
+                        data: sciAll,
                         tooltip: {
                             valueSuffix: ' '
                         }

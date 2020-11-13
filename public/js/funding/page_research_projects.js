@@ -8,6 +8,7 @@ app.controller('controller', function($scope, $http) {
 
     $http.get(optionsUrl)
         .success(function (response) {
+            console.log(response);
             $scope.fields=response.fields;
         });
 
