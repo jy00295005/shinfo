@@ -30,14 +30,24 @@ app.controller('controller', function($scope, $http) {
         $("#all2").click(function () {
             $scope.filterss();
         });
-        $(".timeRange input").click(function () {
-            $(".timeRange input").each(function () {
-               $(this)[0].checked=false;
-            });
-            $(this)[0].checked=true;
-            $scope.filterss();
-        });
+        // $(".timeRange input").click(function () {
+        //     $(".timeRange input").each(function () {
+        //        $(this)[0].checked=false;
+        //     });
+        //     $(this)[0].checked=true;
+        //     $scope.filterss();
+        // });
     });
+
+    $scope.selectYear=function(){
+        $(".timeRange input").each(function () {
+            $(this)[0].checked=false;
+        });
+        let s = "#y"+this.x;
+        $(s)[0].checked=true;
+        $scope.filterss();
+    };
+
 
     $scope.filterss=function(){
         university="";

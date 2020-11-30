@@ -11,7 +11,7 @@
                 <div class="dropdown-divider"></div>
                 <div class="checkboxs">
                     <div ng-repeat="x in timeRange" class="form-check timeRange">
-                        <input class="form-check-input" type="radio" value=@{{x}}>
+                        <input class="form-check-input" type="radio" value=@{{x}} id="y@{{x}}" ng-click="selectYear()">
                         <label class="form-check-label">@{{x}}</label>
                     </div>
                 </div>
