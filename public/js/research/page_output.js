@@ -259,11 +259,15 @@ app.controller('controller', function($scope, $http) {
                     length++;
                 }
 
+                let min = parseInt(Object.keys(trendData[0])[0]);
+                let len = Object.keys(trendData[0]).length;
+                let max = parseInt(Object.keys(trendData[0])[len-1]);
+
                 var series=[];
                 for(var i=0; i<length; i++){
                     var data={};
                     var dataData=[];
-                    for(var year=2015;year<2020;year++){
+                    for(let year = min; year < max + 1; year++){
                         dataData.push(trendData[i][year]);
                     }
                     data.data=dataData;
@@ -313,7 +317,7 @@ app.controller('controller', function($scope, $http) {
                             label: {
                                 connectorAllowed: false
                             },
-                            pointStart: 2015,
+                            pointStart: min,
                             cursor: 'pointer',
                             events: {
                                 click: function (event) {
