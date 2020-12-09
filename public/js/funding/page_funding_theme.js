@@ -211,7 +211,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-year').highcharts(), 'render', function () {
@@ -315,7 +316,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-cate').highcharts(), 'render', function () {
@@ -419,7 +421,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-country').highcharts(), 'render', function () {
@@ -523,7 +526,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-group').highcharts(), 'render', function () {
@@ -628,7 +632,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#research-org').highcharts(), 'render', function () {
@@ -733,7 +738,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#fund-researcher').highcharts(), 'render', function () {

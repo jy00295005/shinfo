@@ -142,7 +142,6 @@ app.controller('controller', function($scope, $http) {
                     sciAll.push(sci);
                 }
 
-
                 var nopp = Highcharts.chart('nopp', { //number of published papers
                     title: {
                         text: '发文总量'
@@ -202,7 +201,8 @@ app.controller('controller', function($scope, $http) {
                                     window.open("platform/list");
                                 }
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#nopp').highcharts(), 'render', function () {
@@ -505,7 +505,8 @@ app.controller('controller', function($scope, $http) {
                                     window.open("platform/list");
                                 }
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#q1').highcharts(), 'render', function () {
@@ -670,7 +671,8 @@ app.controller('controller', function($scope, $http) {
                                     window.open("platform/list");
                                 }
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#hq').highcharts(), 'render', function () {
@@ -835,7 +837,8 @@ app.controller('controller', function($scope, $http) {
                                     window.open("platform/list");
                                 }
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#hot').highcharts(), 'render', function () {
@@ -1000,7 +1003,8 @@ app.controller('controller', function($scope, $http) {
                                     window.open("platform/list");
                                 }
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#cns').highcharts(), 'render', function () {

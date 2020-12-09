@@ -195,7 +195,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#group-NIH').highcharts(), 'render', function () {
@@ -341,7 +342,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#group-DOD').highcharts(), 'render', function () {
@@ -487,7 +489,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#group-DOE').highcharts(), 'render', function () {
@@ -633,7 +636,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#group-UKRI').highcharts(), 'render', function () {
@@ -779,7 +783,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#group-ECERC').highcharts(), 'render', function () {
@@ -925,7 +930,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#group-NASA').highcharts(), 'render', function () {

@@ -179,6 +179,9 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#nopp').highcharts(), 'render', function () {
@@ -301,6 +304,9 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#topp').highcharts(), 'render', function () {
@@ -429,6 +435,9 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#q1').highcharts(), 'render', function () {
@@ -580,6 +589,9 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#hq').highcharts(), 'render', function () {
@@ -708,6 +720,9 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#hot').highcharts(), 'render', function () {
@@ -859,6 +874,9 @@ app.controller('controller', function($scope, $http) {
                     exporting: {
                         showTable: true,
                         allowHTML: true
+                    },
+                    plotOptions: {
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#cns').highcharts(), 'render', function () {

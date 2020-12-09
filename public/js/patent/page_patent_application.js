@@ -290,7 +290,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#patentees').highcharts(), 'render', function () {
@@ -394,7 +395,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#country-area').highcharts(), 'render', function () {
@@ -498,7 +500,8 @@ app.controller('controller', function($scope, $http) {
                             events: {
                                 click: function (event) {}
                             }
-                        }
+                        },
+                        column: {colorByPoint: true}
                     }
                 }, function () {
                     Highcharts.addEvent($('#ipc-tech').highcharts(), 'render', function () {
