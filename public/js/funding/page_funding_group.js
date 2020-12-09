@@ -175,7 +175,14 @@ app.controller('controller', function($scope, $http) {
                         yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
-                            valueSuffix: '百万'
+                            valueSuffix: '百万',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ': ' +  Highcharts.numberFormat(this.y, 2) + "百万\n";
+                                } else {
+                                    return this.series.name + ': ' +  this.y + "百万\n";
+                                }
+                            }
                         }
                     }, {
                         name: '资助强度',
@@ -322,7 +329,14 @@ app.controller('controller', function($scope, $http) {
                         yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
-                            valueSuffix: '百万'
+                            valueSuffix: '百万',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ': ' +  Highcharts.numberFormat(this.y, 2) + "百万\n";
+                                } else {
+                                    return this.series.name + ': ' +  this.y + "百万\n";
+                                }
+                            }
                         }
                     }, {
                         name: '资助强度',
@@ -469,7 +483,14 @@ app.controller('controller', function($scope, $http) {
                         yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
-                            valueSuffix: '百万'
+                            valueSuffix: '百万',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ': ' +  Highcharts.numberFormat(this.y, 2) + "百万\n";
+                                } else {
+                                    return this.series.name + ': ' +  this.y + "百万\n";
+                                }
+                            }
                         }
                     }, {
                         name: '资助强度',
@@ -616,7 +637,14 @@ app.controller('controller', function($scope, $http) {
                         yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
-                            valueSuffix: '百万'
+                            valueSuffix: '百万',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ': ' +  Highcharts.numberFormat(this.y, 2) + "百万\n";
+                                } else {
+                                    return this.series.name + ': ' +  this.y + "百万\n";
+                                }
+                            }
                         }
                     }, {
                         name: '资助强度',
@@ -763,7 +791,14 @@ app.controller('controller', function($scope, $http) {
                         yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
-                            valueSuffix: '百万'
+                            valueSuffix: '百万',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ': ' +  Highcharts.numberFormat(this.y, 2) + "百万\n";
+                                } else {
+                                    return this.series.name + ': ' +  this.y + "百万\n";
+                                }
+                            }
                         }
                     }, {
                         name: '资助强度',
@@ -910,7 +945,14 @@ app.controller('controller', function($scope, $http) {
                         yAxis: 1,
                         data: fundingUSD,
                         tooltip: {
-                            valueSuffix: '百万'
+                            valueSuffix: '百万',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ': ' +  Highcharts.numberFormat(this.y, 2) + "百万\n";
+                                } else {
+                                    return this.series.name + ': ' +  this.y + "百万\n";
+                                }
+                            }
                         }
                     }, {
                         name: '资助强度',

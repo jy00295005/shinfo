@@ -583,7 +583,14 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: hqRatio,
                         tooltip: {
-                            valueSuffix: '%'
+                            valueSuffix: '%',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ':' +  Highcharts.numberFormat(this.y, 2) + "%";
+                                } else {
+                                    return this.series.name + ':' +  this.y + "%";
+                                }
+                            }
                         }
                     }],
                     exporting: {
@@ -868,7 +875,14 @@ app.controller('controller', function($scope, $http) {
                         type: 'spline',
                         data: cnsRatio,
                         tooltip: {
-                            valueSuffix: '%'
+                            valueSuffix: '%',
+                            pointFormatter: function() {
+                                if (String(this.y).indexOf('.') >= 0) {
+                                    return this.series.name + ':' +  Highcharts.numberFormat(this.y, 2) + "%";
+                                } else {
+                                    return this.series.name + ':' +  this.y + "%";
+                                }
+                            }
                         }
                     }],
                     exporting: {
