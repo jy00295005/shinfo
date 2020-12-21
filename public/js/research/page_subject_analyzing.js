@@ -4,10 +4,33 @@ let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
     $scope.isFirst=true;
     let updateDate="2019-06-20";
+
+    if (localStorage.getItem("research_updateDate") != null) {
+        updateDate = localStorage.getItem("research_updateDate");
+    }
+
     let uni="上交大";
     let dic="Physics";
-    let optionsUrl="/shinfo/public/api/output/get_options";
+    let optionsUrl="/shinfo/public/api/output/get_options/"+updateDate;
     let cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+
+    $scope.getOption=function(){
+        $http.get(optionsUrl)
+            .success(function (response) {
+                $scope.universityName=response.universityName;
+                $scope.dicipline=response.dicipline;
+                $scope.timeRange = [];
+                for (let i in response["time_range"]) {
+                    $scope.timeRange.push(response["time_range"][i]["updateTime"])
+                }
+                uni = response.universityName[0];
+                dic = response.dicipline[0];
+                cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+                $scope.getCoo();
+            });
+    };
+
+    $scope.getOption();
 
     let interval=400;
 
@@ -25,11 +48,6 @@ app.controller('controller', function($scope, $http) {
         $scope.getCoo();
     };
 
-    $http.get(optionsUrl)
-        .success(function (response) {
-            $scope.universityName=response.universityName;
-            $scope.dicipline=response.dicipline;
-        });
 
     $("#institution").change(function () {
         uni=$(this).val();
@@ -45,6 +63,15 @@ app.controller('controller', function($scope, $http) {
         d3.select(".nodes").remove();
         d3.select(".links").remove();
         $scope.getCoo();
+    });
+
+    $("#updateDate").change(function () {
+        updateDate=$(this).val();
+        cooUrl="/shinfo/public/api/cooccurrence/inst_coo/"+updateDate+"/"+uni+"/"+dic;
+        optionsUrl="/shinfo/public/api/output/get_options/"+updateDate;
+        d3.select(".nodes").remove();
+        d3.select(".links").remove();
+        $scope.getOption();
     });
 
     $scope.getCoo=function(){
@@ -165,5 +192,4 @@ app.controller('controller', function($scope, $http) {
         });
     };
 
-    $scope.getCoo();
 });

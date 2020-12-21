@@ -4,6 +4,13 @@
 
     <div class="row col-12">
         <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
+            <strong>时间选择</strong>
+            <select class="form-control" id="updateDate">
+                <option ng-repeat="x in timeRange" value=@{{x}}>@{{x}}</option>
+            </select>
+        </div>
+
+        <div class="form-group mt-3 ml-2 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
             <strong>机构选择</strong>
             <select class="form-control" id="institution">
                 <option ng-repeat="x in universityName" value=@{{x}}>@{{x}}</option>
