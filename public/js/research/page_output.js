@@ -1,26 +1,26 @@
 var app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
-    $scope.isFirst=true;
+    $scope.isFirst = true;
 
-    let updateDate="2019-06-20";
-    let university="all";
-    let dicipline="all";
+    let updateDate = "2019-06-20";
+    let university = "all";
+    let dicipline = "all";
 
-    if(localStorage.getItem("research_updateDate")!=null){
-        updateDate=localStorage.getItem("research_updateDate");
-        university=localStorage.getItem("research_university");
-        dicipline=localStorage.getItem("research_dicipline");
+    if (localStorage.getItem("research_updateDate") != null) {
+        updateDate = localStorage.getItem("research_updateDate");
+        university = localStorage.getItem("research_university");
+        dicipline = localStorage.getItem("research_dicipline");
     }
 
-    var optionsUrl="/shinfo/public/api/output/get_options";
-    let noppUrl="/shinfo/public/api/output/high_quality_paper/all_paper/"+updateDate+"/"+university+"/"+dicipline;
-    var toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-    var q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-    var hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-    var hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-    var cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
+    var optionsUrl="/shinfo/public/api/output/get_options/"+updateDate;
+    let noppUrl = "/shinfo/public/api/output/high_quality_paper/all_paper/" + updateDate + "/" + university + "/" + dicipline;
+    var toppUrl = "/shinfo/public/api/output/inst_paper_trend/paper/" + updateDate + "/" + university + "/" + dicipline;
+    var q1Url = "/shinfo/public/api/output/high_quality_paper/Q1/" + updateDate + "/" + university + "/" + dicipline;
+    var hotUrl = "/shinfo/public/api/output/high_quality_paper/HOT/" + updateDate + "/" + university + "/" + dicipline;
+    var hqUrl = "/shinfo/public/api/output/high_quality_paper/HQ/" + updateDate + "/" + university + "/" + dicipline;
+    var cnsUrl = "/shinfo/public/api/output/high_quality_paper/CNS/" + updateDate + "/" + university + "/" + dicipline;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $(".checkboxs input[type='checkbox']").click(function () {
             $scope.filterss();
         });
@@ -39,60 +39,62 @@ app.controller('controller', function($scope, $http) {
         // });
     });
 
-    $scope.selectYear=function(){
+    $scope.selectYear = function () {
         $(".timeRange input").each(function () {
-            $(this)[0].checked=false;
+            $(this)[0].checked = false;
         });
-        let s = "#y"+this.x;
-        $(s)[0].checked=true;
+        let s = "#y" + this.x;
+        $(s)[0].checked = true;
         $scope.filterss();
     };
 
 
-    $scope.filterss=function(){
-        university="";
-        dicipline="";
-        updateDate="";
+    $scope.filterss = function () {
+        university = "";
+        dicipline = "";
+        // updateDate = "";
 
         $("#jigou .checkboxs input[type='checkbox']:checked").each(function () {
-            university+=","+$(this).val();
+            university += "," + $(this).val();
         });
 
         $("#lingyu .checkboxs input[type='checkbox']:checked").each(function () {
-            dicipline+=","+$(this).val();
+            dicipline += "," + $(this).val();
         });
 
         $(".timeRange input:checked").each(function () {
-            updateDate=$(this).val();
+            updateDate = $(this).val();
+            optionsUrl = "/shinfo/public/api/output/get_options/"+updateDate;
+            $scope.getOption();
         });
 
-        university=university.replace(",","");
-        dicipline=dicipline.replace(",","");
+        university = university.replace(",", "");
+        dicipline = dicipline.replace(",", "");
 
-        if(university=="") university="all"; // 如果没有选中项，默认全选
-        if(dicipline=="") dicipline="all";
+        if (university == "") university = "all"; // 如果没有选中项，默认全选
+        if (dicipline == "") dicipline = "all";
 
-        console.log("时间范围："+updateDate);
-        console.log("机构选择："+university);
-        console.log("研究领域："+dicipline);
+        console.log("时间范围：" + updateDate);
+        console.log("机构选择：" + university);
+        console.log("研究领域：" + dicipline);
 
-        $(".info-display").css("display","flex");
+        $(".info-display").css("display", "flex");
 
-        $(".info-display span")[0].innerHTML=updateDate;
-        $(".info-display span")[1].innerHTML=university;
-        $(".info-display span")[2].innerHTML=dicipline;
+        $(".info-display span")[0].innerHTML = updateDate;
+        $(".info-display span")[1].innerHTML = university;
+        $(".info-display span")[2].innerHTML = dicipline;
 
         localStorage.setItem("research_updateDate", updateDate);
         localStorage.setItem("research_university", university);
         localStorage.setItem("research_dicipline", dicipline);
 
-        toppUrl="/shinfo/public/api/output/inst_paper_trend/paper/"+updateDate+"/"+university+"/"+dicipline;
-        noppUrl="/shinfo/public/api/output/high_quality_paper/all_paper/"+updateDate+"/"+university+"/"+dicipline;
+        toppUrl = "/shinfo/public/api/output/inst_paper_trend/paper/" + updateDate + "/" + university + "/" + dicipline;
+        noppUrl = "/shinfo/public/api/output/high_quality_paper/all_paper/" + updateDate + "/" + university + "/" + dicipline;
 
-        q1Url="/shinfo/public/api/output/high_quality_paper/Q1/"+updateDate+"/"+university+"/"+dicipline;
-        hqUrl="/shinfo/public/api/output/high_quality_paper/HQ/"+updateDate+"/"+university+"/"+dicipline;
-        hotUrl="/shinfo/public/api/output/high_quality_paper/HOT/"+updateDate+"/"+university+"/"+dicipline;
-        cnsUrl="/shinfo/public/api/output/high_quality_paper/CNS/"+updateDate+"/"+university+"/"+dicipline;
+        q1Url = "/shinfo/public/api/output/high_quality_paper/Q1/" + updateDate + "/" + university + "/" + dicipline;
+        hqUrl = "/shinfo/public/api/output/high_quality_paper/HQ/" + updateDate + "/" + university + "/" + dicipline;
+        hotUrl = "/shinfo/public/api/output/high_quality_paper/HOT/" + updateDate + "/" + university + "/" + dicipline;
+        cnsUrl = "/shinfo/public/api/output/high_quality_paper/CNS/" + updateDate + "/" + university + "/" + dicipline;
 
         $("#nopp").highcharts().showLoading();
         $("#topp").highcharts().showLoading();
@@ -109,16 +111,19 @@ app.controller('controller', function($scope, $http) {
         $scope.getCns();
     };
 
-    $http.get(optionsUrl)
-        .success(function (response) {
-            console.log(response);
-            $scope.universityName=response.universityName;
-            $scope.dicipline=response.dicipline;
-            $scope.timeRange=[];
-            for(let i in response["time_range"]){
-                $scope.timeRange.push(response["time_range"][i]["updateTime"])
-            }
-        });
+    $scope.getOption = function () {
+        $http.get(optionsUrl)
+            .success(function (response) {
+                $scope.universityName = response.universityName;
+                $scope.dicipline = response.dicipline;
+                $scope.timeRange = [];
+                for (let i in response["time_range"]) {
+                    $scope.timeRange.push(response["time_range"][i]["updateTime"])
+                }
+            });
+    };
+
+    $scope.getOption();
 
     $scope.getNopp=function(){
         $http.get(noppUrl)
@@ -260,6 +265,7 @@ app.controller('controller', function($scope, $http) {
     $scope.getTopp=function(){
         $http.get(toppUrl)
             .success(function (response) {
+                console.log(response);
                 var uniName=[];
                 var trendData=[];
                 var length=0;
@@ -300,6 +306,9 @@ app.controller('controller', function($scope, $http) {
                         verticalAlign: 'middle'
                     },
                     series: series,
+                    xAxis: {
+                        categories: [1,2]
+                    },
                     responsive: {
                         rules: [{
                             condition: {

@@ -14,7 +14,7 @@ app.controller('controller', function($scope, $http) {
         dicipline=localStorage.getItem("research_dicipline");
     }
 
-    var optionsUrl="/shinfo/public/api/output/get_options";
+    var optionsUrl="/shinfo/public/api/output/get_options/"+updateDate;
     var noppUrl="/shinfo/public/api/output/high_quality_paper/all_citation/"+updateDate+"/"+university+"/"+dicipline;
     var toppUrl="/shinfo/public/api/output/high_quality_paper/cite_pp/"+updateDate+"/"+university+"/"+dicipline;
     var hUrl="/shinfo/public/api/output/high_quality_paper/H/"+updateDate+"/"+university+"/"+dicipline;
@@ -56,6 +56,8 @@ app.controller('controller', function($scope, $http) {
 
         $(".timeRange input:checked").each(function () {
             updateDate=$(this).val();
+            optionsUrl = "/shinfo/public/api/output/get_options/"+updateDate;
+            $scope.getOption();
         });
 
         university=university.replace(",","");
@@ -100,16 +102,19 @@ app.controller('controller', function($scope, $http) {
         $scope.getRf();
     };
 
-    $http.get(optionsUrl)
-        .success(function (response) {
-            console.log(response);
-            $scope.universityName=response.universityName;
-            $scope.dicipline=response.dicipline;
-            $scope.timeRange=[];
-            for(let i in response["time_range"]){
-                $scope.timeRange.push(response["time_range"][i]["updateTime"])
-            }
-        });
+    $scope.getOption = function () {
+        $http.get(optionsUrl)
+            .success(function (response) {
+                $scope.universityName = response.universityName;
+                $scope.dicipline = response.dicipline;
+                $scope.timeRange = [];
+                for (let i in response["time_range"]) {
+                    $scope.timeRange.push(response["time_range"][i]["updateTime"])
+                }
+            });
+    };
+
+    $scope.getOption();
 
     $scope.getNopp=function(){
         $http.get(noppUrl)
