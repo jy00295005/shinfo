@@ -2,6 +2,13 @@
 @section("content")
     <div class="row col-12 justify-content-between">
         <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
+            <strong>时间选择</strong>
+            <select class="form-control" id="updateDate">
+                <option ng-repeat="x in timeRange" value=@{{x}}>@{{x}}</option>
+            </select>
+        </div>
+
+        <div class="form-group mt-3 col-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 row">
             <strong>机构选择</strong>
             <select class="form-control" id="institution1">
                 <option ng-repeat="x in universityName" value=@{{x}}>@{{x}}</option>
@@ -30,10 +37,11 @@
         </div>
     </div>
 
-    <div class="form-check">
+    <div class="form-check col-3">
         <input class="form-check-input" type="checkbox" value="" id="scale">
         <label class="form-check-label" for="scale">统一比例尺</label>
     </div>
+
 
     <div class="row mt-2">
         <div class="col-12">

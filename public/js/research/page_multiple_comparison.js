@@ -2,41 +2,68 @@ changeSidebarLink(4);
 
 let app = angular.module('shinfo', []);
 app.controller('controller', function($scope, $http) {
-    let optionsUrl="/shinfo/public/api/output/get_options";
+    let updateDate="2019-06-20";
 
-    $http.get(optionsUrl)
-        .success(function (response) {
-            $scope.universityName=response.universityName;
-            $scope.dicipline=response.dicipline;
-        });
+    if (localStorage.getItem("research_updateDate") != null) {
+        updateDate = localStorage.getItem("research_updateDate");
+    }
 
-    let subject=["Physics","Chemistry","Molecular Biology & Genetics","Biology & Biochemistry","Neuroscience & Behavior","Engineering","Materials Science","Computer Science","Immunology","Microbiology"];
+    let subject="";
     let category="Q1";
-    let uni1="上交大";
-    let uni2="上科大";
-    let mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+    let uni1="";
+    let uni2="";
+
+    // x坐标比例尺
+    let ti=undefined;
+    let tp=undefined;
+
+    let mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/"+updateDate+"/"+uni1+","+uni2+"/"+subject;
+    let optionsUrl="/shinfo/public/api/output/get_options/"+updateDate;
+
+    $scope.getOption=function() {
+        $http.get(optionsUrl)
+            .success(function (response) {
+                $scope.universityName = response.universityName;
+                $scope.dicipline = response.dicipline;
+                $scope.timeRange = [];
+                for (let i in response["time_range"]) {
+                    $scope.timeRange.push(response["time_range"][i]["updateTime"])
+                }
+                uni1 = response.universityName[0];
+                uni2 = response.universityName[1];
+                subject = response.dicipline.toString();
+                mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/"+updateDate+"/"+uni1+","+uni2+"/"+subject;
+                $scope.mc();
+            });
+    };
+
+    $scope.getOption();
+
 
     $("#institution1").change(function () {
         uni1=$(this).val();
-        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/"+updateDate+"/"+uni1+","+uni2+"/"+subject;
         $scope.mc();
     });
 
     $("#institution2").change(function () {
         uni2=$(this).val();
-        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/"+updateDate+"/"+uni1+","+uni2+"/"+subject;
         $scope.mc();
     });
 
     $("#high_quality_paper").change(function () {
         category=$(this).val();
-        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/2019-06-20/"+uni1+","+uni2+"/"+subject.toString();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/"+updateDate+"/"+uni1+","+uni2+"/"+subject;
         $scope.mc();
     });
 
-    // x坐标比例尺
-    let ti=undefined;
-    let tp=undefined;
+    $("#updateDate").change(function () {
+        updateDate=$(this).val();
+        mcUrl="/shinfo/public/api/output/high_quality_paper/"+category+"/"+updateDate+"/"+uni1+","+uni2+"/"+subject;
+        optionsUrl="/shinfo/public/api/output/get_options/"+updateDate;
+        $scope.getOption();
+    });
 
     $scope.mc=function() {
         $http.get(mcUrl).success(function (response){
@@ -175,5 +202,4 @@ app.controller('controller', function($scope, $http) {
         });
     };
 
-    $scope.mc();
 });
