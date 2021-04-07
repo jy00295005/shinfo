@@ -2,7 +2,11 @@ var app = angular.module('shinfo', []);
 
 app.controller('controller', function($scope, $http) {
 
-    var updateDate="2019-06-20";
+    let updateDate="2019-06-20";
+    if(localStorage.getItem("research_updateDate") != null){
+        updateDate = localStorage.getItem("research_updateDate");
+    }
+
     var university=localStorage.getItem("uni");
     var dicipline=localStorage.getItem("cate");
 
